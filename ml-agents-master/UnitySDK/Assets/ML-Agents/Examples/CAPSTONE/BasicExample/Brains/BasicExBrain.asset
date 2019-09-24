@@ -14,7 +14,7 @@ MonoBehaviour:
   brainParameters:
     vectorObservationSize: 1
     numStackedVectorObservations: 1
-    vectorActionSize: 01000000
+    vectorActionSize: 
     cameraResolutions: []
     vectorActionDescriptions: []
     vectorActionSpaceType: 0
