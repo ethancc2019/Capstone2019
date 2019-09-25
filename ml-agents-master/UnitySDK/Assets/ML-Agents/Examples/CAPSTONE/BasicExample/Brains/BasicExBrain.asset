@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Name: BasicExBrain
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 1
+    vectorObservationSize: 6
     numStackedVectorObservations: 1
-    vectorActionSize: 
+    vectorActionSize: 01000000020000000300000004000000
     cameraResolutions: []
-    vectorActionDescriptions: []
+    vectorActionDescriptions:
+    - W
+    - A
+    - S
+    - D
     vectorActionSpaceType: 0
   model: {fileID: 0}
   inferenceDevice: 0

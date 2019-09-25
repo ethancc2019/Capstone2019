@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Name: BasicLearning
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 20
+    vectorObservationSize: 3
     numStackedVectorObservations: 1
     vectorActionSize: 03000000
     cameraResolutions: []
     vectorActionDescriptions:
-    - 
+    - W
     vectorActionSpaceType: 0
-  model: {fileID: 11400000, guid: b9b3600e7ab99422684e1f3bf597a456, type: 3}
+  model: {fileID: 11400000, guid: 9aed85b22394844eaa6db4d5e3c61adb, type: 3}
   inferenceDevice: 0

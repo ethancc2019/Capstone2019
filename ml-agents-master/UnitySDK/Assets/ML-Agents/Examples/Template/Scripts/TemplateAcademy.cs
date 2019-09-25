@@ -11,7 +11,7 @@ public class TemplateAcademy : Academy
     public override void AcademyReset()
     {
         player.transform.position = startPosition.position;
-        Debug.Log("Function Called!");
+        Debug.Log("AcademyReset Called!");
     }
 
     public override void AcademyStep()

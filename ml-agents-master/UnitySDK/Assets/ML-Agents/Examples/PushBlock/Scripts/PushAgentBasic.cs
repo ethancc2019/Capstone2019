@@ -125,7 +125,8 @@ public class PushAgentBasic : Agent
         Done();
 
         // Swap ground material for a bit to indicate we scored.
-        StartCoroutine(GoalScoredSwapGroundMaterial(academy.goalScoredMaterial, 0.5f));
+        //StartCoroutine(GoalScoredSwapGroundMaterial(academy.goalScoredMaterial, 0.5f));
+        AgentReset();
     }
 
     /// <summary>
