@@ -18,9 +18,10 @@ public class GoalDetect : MonoBehaviour
     void OnCollisionEnter(Collision col)
     {
         // Touched goal.
-        if (col.gameObject.CompareTag("goal"))
+        if (col.gameObject.CompareTag("player"))
         {
-            agent.IScoredAGoal();
+            agent.AddReward(1f);
+            agent.AgentReset();
         }
     }
 }
