@@ -15,13 +15,13 @@ public class GoalDetect : MonoBehaviour
     /// </summary>
 	public PushAgentBasic agent;  //
 
-    void OnCollisionEnter(Collision col)
-    {
-        // Touched goal.
-        if (col.gameObject.CompareTag("player"))
-        {
-            agent.AddReward(1f);
-            agent.AgentReset();
-        }
-    }
+    //void OnCollisionEnter(Collision col)
+    //{
+    //    // Touched goal.
+    //    if (col.gameObject.CompareTag("player"))
+    //    {
+    //        agent.AddReward(1f);
+    //        agent.AgentReset();
+    //    }
+    //}
 }
