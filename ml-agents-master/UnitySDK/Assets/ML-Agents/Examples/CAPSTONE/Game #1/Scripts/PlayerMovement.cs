@@ -51,3 +51,4 @@ public class PlayerMovement : MonoBehaviour {
         this.transform.position = spawnPointOne.position;
     }
 }
+ 
