@@ -43,11 +43,6 @@ public class TemplateAgent : Agent
 
 
 
-
-        //       playerRb.AddForce(transform.forward * speed);
-
-        //}
-
     }
 
     void OnCollisionEnter(Collision col)
