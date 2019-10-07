@@ -10,6 +10,11 @@ public class PlayerMovement : MonoBehaviour {
     public float gravity = 20.0F;
     private Vector3 moveDirection = Vector3.zero;
 
+    public Transform spawnPointOne;
+
+    //Scripts 
+    public GameObject gameManger;
+
     void Update()
     {
         CharacterController controller = GetComponent<CharacterController>();
@@ -30,5 +35,20 @@ public class PlayerMovement : MonoBehaviour {
         moveDirection.y -= gravity * Time.deltaTime;
         //Making the character move
         controller.Move(moveDirection * Time.deltaTime);
+
+        //Player fell off platform, reset him to the first spawn point
+        if (this.transform.position.y <= -1)
+        {
+            
+            resetPlayer();
+        }
+
+    }
+
+    public void resetPlayer()
+    {
+        gameManger.GetComponent<GameManager>().decreaseScore();
+        this.transform.position = spawnPointOne.position;
     }
 }
+ 

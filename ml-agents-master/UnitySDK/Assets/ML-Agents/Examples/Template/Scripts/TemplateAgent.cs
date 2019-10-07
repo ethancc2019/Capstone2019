@@ -33,56 +33,14 @@ public class TemplateAgent : Agent
     {
 
         //Here get the action and apply it to the player
-        if (brain.brainParameters.vectorActionSpaceType == SpaceType.discrete)
-        {
-            int counter = 0;
-            Debug.Log("Discrete space type: " + counter);
-            int random = Random.Range(0, 4);
-            float index = vectorAction[random];
-            player.GetComponent<Rigidbody>().AddForce(Vector3.forward);
-            counter++;
-            switch ((int)index)
-            {
-                case 0: //W
-                    player.GetComponent<Rigidbody>().AddForce(Vector3.forward * speed);
-                    if (goal.transform.position.x - player.transform.position.x <= 0f)
-                    {
-                        Debug.Log("Reward earned!");
-                        SetReward(OnMarkerPoints);
-                        Done();
-                    }
 
-                    break;
-                case 1: //A
-                    player.GetComponent<Rigidbody>().AddForce(Vector3.left * speed);
-                    if (goal.transform.position.x - player.transform.position.x <= 0f)
-                    {
-                        Debug.Log("Reward earned!");
-                        SetReward(OnMarkerPoints);
-                        Done();
-                    }
-                    break;
-                case 2: //S
-                    player.GetComponent<Rigidbody>().AddForce(Vector3.back * speed);
-                    if (goal.transform.position.x - player.transform.position.x <= 0f)
-                    {
-                        Debug.Log("Reward earned!");
-                        SetReward(OnMarkerPoints);
-                        Done();
-                    }
-                    break;
-                case 3: //W
-                    player.GetComponent<Rigidbody>().AddForce(Vector3.right * speed);
-                    if (goal.transform.position.x - player.transform.position.x <= 0f)
-                    {
-                        Debug.Log("Reward earned!");
-                        SetReward(OnMarkerPoints);
-                        Done();
-                    }
-                    break;
-            }
-            //player.transform.Translate(speed * SendKeys * Time.deltaTime, 0f, speed * Input.GetAxis("Vertical") * Time.deltaTime);
-        }
+        int counter = 0;
+        Debug.Log("Discrete space type: " + counter);
+        float action = vectorAction[0];
+        //float index = vectorAction[random];
+        player.GetComponent<Rigidbody>().AddForce(Vector3.forward);
+
+
 
 
 
