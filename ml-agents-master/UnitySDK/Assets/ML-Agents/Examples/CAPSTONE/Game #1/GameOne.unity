@@ -474,6 +474,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8531db473cab2c408bce7ff3b01f897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 0
+  player: {fileID: 1975183250}
+  spawnPoint: {fileID: 1606842830}
 --- !u!1 &1102552726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,7 +1074,7 @@ Transform:
   m_GameObject: {fileID: 2072431836}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.067228, y: 0.55, z: -0.19}
-  m_LocalScale: {x: 16.52744, y: 1.1249363, z: 1.1249363}
+  m_LocalScale: {x: 11.042861, y: 0.7516298, z: 0.7516298}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
