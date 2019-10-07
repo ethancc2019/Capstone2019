@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class TemplateAgent : Agent
 {
 
-    public float speed = 3f;
+    public float speed = 1.0f;
     public float DistanceToEarnReward = 0.1f;
     public float OnMarkerPoints = 1f;
 
@@ -23,7 +23,6 @@ public class TemplateAgent : Agent
     {
         AddVectorObs(player.transform.position - goal.transform.position); // distance to target
         AddVectorObs(player.transform.position.x);
-        AddVectorObs(player.transform.position.y);
         AddVectorObs(player.transform.position.z);
 
 
@@ -33,15 +32,18 @@ public class TemplateAgent : Agent
     {
 
         //Here get the action and apply it to the player
+        Debug.Log("Agent Action Called");
 
         int counter = 0;
-        Debug.Log("Discrete space type: " + counter);
+        var actionX = vectorAction[0];
+        //var actionZ = vectorAction[1];
+        Debug.Log("Action X: " + actionX.ToString());
+        //Debug.Log("Action Z: " + actionZ.ToString());
+
         float action = vectorAction[0];
-        //float index = vectorAction[random];
-        player.GetComponent<Rigidbody>().AddForce(Vector3.forward);
+        transform.Translate(Vector3.forward);
 
-
-
+        
 
     }
 
