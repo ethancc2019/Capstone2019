@@ -14,9 +14,12 @@ MonoBehaviour:
   brainParameters:
     vectorObservationSize: 5
     numStackedVectorObservations: 1
-    vectorActionSize: 01000000
+    vectorActionSize: 01000000010000000100000001000000
     cameraResolutions: []
     vectorActionDescriptions:
+    - 
+    - 
+    - 
     - 
     vectorActionSpaceType: 0
   keyContinuousPlayerActions: []
@@ -25,12 +28,12 @@ MonoBehaviour:
   - key: 119
     branchIndex: 0
     value: 1
-  - key: 97
-    branchIndex: 0
-    value: 2
   - key: 115
     branchIndex: 0
-    value: 3
+    value: 2
+  - key: 97
+    branchIndex: 2
+    value: 1
   - key: 100
-    branchIndex: 0
-    value: 4
+    branchIndex: 2
+    value: 2
