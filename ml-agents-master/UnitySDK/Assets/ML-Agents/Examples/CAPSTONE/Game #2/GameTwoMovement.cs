@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameTwoMovement : MonoBehaviour {
 
@@ -16,13 +17,15 @@ public class GameTwoMovement : MonoBehaviour {
     private Vector3 velocity;
     private float rotationVelocity;
 
+    //Vars for the shooting
     public GameObject bulletPrefab;
     public Transform point;
     public Rigidbody2D rb;
-    public float velocityX = 0f;
-    public float velocityY = 50f;
+   
 
-
+    private Text scoreText;
+    private int score = 0;
+    public GameObject goal;
     void Start()
     {
         //Camera.main.enabled = true;
@@ -79,5 +82,14 @@ public class GameTwoMovement : MonoBehaviour {
         // update transform
         transform.position += velocity * Time.deltaTime;
         transform.Rotate(0, 0, rotationVelocity * Time.deltaTime);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "goal")
+        {
+            this.score++;
+            Destroy(goal);
+        }
     }
 }
