@@ -18,9 +18,9 @@ public class GameTwoMovement : MonoBehaviour {
 
     public GameObject bulletPrefab;
     public Transform point;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     public float velocityX = 0f;
-    public float velocityY = 5f;
+    public float velocityY = 50f;
 
 
     void Start()
@@ -47,6 +47,8 @@ public class GameTwoMovement : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) //Can make this automatic firing if we want 
         {
             Shoot();
+            
+
         }
     }
 
@@ -55,9 +57,8 @@ public class GameTwoMovement : MonoBehaviour {
     {
         Debug.Log("Pew Pew!");
         Instantiate(bulletPrefab, point.position, Quaternion.identity);
-        rb = GameObject.Find("Bullet(Clone)").GetComponent<Rigidbody2D>();
+        //rb = GameObject.Find("Bullet").GetComponent<Rigidbody2D>();
 
-        rb.velocity = new Vector2(velocityX, velocityY);
 
     }
 
