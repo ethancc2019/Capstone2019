@@ -27,6 +27,8 @@ TagManager:
   - switchOn
   - stone
   - player
+  - start
+  - boundry
   layers:
   - Default
   - TransparentFX
