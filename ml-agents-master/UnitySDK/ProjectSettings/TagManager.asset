@@ -29,6 +29,8 @@ TagManager:
   - player
   - start
   - boundry
+  - score_text
+  - spawn_point_container
   layers:
   - Default
   - TransparentFX

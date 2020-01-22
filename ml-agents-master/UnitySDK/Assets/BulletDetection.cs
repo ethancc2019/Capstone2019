@@ -15,7 +15,7 @@ public class BulletDetection : MonoBehaviour
 	void Update () {
 		
 	}
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter2d(Collider other)
     {
         Debug.Log("Hit the boundary");
 
