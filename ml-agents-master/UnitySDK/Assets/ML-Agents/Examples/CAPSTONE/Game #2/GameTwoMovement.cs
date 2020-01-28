@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,12 +25,19 @@ public class GameTwoMovement : MonoBehaviour {
     public Rigidbody2D rb;
    
 
-    private Text scoreText;
+    public Text scoreText;
     private int score = 0;
     public GameObject goal;
+
+    private GameObject spawnPointGameObject;
+    private PowerUpSpawnner spawnPointScript;
+
     void Start()
     {
         //Camera.main.enabled = true;
+        //scoreText = GameObject.FindGameObjectWithTag("score_text").GetComponent<Text>();
+        spawnPointGameObject = GameObject.FindGameObjectWithTag("spawn_point_container");
+        spawnPointScript = spawnPointGameObject.GetComponent<PowerUpSpawnner>();
     }
 
     private void Update()
@@ -48,12 +56,19 @@ public class GameTwoMovement : MonoBehaviour {
         pos.y = Mathf.Clamp01(pos.y);
         transform.position = Camera.main.ViewportToWorldPoint(pos);
 
+        //if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0)) //Can make this automatic firing if we want 
+        //{
+        //    Shoot();
+        //}
         if (Input.GetKeyDown(KeyCode.Space)) //Can make this automatic firing if we want 
         {
             Shoot();
-            
 
         }
+
+        scoreText.text = score.ToString();
+
+
     }
 
 
@@ -83,14 +98,19 @@ public class GameTwoMovement : MonoBehaviour {
         // update transform
         transform.position += velocity * Time.deltaTime;
         transform.Rotate(0, 0, rotationVelocity * Time.deltaTime);
+
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "goal")
+
+        //Fix destroying game objects when they are instantiated 
+        if (other.gameObject.CompareTag("goal"))
         {
+            Debug.Log("Goal hit!");
             this.score++;
             Destroy(goal);
+            spawnPointScript.activePowerups--;
         }
     }
 }
