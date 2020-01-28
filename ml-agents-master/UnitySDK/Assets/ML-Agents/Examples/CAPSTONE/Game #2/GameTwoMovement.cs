@@ -63,7 +63,7 @@ public class GameTwoMovement : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) //Can make this automatic firing if we want 
         {
             Shoot();
-
+            
         }
 
         scoreText.text = score.ToString();
@@ -104,13 +104,12 @@ public class GameTwoMovement : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-        //Fix destroying game objects when they are instantiated 
         if (other.gameObject.CompareTag("goal"))
         {
             Debug.Log("Goal hit!");
             this.score++;
-            Destroy(goal);
-            spawnPointScript.activePowerups--;
+            spawnPointScript.DestoryPowerUp();
+            //spawnPointScript.activePowerups--;
         }
     }
 }
