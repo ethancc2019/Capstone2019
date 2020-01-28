@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameTwoMovement : MonoBehaviour {
 
@@ -9,12 +11,34 @@ public class GameTwoMovement : MonoBehaviour {
 
     public float maxSpeed = 10;
     public float maxRotationSpeed = 100;
+    
 
     public float velocityDrag = 1;
     public float rotationDrag = 1;
 
     private Vector3 velocity;
-    private float zRotationVelocity;
+    private float rotationVelocity;
+
+    //Vars for the shooting
+    public GameObject bulletPrefab;
+    public Transform point;
+    public Rigidbody2D rb;
+   
+
+    public Text scoreText;
+    private int score = 0;
+    public GameObject goal;
+
+    private GameObject spawnPointGameObject;
+    private PowerUpSpawnner spawnPointScript;
+
+    void Start()
+    {
+        //Camera.main.enabled = true;
+        //scoreText = GameObject.FindGameObjectWithTag("score_text").GetComponent<Text>();
+        spawnPointGameObject = GameObject.FindGameObjectWithTag("spawn_point_container");
+        spawnPointScript = spawnPointGameObject.GetComponent<PowerUpSpawnner>();
+    }
 
     private void Update()
     {
@@ -23,8 +47,38 @@ public class GameTwoMovement : MonoBehaviour {
         velocity += acceleration * Time.deltaTime;
 
         // apply turn input
-        float zTurnAcceleration = -1 * Input.GetAxis("Horizontal") * horizontalInputAcceleration;
-        zRotationVelocity += zTurnAcceleration * Time.deltaTime;
+        float turnAccleration = -1 * Input.GetAxis("Horizontal") * horizontalInputAcceleration;
+        rotationVelocity += turnAccleration * Time.deltaTime;
+
+        //Taking care of keeping th e player in the screen bounds
+        Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+        pos.x = Mathf.Clamp01(pos.x);
+        pos.y = Mathf.Clamp01(pos.y);
+        transform.position = Camera.main.ViewportToWorldPoint(pos);
+
+        //if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0)) //Can make this automatic firing if we want 
+        //{
+        //    Shoot();
+        //}
+        if (Input.GetKeyDown(KeyCode.Space)) //Can make this automatic firing if we want 
+        {
+            Shoot();
+            
+        }
+
+        scoreText.text = score.ToString();
+
+
+    }
+
+
+    public void Shoot()
+    {
+        Debug.Log("Pew Pew!");
+        Instantiate(bulletPrefab, point.position, Quaternion.identity);
+        //rb = GameObject.Find("Bullet").GetComponent<Rigidbody2D>();
+
+
     }
 
     private void FixedUpdate()
@@ -36,13 +90,26 @@ public class GameTwoMovement : MonoBehaviour {
         velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
 
         // apply rotation drag
-        zRotationVelocity = zRotationVelocity * (1 - Time.deltaTime * rotationDrag);
+        rotationVelocity = rotationVelocity * (1 - Time.deltaTime * rotationDrag);
 
         // clamp to maxRotationSpeed
-        zRotationVelocity = Mathf.Clamp(zRotationVelocity, -maxRotationSpeed, maxRotationSpeed);
+        rotationVelocity = Mathf.Clamp(rotationVelocity, -maxRotationSpeed, maxRotationSpeed);
 
         // update transform
         transform.position += velocity * Time.deltaTime;
-        transform.Rotate(0, 0, zRotationVelocity * Time.deltaTime);
+        transform.Rotate(0, 0, rotationVelocity * Time.deltaTime);
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+
+        if (other.gameObject.CompareTag("goal"))
+        {
+            Debug.Log("Goal hit!");
+            this.score++;
+            spawnPointScript.DestoryPowerUp();
+            //spawnPointScript.activePowerups--;
+        }
     }
 }
