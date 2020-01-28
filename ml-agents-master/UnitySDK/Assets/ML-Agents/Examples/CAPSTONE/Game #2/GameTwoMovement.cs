@@ -10,6 +10,7 @@ public class GameTwoMovement : MonoBehaviour {
 
     public float maxSpeed = 10;
     public float maxRotationSpeed = 100;
+    
 
     public float velocityDrag = 1;
     public float rotationDrag = 1;
