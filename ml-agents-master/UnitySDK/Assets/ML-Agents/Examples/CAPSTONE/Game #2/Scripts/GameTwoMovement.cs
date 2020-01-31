@@ -104,12 +104,24 @@ public class GameTwoMovement : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-        if (other.gameObject.CompareTag("goal"))
+        //if (other.gameObject.CompareTag("goal"))
+        //{
+        //    Debug.Log("Goal hit!");
+        //    this.score++;
+        //    spawnPointScript.DestoryPowerUp();
+        //    //spawnPointScript.activePowerups--;
+        //}
+
+        switch (other.gameObject.tag)
         {
-            Debug.Log("Goal hit!");
-            this.score++;
-            spawnPointScript.DestoryPowerUp();
-            //spawnPointScript.activePowerups--;
+            case "goal":
+                Debug.Log("Goal hit!");
+                this.score++;
+                spawnPointScript.DestoryPowerUp();
+                break;
+            case "asteroid":
+                Debug.Log("Player hit by asteroid!");
+                break;
         }
     }
 }
