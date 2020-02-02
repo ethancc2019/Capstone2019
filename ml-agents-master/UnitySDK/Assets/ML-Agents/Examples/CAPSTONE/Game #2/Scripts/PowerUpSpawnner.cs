@@ -9,11 +9,12 @@ public class PowerUpSpawnner : MonoBehaviour
     public GameObject[] spawnPoints;
     public GameObject powerUpPrefab;
 
+	private GameObject tempPowerup;
     public int activePowerups;
 	// Use this for initialization
 	void Start ()
 	{
-	    activePowerups++;
+	    activePowerups = 0;
         spawnPowerUp();
 	}
 	
@@ -28,8 +29,14 @@ public class PowerUpSpawnner : MonoBehaviour
     public void spawnPowerUp()
     {
         int randomPos = Random.Range(0, spawnPoints.Length - 1);
-        Instantiate(powerUpPrefab, spawnPoints[randomPos].transform.position,Quaternion.identity,gameObject.transform);
+		tempPowerup = Instantiate(powerUpPrefab, spawnPoints[randomPos].transform.position,Quaternion.identity,gameObject.transform);
         activePowerups++;
+    }
+
+	public void DestoryPowerUp()
+    {
+		Destroy(tempPowerup);
+		activePowerups--;
     }
 
 

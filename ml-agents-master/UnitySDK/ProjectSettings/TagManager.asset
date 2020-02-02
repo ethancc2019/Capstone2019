@@ -31,6 +31,9 @@ TagManager:
   - boundry
   - score_text
   - spawn_point_container
+  - target
+  - walkableSurface
+  - asteroid
   layers:
   - Default
   - TransparentFX

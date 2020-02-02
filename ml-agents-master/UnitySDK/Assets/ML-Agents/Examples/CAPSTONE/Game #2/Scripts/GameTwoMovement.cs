@@ -11,6 +11,7 @@ public class GameTwoMovement : MonoBehaviour {
 
     public float maxSpeed = 10;
     public float maxRotationSpeed = 100;
+    
 
     public float velocityDrag = 1;
     public float rotationDrag = 1;
@@ -62,7 +63,7 @@ public class GameTwoMovement : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) //Can make this automatic firing if we want 
         {
             Shoot();
-
+            
         }
 
         scoreText.text = score.ToString();
@@ -103,13 +104,24 @@ public class GameTwoMovement : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-        //Fix destroying game objects when they are instantiated 
-        if (other.gameObject.CompareTag("goal"))
+        //if (other.gameObject.CompareTag("goal"))
+        //{
+        //    Debug.Log("Goal hit!");
+        //    this.score++;
+        //    spawnPointScript.DestoryPowerUp();
+        //    //spawnPointScript.activePowerups--;
+        //}
+
+        switch (other.gameObject.tag)
         {
-            Debug.Log("Goal hit!");
-            this.score++;
-            Destroy(goal);
-            spawnPointScript.activePowerups--;
+            case "goal":
+                Debug.Log("Goal hit!");
+                this.score++;
+                spawnPointScript.DestoryPowerUp();
+                break;
+            case "asteroid":
+                Debug.Log("Player hit by asteroid!");
+                break;
         }
     }
 }
