@@ -22,10 +22,13 @@ public class PowerUpSpawnner : MonoBehaviour
 	void Update () {
 	    if (activePowerups <= 0)
 	    {
+	       // activePowerups--;
+
             spawnPowerUp();
 	    }
 	}
 
+    //Debug power up spawn bug
     public void spawnPowerUp()
     {
         int randomPos = Random.Range(0, spawnPoints.Length - 1);

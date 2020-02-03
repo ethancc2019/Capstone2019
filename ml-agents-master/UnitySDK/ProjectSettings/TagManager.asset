@@ -21,7 +21,6 @@ TagManager:
   - ground
   - orangeBlock
   - block
-  - orangeGoal
   - switchOff
   - pyramid
   - switchOn
@@ -34,6 +33,7 @@ TagManager:
   - target
   - walkableSurface
   - asteroid
+  - bullet
   layers:
   - Default
   - TransparentFX

@@ -9,7 +9,7 @@ public class GameTwoMovement : MonoBehaviour {
     public float verticalInputAcceleration = 1;
     public float horizontalInputAcceleration = 20;
 
-    public float maxSpeed = 10;
+    public float maxSpeed = 0.2f;
     public float maxRotationSpeed = 100;
     
 
@@ -26,11 +26,12 @@ public class GameTwoMovement : MonoBehaviour {
    
 
     public Text scoreText;
-    private int score = 0;
+    public int score = 0;
     public GameObject goal;
 
     private GameObject spawnPointGameObject;
     private PowerUpSpawnner spawnPointScript;
+
 
     void Start()
     {
@@ -46,16 +47,16 @@ public class GameTwoMovement : MonoBehaviour {
         Vector3 acceleration = Input.GetAxis("Vertical") * verticalInputAcceleration * transform.up;
         velocity += acceleration * Time.deltaTime;
 
-        // apply turn input
+        //// apply turn input
         float turnAccleration = -1 * Input.GetAxis("Horizontal") * horizontalInputAcceleration;
         rotationVelocity += turnAccleration * Time.deltaTime;
 
-        //Taking care of keeping th e player in the screen bounds
+        ////Taking care of keeping the player in the screen bounds
         Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
         pos.x = Mathf.Clamp01(pos.x);
         pos.y = Mathf.Clamp01(pos.y);
         transform.position = Camera.main.ViewportToWorldPoint(pos);
-
+        
         //if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0)) //Can make this automatic firing if we want 
         //{
         //    Shoot();

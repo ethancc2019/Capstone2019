@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EuclideanTorus : MonoBehaviour
 {
-
+    private GameObject tempGameObject;
     // Use this for initialization
     void Start()
     {
@@ -25,6 +25,7 @@ public class EuclideanTorus : MonoBehaviour
         else if (transform.position.x < -9)
         {
             transform.position = new Vector3(9, transform.position.y, 0);
+            //Destroy(gameObject);
         }
 
         else if (transform.position.y > 6)
@@ -35,6 +36,8 @@ public class EuclideanTorus : MonoBehaviour
         else if (transform.position.y < -6)
         {
             transform.position = new Vector3(transform.position.x, 6, 0);
+            //Destroy(gameObject);
+
         }
     }
 }
