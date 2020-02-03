@@ -1128,19 +1128,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f911a69f95f35f14a8be7939e5ea9b83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  verticalInputAcceleration: 1
-  horizontalInputAcceleration: 1
-  maxSpeed: 3000
+  verticalInputAcceleration: 50
+  horizontalInputAcceleration: 8000
+  maxSpeed: 4000
   maxRotationSpeed: 1000
-  velocityDrag: 10
-  rotationDrag: 35
+  velocityDrag: 5
+  rotationDrag: 15
   bulletPrefab: {fileID: 1049884114466022, guid: 2897ca0462040d44da59c0cc433ca51e,
     type: 2}
   point: {fileID: 1584450081}
   rb: {fileID: 50281015603474352, guid: 2897ca0462040d44da59c0cc433ca51e, type: 2}
   scoreText: {fileID: 238006967}
   score: 0
-  goal: {fileID: 1825615954912070, guid: 118b7558a799ed540b9a7f85613c76e9, type: 2}
+  goal: {fileID: 1393099436906762, guid: 79711b043082f9841aa7cf672ef09e77, type: 2}
 --- !u!61 &958907308
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1581,6 +1581,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1650812557
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1650812558}
+  - component: {fileID: 1650812559}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1650812558
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1650812557}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2010734863}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1650812559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1650812557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33b738f2ce8c53145bb8f4a3c9bc7759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1844822942
 GameObject:
   m_ObjectHideFlags: 0
@@ -1933,6 +1978,7 @@ RectTransform:
   - {fileID: 238006966}
   - {fileID: 2137598343}
   - {fileID: 2072256946}
+  - {fileID: 1650812558}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2149,6 +2195,6 @@ MonoBehaviour:
   - {fileID: 1367388582}
   - {fileID: 504701439}
   - {fileID: 1929583722}
-  powerUpPrefab: {fileID: 1825615954912070, guid: 118b7558a799ed540b9a7f85613c76e9,
+  powerUpPrefab: {fileID: 1393099436906762, guid: 79711b043082f9841aa7cf672ef09e77,
     type: 2}
-  activePowerups: 1
+  ActivePowerups: 0

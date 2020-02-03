@@ -9,7 +9,7 @@ public class AsteroidController : MonoBehaviour
     public GameObject asteroid;
     private GameObject asteroid_temp;
 
-    private float start_time = 3f;
+    private float start_time = 10f; //Spawn asteroids in 10 seconds
     private float min = 0.0f;
     private float max = 0.8f;
 

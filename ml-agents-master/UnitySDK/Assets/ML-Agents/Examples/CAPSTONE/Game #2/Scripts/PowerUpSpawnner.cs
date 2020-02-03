@@ -10,22 +10,17 @@ public class PowerUpSpawnner : MonoBehaviour
     public GameObject powerUpPrefab;
 
 	private GameObject tempPowerup;
-    public int activePowerups;
+    public int ActivePowerups = 1;
 	// Use this for initialization
 	void Start ()
 	{
-	    activePowerups = 0;
+	    //ActivePowerups = 0;
         spawnPowerUp();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	    if (activePowerups <= 0)
-	    {
-	       // activePowerups--;
-
-            spawnPowerUp();
-	    }
+	    
 	}
 
     //Debug power up spawn bug
@@ -33,13 +28,19 @@ public class PowerUpSpawnner : MonoBehaviour
     {
         int randomPos = Random.Range(0, spawnPoints.Length - 1);
 		tempPowerup = Instantiate(powerUpPrefab, spawnPoints[randomPos].transform.position,Quaternion.identity,gameObject.transform);
-        activePowerups++;
+        ActivePowerups++;
     }
 
 	public void DestoryPowerUp()
     {
 		Destroy(tempPowerup);
-		activePowerups--;
+		this.ActivePowerups--;
+        if (ActivePowerups <= 0)
+        {
+            // activePowerups--;
+
+            spawnPowerUp();
+        }
     }
 
 

@@ -47,7 +47,7 @@ public class GameTwoMovement : MonoBehaviour {
         Vector3 acceleration = Input.GetAxis("Vertical") * verticalInputAcceleration * transform.up;
         velocity += acceleration * Time.deltaTime;
 
-        //// apply turn input
+        // apply turn input
         float turnAccleration = -1 * Input.GetAxis("Horizontal") * horizontalInputAcceleration;
         rotationVelocity += turnAccleration * Time.deltaTime;
 
@@ -79,7 +79,6 @@ public class GameTwoMovement : MonoBehaviour {
         Instantiate(bulletPrefab, point.position, Quaternion.identity);
         //rb = GameObject.Find("Bullet").GetComponent<Rigidbody2D>();
 
-
     }
 
     private void FixedUpdate()
@@ -105,24 +104,32 @@ public class GameTwoMovement : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-        //if (other.gameObject.CompareTag("goal"))
-        //{
-        //    Debug.Log("Goal hit!");
-        //    this.score++;
-        //    spawnPointScript.DestoryPowerUp();
-        //    //spawnPointScript.activePowerups--;
-        //}
-
-        switch (other.gameObject.tag)
+        if (other.gameObject.CompareTag("goal"))
         {
-            case "goal":
-                Debug.Log("Goal hit!");
-                this.score++;
-                spawnPointScript.DestoryPowerUp();
-                break;
-            case "asteroid":
-                Debug.Log("Player hit by asteroid!");
-                break;
+            Debug.Log("Goal hit!");
+            this.score++;
+            spawnPointScript.DestoryPowerUp();
+            //spawnPointScript.activePowerups--;
         }
+
+        if (other.gameObject.CompareTag("asteroid"))
+        {
+            Debug.Log("Goal hit!");
+            this.score--;
+            //Either kill player here or decrement his score
+        }
+
+
+        //switch (other.gameObject.tag)
+        //{
+        //    case "goal":
+        //        Debug.Log("Goal hit!");
+        //        this.score++;
+        //        spawnPointScript.DestoryPowerUp();
+        //        break;
+        //    case "asteroid":
+        //        Debug.Log("Player hit by asteroid!");
+        //        break;
+        //}
     }
 }
