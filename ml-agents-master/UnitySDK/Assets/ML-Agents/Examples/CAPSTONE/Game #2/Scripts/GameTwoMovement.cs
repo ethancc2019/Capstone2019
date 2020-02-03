@@ -9,7 +9,7 @@ public class GameTwoMovement : MonoBehaviour {
     public float verticalInputAcceleration = 1;
     public float horizontalInputAcceleration = 20;
 
-    public float maxSpeed = 10;
+    public float maxSpeed = 0.2f;
     public float maxRotationSpeed = 100;
     
 
@@ -26,11 +26,12 @@ public class GameTwoMovement : MonoBehaviour {
    
 
     public Text scoreText;
-    private int score = 0;
+    public int score = 0;
     public GameObject goal;
 
     private GameObject spawnPointGameObject;
     private PowerUpSpawnner spawnPointScript;
+
 
     void Start()
     {
@@ -50,12 +51,12 @@ public class GameTwoMovement : MonoBehaviour {
         float turnAccleration = -1 * Input.GetAxis("Horizontal") * horizontalInputAcceleration;
         rotationVelocity += turnAccleration * Time.deltaTime;
 
-        //Taking care of keeping th e player in the screen bounds
+        ////Taking care of keeping the player in the screen bounds
         Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
         pos.x = Mathf.Clamp01(pos.x);
         pos.y = Mathf.Clamp01(pos.y);
         transform.position = Camera.main.ViewportToWorldPoint(pos);
-
+        
         //if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0)) //Can make this automatic firing if we want 
         //{
         //    Shoot();
@@ -77,7 +78,6 @@ public class GameTwoMovement : MonoBehaviour {
         Debug.Log("Pew Pew!");
         Instantiate(bulletPrefab, point.position, Quaternion.identity);
         //rb = GameObject.Find("Bullet").GetComponent<Rigidbody2D>();
-
 
     }
 
@@ -104,24 +104,32 @@ public class GameTwoMovement : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-        //if (other.gameObject.CompareTag("goal"))
-        //{
-        //    Debug.Log("Goal hit!");
-        //    this.score++;
-        //    spawnPointScript.DestoryPowerUp();
-        //    //spawnPointScript.activePowerups--;
-        //}
-
-        switch (other.gameObject.tag)
+        if (other.gameObject.CompareTag("goal"))
         {
-            case "goal":
-                Debug.Log("Goal hit!");
-                this.score++;
-                spawnPointScript.DestoryPowerUp();
-                break;
-            case "asteroid":
-                Debug.Log("Player hit by asteroid!");
-                break;
+            Debug.Log("Goal hit!");
+            this.score++;
+            spawnPointScript.DestoryPowerUp();
+            //spawnPointScript.activePowerups--;
         }
+
+        if (other.gameObject.CompareTag("asteroid"))
+        {
+            Debug.Log("Goal hit!");
+            this.score--;
+            //Either kill player here or decrement his score
+        }
+
+
+        //switch (other.gameObject.tag)
+        //{
+        //    case "goal":
+        //        Debug.Log("Goal hit!");
+        //        this.score++;
+        //        spawnPointScript.DestoryPowerUp();
+        //        break;
+        //    case "asteroid":
+        //        Debug.Log("Player hit by asteroid!");
+        //        break;
+        //}
     }
 }
