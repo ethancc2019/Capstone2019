@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -12,32 +13,29 @@ MonoBehaviour:
   m_Name: Game1PlayerBrain
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 6
+    vectorObservationSize: 1
     numStackedVectorObservations: 1
-    vectorActionSize: 0100000001000000010000000100000001000000
+    vectorActionSize: 0300000003000000
     cameraResolutions: []
     vectorActionDescriptions:
-    - 1
-    - 1
-    - 1
-    - 1
-    - 1
+    - Move Forward/Backwards
+    - Strafe left/right
     vectorActionSpaceType: 0
   keyContinuousPlayerActions: []
   axisContinuousPlayerActions: []
   discretePlayerActions:
   - key: 119
     branchIndex: 0
-    value: 0
+    value: 1
   - key: 115
+    branchIndex: 0
+    value: 2
+  - key: 97
     branchIndex: 1
     value: 1
   - key: 100
-    branchIndex: 2
+    branchIndex: 1
     value: 2
-  - key: 97
-    branchIndex: 3
-    value: 3
   - key: 32
-    branchIndex: 4
-    value: 4
+    branchIndex: 2
+    value: 1
