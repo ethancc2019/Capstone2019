@@ -28,15 +28,15 @@ public class EuclideanTorus : MonoBehaviour
             //Destroy(gameObject);
         }
 
-        else if (transform.position.y > 6)
-        {
-            transform.position = new Vector3(transform.position.x, -6, 0);
-        }
+        //else if (transform.position.y > 6)
+        //{
+        //    transform.position = new Vector3(transform.position.x, -6, 0);
+        //}
 
-        else if (transform.position.y < -6)
+        if (transform.position.y < -6)
         {
-            transform.position = new Vector3(transform.position.x, 6, 0);
-            //Destroy(gameObject);
+            //transform.position = new Vector3(transform.position.x, 6, 0);
+            Destroy(gameObject);
 
         }
     }

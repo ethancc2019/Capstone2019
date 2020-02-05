@@ -13,6 +13,7 @@ public class AsteroidController : MonoBehaviour
     private float min = 0.0f;
     private float max = 0.8f;
 
+	public GameObject[] asteroidSpawns;
     // Use this for initialization
     void Start () {
 	    	
@@ -24,15 +25,15 @@ public class AsteroidController : MonoBehaviour
 	    start_time -= Time.deltaTime;
 	    if (start_time <= 0)
 	    {
+			Debug.Log("Asteroid incoming!");
+
+			int ran = Random.Range(0, asteroidSpawns.Length);
+			Vector3 spawnLoc = asteroidSpawns[ran].transform.position;
 	        asteroid_temp = asteroid;
             Vector3 randomPos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(min, max), 1,10));
-	        Instantiate(asteroid,
-	            new Vector3(Random.Range(-9.0f, 9.0f),
-	                Random.Range(-6.0f, 6.0f), 0),
-	            Quaternion.Euler(0, 0, Random.Range(-0.0f, 359.0f)));
+	        Instantiate(asteroid,spawnLoc, Quaternion.Euler(0, 0, Random.Range(-0.0f, 359.0f)));
             asteroid_temp.GetComponent<Rigidbody2D>().AddForce(transform.up * Random.Range(-50.0f, 150.0f));
             start_time = 10f;
 	    }
-        Debug.Log(start_time.ToString());
 	}
 }

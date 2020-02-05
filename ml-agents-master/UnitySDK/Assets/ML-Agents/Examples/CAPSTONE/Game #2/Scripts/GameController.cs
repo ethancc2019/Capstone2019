@@ -2,16 +2,22 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
 
     private GameObject GameTwoGameObject;
     private GameTwoMovement gameTwoScript;
+
+	public Text timerText;
+
+	public float timer = 60f;
 	// Use this for initialization
 	void Start ()
 	{
-        //Get the 
+		//Get the 
+		timerText = GameObject.FindGameObjectWithTag("timer_text").GetComponent<Text>();
 	    gameTwoScript = GameObject.FindGameObjectWithTag("Player").GetComponent<GameTwoMovement>();
 	}
 	
@@ -25,5 +31,12 @@ public class GameController : MonoBehaviour
 	        EditorApplication.ExecuteMenuItem("Edit/Play");
 
         }
-    }
+		if(this.timer <= 0.0)
+		{
+			EditorApplication.ExecuteMenuItem("Edit/Play");
+
+		}
+		this.timer -= Time.deltaTime;
+		timerText.text = this.timer.ToString("#.0");
+	}
 }

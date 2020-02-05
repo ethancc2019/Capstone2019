@@ -36,7 +36,7 @@ public class GameTwoMovement : MonoBehaviour {
     void Start()
     {
         //Camera.main.enabled = true;
-        //scoreText = GameObject.FindGameObjectWithTag("score_text").GetComponent<Text>();
+        scoreText = GameObject.FindGameObjectWithTag("score_text").GetComponent<Text>();
         spawnPointGameObject = GameObject.FindGameObjectWithTag("spawn_point_container");
         spawnPointScript = spawnPointGameObject.GetComponent<PowerUpSpawnner>();
     }

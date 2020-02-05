@@ -20,7 +20,7 @@ public class Asteroid : MonoBehaviour {
 	{
 		//reference to Rigidbody2D
 		rb = GetComponent<Rigidbody2D>();
-		//declare direction vector for moving (this will be along the Y-axe)
+		//declare direction vector for moving (this will be along the Y-axis)
 		Vector3 move = new Vector3(0, -1, 0);
 		//change velocity (moving speed and direction)
 		rb.velocity = move * speed;

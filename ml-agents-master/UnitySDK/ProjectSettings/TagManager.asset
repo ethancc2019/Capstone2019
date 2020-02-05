@@ -34,6 +34,7 @@ TagManager:
   - walkableSurface
   - asteroid
   - bullet
+  - timer_text
   layers:
   - Default
   - TransparentFX
