@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameTwoMovement : MonoBehaviour {
+public class GameTwoMovement : MonoBehaviour
+{
 
     public float verticalInputAcceleration = 1;
     public float horizontalInputAcceleration = 20;
 
     public float maxSpeed = 0.2f;
     public float maxRotationSpeed = 100;
-    
+
 
     public float velocityDrag = 1;
     public float rotationDrag = 1;
@@ -23,7 +24,7 @@ public class GameTwoMovement : MonoBehaviour {
     public GameObject bulletPrefab;
     public Transform point;
     public Rigidbody2D rb;
-   
+
 
     public Text scoreText;
     public int score = 0;
@@ -44,19 +45,42 @@ public class GameTwoMovement : MonoBehaviour {
     private void Update()
     {
         // apply forward input
-        Vector3 acceleration = Input.GetAxis("Vertical") * verticalInputAcceleration * transform.up;
-        velocity += acceleration * Time.deltaTime;
+        Vector3 acceleration = verticalInputAcceleration * transform.up;
+        //velocity += acceleration * Time.deltaTime;
 
         // apply turn input
-        float turnAccleration = -1 * Input.GetAxis("Horizontal") * horizontalInputAcceleration;
-        rotationVelocity += turnAccleration * Time.deltaTime;
+        float turnAccleration = 1 * horizontalInputAcceleration;
+        //rotationVelocity += turnAccleration * Time.deltaTime;
+        //Debug.Log("Vertical pressed: " + Input.GetAxis("Vertical"));
+        //Debug.Log("Horizonatal pressed: " + Input.GetAxis("Horizontal"));
+
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            velocity += acceleration * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            velocity -= acceleration * Time.deltaTime + transform.forward;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            rotationVelocity += turnAccleration * Time.deltaTime;
+
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            rotationVelocity += -1*turnAccleration * Time.deltaTime;
+
+        }
+
 
         ////Taking care of keeping the player in the screen bounds
         Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
         pos.x = Mathf.Clamp01(pos.x);
         pos.y = Mathf.Clamp01(pos.y);
         transform.position = Camera.main.ViewportToWorldPoint(pos);
-        
+
         //if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0)) //Can make this automatic firing if we want 
         //{
         //    Shoot();
@@ -64,7 +88,7 @@ public class GameTwoMovement : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) //Can make this automatic firing if we want 
         {
             Shoot();
-            
+
         }
 
         scoreText.text = score.ToString();

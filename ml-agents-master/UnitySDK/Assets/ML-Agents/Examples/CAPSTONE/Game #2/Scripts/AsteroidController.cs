@@ -35,7 +35,7 @@ public class AsteroidController : MonoBehaviour
 	    start_time -= Time.deltaTime;
 	    if (start_time <= 0)
 	    {
-			//SpawnAsteroids();
+			SpawnAsteroids();
 	    }
 	}
 
