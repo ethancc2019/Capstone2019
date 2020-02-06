@@ -114,7 +114,7 @@ public class GameTwoMovement : MonoBehaviour {
 
         if (other.gameObject.CompareTag("asteroid"))
         {
-            Debug.Log("Goal hit!");
+            Debug.Log("Asteroid hit!");
             this.score--;
             //Either kill player here or decrement his score
         }
