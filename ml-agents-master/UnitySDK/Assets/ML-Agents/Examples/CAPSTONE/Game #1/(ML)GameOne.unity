@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1088,7 +1088,7 @@ GameObject:
   - component: {fileID: 525266894}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: killWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1166,7 +1166,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 525266889}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db2b55814b82061448d1b8bd6edac675, type: 3}
   m_Name: 
@@ -1867,7 +1867,8 @@ MonoBehaviour:
   broadcastHub:
     broadcastingBrains:
     - {fileID: 11400000, guid: eee0a7409b8cbbd4e82613d61f4be666, type: 2}
-    _brainsToControl: []
+    _brainsToControl:
+    - {fileID: 11400000, guid: eee0a7409b8cbbd4e82613d61f4be666, type: 2}
   maxSteps: 0
   trainingConfiguration:
     width: 80
@@ -2613,6 +2614,7 @@ GameObject:
   - component: {fileID: 1975183257}
   - component: {fileID: 1975183251}
   - component: {fileID: 1975183258}
+  - component: {fileID: 1975183259}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2626,7 +2628,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1975183250}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65ae8633a523890439e371036ce7ea08, type: 3}
   m_Name: 
@@ -2761,6 +2763,17 @@ MonoBehaviour:
   startPosition: {fileID: 1975183255}
   playerRb: {fileID: 1975183256}
   goal: {fileID: 1016032029}
+--- !u!114 &1975183259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1975183250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb172294dbbcc408286b156a2c4b553c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1980588896
 GameObject:
   m_ObjectHideFlags: 0
