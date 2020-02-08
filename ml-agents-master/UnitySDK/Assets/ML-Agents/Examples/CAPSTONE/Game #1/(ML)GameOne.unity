@@ -1859,9 +1859,9 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1223378789}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9af83cd96d4bc4088a966af174446d1b, type: 3}
+  m_Script: {fileID: 11500000, guid: 32d2c553840c3694994346d4cf8de87b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   broadcastHub:
@@ -1884,8 +1884,6 @@ MonoBehaviour:
     targetFrameRate: 60
   resetParameters:
     resetParameters: []
-  player: {fileID: 1975183250}
-  startPosition: {fileID: 1606842831}
 --- !u!4 &1223378791
 Transform:
   m_ObjectHideFlags: 0
