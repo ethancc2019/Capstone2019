@@ -6,6 +6,6 @@ public class BallAcademy : Academy {
 
 	public override void AcademyReset()
     {
-
+        
     }
 }

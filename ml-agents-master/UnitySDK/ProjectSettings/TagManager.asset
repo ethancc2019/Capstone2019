@@ -28,6 +28,9 @@ TagManager:
   - stone
   - player
   - killWall
+  - target
+  - walkableSurface
+  - sp1
   layers:
   - Default
   - TransparentFX

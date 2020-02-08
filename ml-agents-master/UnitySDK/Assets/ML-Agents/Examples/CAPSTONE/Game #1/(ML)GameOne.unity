@@ -2611,8 +2611,8 @@ GameObject:
   - component: {fileID: 1975183256}
   - component: {fileID: 1975183257}
   - component: {fileID: 1975183251}
-  - component: {fileID: 1975183258}
   - component: {fileID: 1975183259}
+  - component: {fileID: 1975183258}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2743,10 +2743,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1975183250}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33bb739f1138d40798114d667776a1d6, type: 3}
+  m_Script: {fileID: 11500000, guid: d8f09f49db343f84ca68150ceed41e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brain: {fileID: 11400000, guid: 340c26dfa1dae55428b4ba4591e146a0, type: 2}
+  brain: {fileID: 11400000, guid: eee0a7409b8cbbd4e82613d61f4be666, type: 2}
   agentParameters:
     agentCameras: []
     agentRenderTextures: []
@@ -2754,13 +2754,13 @@ MonoBehaviour:
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
-  speed: 3
-  DistanceToEarnReward: 0.1
-  OnMarkerPoints: 1
-  player: {fileID: 1975183250}
-  startPosition: {fileID: 1975183255}
-  playerRb: {fileID: 1975183256}
-  goal: {fileID: 1016032029}
+  rigidbody: {fileID: 0}
+  Target: {fileID: 0}
+  speed: 6
+  jumpSpeed: 8
+  gravity: 20
+  spawnPointOne: {fileID: 0}
+  gameManger: {fileID: 0}
 --- !u!114 &1975183259
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -24,6 +24,8 @@ public class BallAgent : Agent
         rigidbody = GetComponent<Rigidbody>();
         rayPerception = GetComponent<RayPerception3D>();
         controller = GetComponent<CharacterController>();
+        spawnPointOne = GameObject.FindGameObjectsWithTag("sp1")[0].transform;
+        Target = GameObject.FindGameObjectsWithTag("target")[0].transform;
     }
 
     public override void AgentAction(float[] vectorAction, string textAction)
@@ -45,7 +47,7 @@ public class BallAgent : Agent
         moveDirection.y -= gravity * Time.deltaTime;
         //Making the character move
         controller.Move(moveDirection * Time.deltaTime);
-
+        AddReward(-1f / agentParameters.maxStep);
         //Player fell off platform, reset him to the first spawn point
         if (this.transform.position.y <= -1)
         {
