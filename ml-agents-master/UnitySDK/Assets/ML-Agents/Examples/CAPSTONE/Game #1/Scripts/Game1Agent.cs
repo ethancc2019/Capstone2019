@@ -2,12 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MLAgents;
-
+using System.Linq;
+using System;
+using TMPro;
 public class Game1Agent : Agent
 {
     // Start is called before the first frame update
     private RayPerception3D rayPerception;
     private CharacterController controller;
+    private GameObject currentGoal;
+    private TextMesh cumulativeRewardText;
+    public float speed = 6.0F;
+    public float jumpSpeed = 8.0F;
+    public float gravity = 20.0F;
+    private Vector3 moveDirection = Vector3.zero;
     public override void AgentAction(float[] vectorAction, string textAction)
     {
         float forward = 0f;
@@ -38,6 +46,26 @@ public class Game1Agent : Agent
             strafe = 1f;
         }
 
+        CharacterController controller = GetComponent<CharacterController>();
+        // is the controller on the ground?
+        if (controller.isGrounded)
+        {
+
+            //Feed moveDirection with input.
+            moveDirection = new Vector3(forward, 0, strafe);
+            moveDirection = transform.TransformDirection(moveDirection);
+            Debug.Log("Move direction: " + moveDirection);
+            //Multiply it by speed.
+            moveDirection *= speed;
+            //Jumping
+            if (jump > 0)
+                moveDirection.y = jumpSpeed;
+
+        }
+        //Applying gravity to the controller
+        moveDirection.y -= gravity * Time.deltaTime;
+        //Making the character move
+        controller.Move(moveDirection * Time.deltaTime);
 
         AddReward(-1f / agentParameters.maxStep);
     }
@@ -47,16 +75,14 @@ public class Game1Agent : Agent
         //Score negation, punishment for falling off the edge.
         GetComponent<PlayerMovement>().ResetPlayer();
     }
-
     public override void CollectObservations()
     {
         //Distance to next goal (needs a get closest goal method maybe?
-
-        //TODO: how does it find the next goal?
         //TODO: replace first transform.position with goal position?
         //TODO: increasing difficulty (harder platforms, etc)
         //Distance to goal
-        AddVectorObs(Vector3.Distance(transform.position, transform.position));
+        //TODO: Goal position here needs to be replaced.
+        AddVectorObs(Vector3.Distance(currentGoal.transform.position, transform.position));
         //Direction to goal
         AddVectorObs((transform.position - transform.position).normalized);
         //Agent's direction
@@ -75,19 +101,44 @@ public class Game1Agent : Agent
         //I hypothesize that offsets 0f&0f will need to be changed to be at the level of the ball, should be okay for now.
         AddVectorObs(rayPerception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
     }
-
     private void Start()
     {
-        controller = GetComponent<CharacterController>();
+        //controller = GetComponent<CharacterController>();
         rayPerception = GetComponent<RayPerception3D>();
+        currentGoal = GetClosestGoal();
     }
-
+    private GameObject GetClosestGoal()
+    {
+        //Returns closest goal, trending in positive z+ axis.
+        GameObject[] Goals = GameObject.FindGameObjectsWithTag("goal");
+        Goals.OrderBy(
+           x => Vector2.Distance(this.transform.position, x.transform.position)
+          ).ToList();
+        GameObject closestGoal = Goals[Goals.Length-1];
+        float shortestDistance = Vector3.Distance(this.transform.position, closestGoal.transform.position);
+        foreach (GameObject goal in Goals)
+        {
+            float distance = Vector3.Distance(this.transform.position, goal.transform.position);
+            if(this.transform.position.z < goal.transform.position.z && distance < shortestDistance)
+            {
+                shortestDistance = distance;
+                closestGoal = goal;
+            }
+        }
+        return closestGoal;
+    }
     private void FixedUpdate()
     {
+        String rewardStr = String.Format("Reward currently: {0} ", GetCumulativeReward());
+        Debug.Log(rewardStr);
+        String value = String.Format("{0}", GetCumulativeReward());
+        //cumulativeRewardText.SendMessage(value);
+        currentGoal = GetClosestGoal();
+
         //Checks if agent falls off
-        if (transform.position.y <= -1)
+        if (transform.position.y <= -5)
         {
-            AddReward(-1f);
+            AddReward(-0.1f);
             AgentReset();
         }
     }
@@ -95,11 +146,12 @@ public class Game1Agent : Agent
     {
         if (collision.transform.CompareTag("wall"))
         {
-            AddReward(-0.1f);
+            AddReward(-0.05f);
         }
         else if (collision.transform.CompareTag("goal"))
         {
-            AddReward(2f);
+            //TODO: Goal gameObject = GetClosestGoal();
+            AddReward(1f);
         }
     }
 }
