@@ -36,6 +36,7 @@ TagManager:
   - bullet
   - timer_text
   - wave_text
+  - asteroid_barrier
   layers:
   - Default
   - TransparentFX

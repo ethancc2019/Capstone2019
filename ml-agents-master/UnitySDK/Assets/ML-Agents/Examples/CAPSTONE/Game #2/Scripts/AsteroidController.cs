@@ -7,18 +7,21 @@ public class AsteroidController : MonoBehaviour
 {
 
 
-    public GameObject asteroid;
+    public GameObject[] asteroids; //Container for large and small asteroids. We will randomly select which one to spawn
     private GameObject asteroid_temp;
 
     private float start_time = 10f; //Spawn asteroids in 10 seconds
     private float min = 0.0f;
     private float max = 0.8f;
+    private float asteroidSpeed = 5f;
+
 
 
     private int waveNum;
     private int nunmOfAsteroids;
 
     private Text waveText;
+    private GameObject playerGameObject;
 
 	public GameObject[] asteroidSpawns;
     // Use this for initialization
@@ -27,6 +30,8 @@ public class AsteroidController : MonoBehaviour
         waveNum = 1;
         waveText = GameObject.FindGameObjectWithTag("wave_text").GetComponent<Text>();
         waveText.text = waveNum.ToString();
+
+        playerGameObject = GameObject.FindGameObjectWithTag("Player");
     }
 	
 	// Update is called once per frame
@@ -37,6 +42,7 @@ public class AsteroidController : MonoBehaviour
 	    {
 			SpawnAsteroids();
 	    }
+        //asteroid_temp.GetComponent<Rigidbody2D>().AddForce(transform.forward * 500);
 	}
 
     public void SpawnAsteroids()
@@ -45,11 +51,19 @@ public class AsteroidController : MonoBehaviour
         Debug.Log("Asteroid incoming!");
 
         var ran = Random.Range(0, asteroidSpawns.Length);
+        var ranAsteroid = Random.Range(0, asteroids.Length);
+
         var spawnLoc = asteroidSpawns[ran].transform.position;
-        asteroid_temp = asteroid;
+        asteroid_temp = asteroids[ranAsteroid];
+
         var randomPos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(min, max), 1, 10));
-        Instantiate(asteroid, spawnLoc, Quaternion.Euler(0, 0, Random.Range(-0.0f, 359.0f)));
-        asteroid_temp.GetComponent<Rigidbody2D>().AddForce(transform.up * Random.Range(-50.0f, 150.0f));
+        Instantiate(asteroids[ranAsteroid], spawnLoc, Quaternion.identity);
+        //Vector2 tempDir = (Vector2)playerGameObject.transform.position - (Vector2)asteroid_temp.transform.position;
+        //Debug.Log(tempDir);
+        //tempDir = tempDir.normalized;
+        //asteroid_temp.GetComponent<Rigidbody2D>().AddForce(tempDir * 1000, ForceMode2D.Impulse); 
+       // asteroid_temp.GetComponent<Rigidbody2D>()
+
 
         //Reset the spawn timer
         start_time = 10f;
