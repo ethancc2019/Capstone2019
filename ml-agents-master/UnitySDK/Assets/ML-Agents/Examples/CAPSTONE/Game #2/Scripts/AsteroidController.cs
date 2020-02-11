@@ -21,7 +21,6 @@ public class AsteroidController : MonoBehaviour
     private int nunmOfAsteroids;
 
     private Text waveText;
-    private GameObject playerGameObject;
 
 	public GameObject[] asteroidSpawns;
     // Use this for initialization
@@ -31,7 +30,6 @@ public class AsteroidController : MonoBehaviour
         waveText = GameObject.FindGameObjectWithTag("wave_text").GetComponent<Text>();
         waveText.text = waveNum.ToString();
 
-        playerGameObject = GameObject.FindGameObjectWithTag("Player");
     }
 	
 	// Update is called once per frame
@@ -58,13 +56,7 @@ public class AsteroidController : MonoBehaviour
 
         var randomPos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(min, max), 1, 10));
         Instantiate(asteroids[ranAsteroid], spawnLoc, Quaternion.identity);
-        //Vector2 tempDir = (Vector2)playerGameObject.transform.position - (Vector2)asteroid_temp.transform.position;
-        //Debug.Log(tempDir);
-        //tempDir = tempDir.normalized;
-        //asteroid_temp.GetComponent<Rigidbody2D>().AddForce(tempDir * 1000, ForceMode2D.Impulse); 
-       // asteroid_temp.GetComponent<Rigidbody2D>()
-
-
+        
         //Reset the spawn timer
         start_time = 10f;
 
