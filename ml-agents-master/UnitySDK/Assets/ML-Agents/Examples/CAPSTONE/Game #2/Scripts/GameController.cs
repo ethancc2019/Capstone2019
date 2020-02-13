@@ -33,7 +33,7 @@ public class GameController : MonoBehaviour
         }
 		if(this.timer <= 0.0)
 		{
-			EditorApplication.ExecuteMenuItem("Edit/Play");
+			//EditorApplication.ExecuteMenuItem("Edit/Play");
 
 		}
 		this.timer -= Time.deltaTime;
