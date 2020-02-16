@@ -1043,6 +1043,7 @@ GameObject:
   - component: {fileID: 324949189}
   - component: {fileID: 324949188}
   - component: {fileID: 324949187}
+  - component: {fileID: 324949191}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -1118,6 +1119,19 @@ Transform:
   m_Father: {fileID: 376028376}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &324949191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 324949186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a8140555ecc0d842b1885c48e6c29d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  difference: {x: 4, y: 0, z: 0}
+  speed: 1
 --- !u!1 &334978838
 GameObject:
   m_ObjectHideFlags: 0
@@ -1728,7 +1742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8531db473cab2c408bce7ff3b01f897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 1973578865}
+  spawnPoint: {fileID: 1606842830}
   player: {fileID: 1975183250}
   gameManager: {fileID: 1036241842}
 --- !u!23 &551506952
@@ -2896,7 +2910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8531db473cab2c408bce7ff3b01f897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 1606842830}
+  spawnPoint: {fileID: 2047611663}
   player: {fileID: 1975183250}
   gameManager: {fileID: 1036241842}
 --- !u!23 &896127999
@@ -3892,7 +3906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8531db473cab2c408bce7ff3b01f897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 0}
+  spawnPoint: {fileID: 1616091189}
   player: {fileID: 1975183250}
   gameManager: {fileID: 1036241842}
 --- !u!23 &1069401324
@@ -6417,7 +6431,7 @@ GameObject:
   - component: {fileID: 1975183258}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
