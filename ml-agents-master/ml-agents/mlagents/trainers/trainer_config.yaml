@@ -290,7 +290,7 @@ Game1Learning:
     use_curiosity: true
     summary_freq: 5000
     time_horizon: 128
-    batch_size: 128
-    hiden_units: 256
+    batch_size: 256
+    hiden_units: 128
     beta: 1.0e-2
     max_steps: 1.0e6

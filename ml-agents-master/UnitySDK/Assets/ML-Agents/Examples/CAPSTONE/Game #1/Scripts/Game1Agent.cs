@@ -92,7 +92,7 @@ public class Game1Agent : Agent
         //Distance to goal
         AddVectorObs(Vector3.Distance(currentGoal.transform.position, transform.position));
         //Direction to goal
-        AddVectorObs((transform.position - transform.position).normalized);
+        AddVectorObs((currentGoal.transform.position - transform.position).normalized);
         //Agent's direction
         AddVectorObs(transform.forward);
 
@@ -117,7 +117,7 @@ public class Game1Agent : Agent
         AddVectorObs(playerZ + floorSizeZ/2);
 
         //player's velocity
-        AddVectorObs(GetComponent<Rigidbody>().velocity);
+        //AddVectorObs(GetComponent<Rigidbody>().velocity);
 
         //RayPerception (sight)
         //rayDistance: distance of raycasting
@@ -181,33 +181,41 @@ public class Game1Agent : Agent
 
 
         //Checks if agent falls off
-        if (transform.position.y <= -2)
+
+        if (transform.position.y <= closestFloor.transform.position.y - 2)
         {
+            //Debug.Log("Floor pos: " + closestFloor.transform.position + "To my pos: " + this.transform.position);
             AddReward(-0.1f);
             //Score negation, punishment for falling off the edge.
-            GetComponent<PlayerMovement>().ResetPlayer();
             consecutiveGoals = 0;
+            //resets player position
+            GetComponent<PlayerMovement>().ResetPlayer();
             AgentReset();
         }
     }
     private void OnTriggerEnter(Collider collision)
     {
+        //hitting a wall gives negative rewards (may change)
         if (collision.transform.CompareTag("wall"))
         {
-            AddReward(-0.2f);
+            AddReward(-0.1f);
             String rewardStr = String.Format("Reward currently: {0} ", GetCumulativeReward());
+            Debug.Log("Wall hit!");
             Debug.Log(rewardStr);
         }
+        //hitting a goal is positive!
         else if (collision.transform.CompareTag("goal"))
         {
-            AddReward(0.25f + 0.25f*consecutiveGoals);
+            //consecutive goal hits increases reward! max reward of 1f.
+            AddReward(0.5f + 0.25f*consecutiveGoals);
+            Debug.Log("Goal hit! Reward of " + (0.5f + 0.25f*consecutiveGoals) + " added, " + consecutiveGoals + " consecutive goals.");
             if (consecutiveGoals < 4)
             {
                 consecutiveGoals++;
             }
             currentGoal = GetClosestGoal();
             AgentReset();
-            Debug.Log("Goal hit!");
+
             String rewardStr = String.Format("Reward currently: {0} ", GetCumulativeReward());
             Debug.Log(rewardStr);
         }
