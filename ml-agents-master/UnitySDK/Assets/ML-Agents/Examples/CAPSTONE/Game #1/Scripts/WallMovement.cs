@@ -3,31 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WallMovement : MonoBehaviour {
-    public int initialDirection; //1 for up/down, 2 for left/right
+    private Vector3 startPoint;
     public Vector3 difference;
-    public Vector3 startPosition;
-    private Vector3 endPosition;
-    private float min;
-    private float max;
-    private float timer;
-    public float seconds;
-    private bool moveDirection;
-    private float percent;
+    private Vector3 endPoint;
+
+    public float speed = 1.0f;
+
+    private float startTime;
+
+    private float length;
 	// Use this for initialization
 	void Start () {
-        startPosition = this.transform.position;
-        endPosition = this.transform.position - difference;
-        min = this.transform.position.y;
-        max = endPosition.y;
+        startPoint = this.transform.position;
+        endPoint = startPoint - difference;
 
-        moveDirection = true;
+        startTime = Time.time;
+
+        length = Vector3.Distance(startPoint, endPoint);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(endPosition);
-        Debug.Log("min:" + min);
-        Debug.Log(max);
-        transform.position = new Vector3(transform.position.x, Mathf.PingPong(Time.time * 2, max - min) + min, transform.position.z);
+
+        float distCovered = (Time.time - startTime) * speed;
+
+        float percentDist = distCovered / length;
+
+        this.transform.position = Vector3.Lerp(startPoint, endPoint, percentDist);
+
+        if(this.transform.position == endPoint)
+        {
+            Swap();
+        }
+    }
+
+    private void Swap()
+    {
+        Vector3 temp = startPoint;
+        startPoint = endPoint;
+        endPoint = temp;;
+        startTime = Time.time;
     }
 }
