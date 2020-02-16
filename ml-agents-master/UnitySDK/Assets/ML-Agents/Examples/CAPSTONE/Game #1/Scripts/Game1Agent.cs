@@ -81,9 +81,9 @@ public class Game1Agent : Agent
     {
         //gets next goal after reset (might not work)
         currentGoal = GetClosestGoal();
-        Debug.Log("My current goal is at: " + currentGoal.transform.position);
-        String rewardStr = String.Format("Reward currently: {0} ", GetCumulativeReward());
-        Debug.Log(rewardStr);
+        //Debug.Log("My current goal is at: " + currentGoal.transform.position);
+        //String rewardStr = String.Format("Reward currently: {0} ", GetCumulativeReward());
+        //Debug.Log(rewardStr);
     }
     public override void CollectObservations()
     {
@@ -176,7 +176,6 @@ public class Game1Agent : Agent
     }
     private void FixedUpdate()
     {
-        String value = String.Format("{0}", GetCumulativeReward());
         //cumulativeRewardText.SendMessage(value);
 
 
@@ -185,12 +184,12 @@ public class Game1Agent : Agent
         if (transform.position.y <= closestFloor.transform.position.y - 2)
         {
             //Debug.Log("Floor pos: " + closestFloor.transform.position + "To my pos: " + this.transform.position);
-            AddReward(-0.1f);
+            AddReward(-0.5f);
             //Score negation, punishment for falling off the edge.
             consecutiveGoals = 0;
             //resets player position
             GetComponent<PlayerMovement>().ResetPlayer();
-            AgentReset();
+            //AgentReset();
         }
     }
     private void OnTriggerEnter(Collider collision)
@@ -200,6 +199,7 @@ public class Game1Agent : Agent
         {
             AddReward(-0.1f);
             String rewardStr = String.Format("Reward currently: {0} ", GetCumulativeReward());
+            consecutiveGoals = 0;
             Debug.Log("Wall hit!");
             Debug.Log(rewardStr);
         }
@@ -214,8 +214,7 @@ public class Game1Agent : Agent
                 consecutiveGoals++;
             }
             currentGoal = GetClosestGoal();
-            AgentReset();
-
+            //AgentReset();
             String rewardStr = String.Format("Reward currently: {0} ", GetCumulativeReward());
             Debug.Log(rewardStr);
         }
