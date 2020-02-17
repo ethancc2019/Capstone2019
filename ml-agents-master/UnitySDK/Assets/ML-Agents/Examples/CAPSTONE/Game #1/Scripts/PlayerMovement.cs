@@ -10,8 +10,9 @@ public class PlayerMovement : MonoBehaviour
     public float jumpSpeed = 8.0F;
     public float fallMultiplier = 2.5f;
     private Vector3 moveDirection = Vector3.zero;
+    private GameObject spawnPointOne;
 
-    public Transform spawnPointOne;
+    public Game1Area area;
 
     //Scripts 
     public GameObject gameManger;
@@ -40,10 +41,10 @@ public class PlayerMovement : MonoBehaviour
         //Applying gravity to the controller
         moveDirection.y -= (-Physics2D.gravity.y) * (fallMultiplier - 1) * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
-        Debug.Log("moveDirection: " + moveDirection + "vel: " + controller.velocity);
+        //Debug.Log("moveDirection: " + moveDirection + "vel: " + controller.velocity);
 
         //Player fell off platform, reset him to the first spawn point
-        if (this.transform.position.y <= -1)
+        if (this.transform.position.y <= -3)
         {
             ResetPlayer();
         }
@@ -53,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
     public void ResetPlayer()
     {
         gameManger.GetComponent<GameManager>().decreaseScore();
-        this.transform.position = spawnPointOne.position;
+        spawnPointOne = this.area.getSpawnPointOne();
+        this.transform.position = spawnPointOne.transform.position;
     }
 }
