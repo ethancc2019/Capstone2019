@@ -6,17 +6,14 @@ using MLAgents;
 public class TemplateAcademy : Academy
 {
 
-    public GameObject player;
-    public Transform startPosition;
     public override void AcademyReset()
     {
-        player.transform.position = startPosition.position;
-        Debug.Log("AcademyReset Called!");
+        
     }
 
     public override void AcademyStep()
     {
-        Debug.Log("Agent Step called!");
+        //Debug.Log("Agent Step called!");
 
     }
 
