@@ -37,6 +37,7 @@ TagManager:
   - timer_text
   - wave_text
   - asteroid_barrier
+  - floor
   layers:
   - Default
   - TransparentFX
