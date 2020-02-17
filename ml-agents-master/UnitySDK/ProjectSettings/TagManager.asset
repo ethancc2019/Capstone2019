@@ -34,6 +34,8 @@ TagManager:
   - walkableSurface
   - asteroid
   - bullet
+  - platform
+  - floor
   layers:
   - Default
   - TransparentFX
