@@ -11,7 +11,7 @@ default:
     memory_size: 256
     normalize: false
     num_epoch: 3
-    num_layers: 2
+    num_layers: 3
     time_horizon: 64
     sequence_length: 64
     summary_freq: 1000
@@ -285,13 +285,3 @@ BasicLearning:
         extrinsic:
             strength: 1.0
             gamma: 0.9
-
-Game1Learning:
-    use_curiosity: true
-    summary_freq: 5000
-    time_horizon: 128
-    epochs: 4
-    hidden_units: 256
-    batch_size: 256
-    beta: 1.0e-2
-    max_steps: 1.0e6

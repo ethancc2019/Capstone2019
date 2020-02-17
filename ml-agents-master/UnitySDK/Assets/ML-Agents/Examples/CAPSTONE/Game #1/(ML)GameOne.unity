@@ -290,6 +290,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: eee0a7409b8cbbd4e82613d61f4be666,
         type: 2}
+    - target: {fileID: 8713351814980155817, guid: 0b7d4965193f0b442a620d1bba54ea4b,
+        type: 3}
+      propertyPath: agentParameters.maxStep
+      value: 50000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b7d4965193f0b442a620d1bba54ea4b, type: 3}
 --- !u!1 &120823968 stripped
@@ -403,6 +408,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: eee0a7409b8cbbd4e82613d61f4be666,
         type: 2}
+    - target: {fileID: 8713351814980155817, guid: 0b7d4965193f0b442a620d1bba54ea4b,
+        type: 3}
+      propertyPath: agentParameters.maxStep
+      value: 50000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b7d4965193f0b442a620d1bba54ea4b, type: 3}
 --- !u!1 &241751263 stripped
@@ -1548,6 +1558,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: eee0a7409b8cbbd4e82613d61f4be666,
         type: 2}
+    - target: {fileID: 8713351814980155817, guid: 0b7d4965193f0b442a620d1bba54ea4b,
+        type: 3}
+      propertyPath: agentParameters.maxStep
+      value: 50000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b7d4965193f0b442a620d1bba54ea4b, type: 3}
 --- !u!1 &738975483 stripped
@@ -2563,6 +2578,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: eee0a7409b8cbbd4e82613d61f4be666,
         type: 2}
+    - target: {fileID: 8713351814980155817, guid: 0b7d4965193f0b442a620d1bba54ea4b,
+        type: 3}
+      propertyPath: agentParameters.maxStep
+      value: 50000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b7d4965193f0b442a620d1bba54ea4b, type: 3}
 --- !u!1 &1182702962 stripped
@@ -2672,19 +2692,20 @@ MonoBehaviour:
     broadcastingBrains:
     - {fileID: 11400000, guid: eee0a7409b8cbbd4e82613d61f4be666, type: 2}
     - {fileID: 0}
-    _brainsToControl: []
-  maxSteps: 5000
+    _brainsToControl:
+    - {fileID: 11400000, guid: eee0a7409b8cbbd4e82613d61f4be666, type: 2}
+  maxSteps: 50000
   trainingConfiguration:
     width: 80
     height: 80
     qualityLevel: 1
-    timeScale: 20
+    timeScale: 40
     targetFrameRate: -1
   inferenceConfiguration:
     width: 1280
     height: 720
     qualityLevel: 5
-    timeScale: 1
+    timeScale: 20
     targetFrameRate: 60
   resetParameters:
     resetParameters: []
@@ -2921,6 +2942,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: eee0a7409b8cbbd4e82613d61f4be666,
         type: 2}
+    - target: {fileID: 8713351814980155817, guid: 0b7d4965193f0b442a620d1bba54ea4b,
+        type: 3}
+      propertyPath: agentParameters.maxStep
+      value: 50000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b7d4965193f0b442a620d1bba54ea4b, type: 3}
 --- !u!1 &1403335206 stripped
@@ -3034,6 +3060,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: eee0a7409b8cbbd4e82613d61f4be666,
         type: 2}
+    - target: {fileID: 8713351814980155817, guid: 0b7d4965193f0b442a620d1bba54ea4b,
+        type: 3}
+      propertyPath: agentParameters.maxStep
+      value: 50000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b7d4965193f0b442a620d1bba54ea4b, type: 3}
 --- !u!1 &1542006460 stripped
@@ -3741,6 +3772,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: eee0a7409b8cbbd4e82613d61f4be666,
         type: 2}
+    - target: {fileID: 8713351814980155817, guid: 0b7d4965193f0b442a620d1bba54ea4b,
+        type: 3}
+      propertyPath: agentParameters.maxStep
+      value: 50000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b7d4965193f0b442a620d1bba54ea4b, type: 3}
 --- !u!1 &1775079862 stripped
@@ -4285,5 +4321,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: eee0a7409b8cbbd4e82613d61f4be666,
         type: 2}
+    - target: {fileID: 8713351814980155817, guid: 0b7d4965193f0b442a620d1bba54ea4b,
+        type: 3}
+      propertyPath: agentParameters.maxStep
+      value: 50000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b7d4965193f0b442a620d1bba54ea4b, type: 3}

@@ -202,7 +202,7 @@ public class Game1Agent : Agent
         //Checks if agent falls off
         if (transform.position.y <= closestFloor.transform.position.y - 2)
         {
-            String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
+            //String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
             //Debug.Log(rewardStr);
             //changes reward depending on distance from goal when failed
             //float distanceReward = Mathf.Log(Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance) * 0.2f;
@@ -229,10 +229,10 @@ public class Game1Agent : Agent
             float distanceReward = Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance;
             //this is supposed to reduce the negative effects of this punishment for falling off/hitting a wall
             AddReward(-1f * distanceReward);
-            String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
+            //String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
             currentGoal = GetClosestGoal();
             Debug.Log("Wall hit!");
-            Debug.Log(rewardStr);
+            //Debug.Log(rewardStr);
             GetComponent<PlayerMovement>().ResetPlayer();
             Done();
             startingPosition = transform.position;
@@ -246,8 +246,8 @@ public class Game1Agent : Agent
             //Debug.Log("My current goal was at: " + currentGoal.transform.position);
             cumulativeDistance += Vector3.Distance(startingPosition,currentGoal.transform.position);
             currentGoal = GetClosestGoal();
-            String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
-            Debug.Log(rewardStr);
+            //String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
+            //Debug.Log(rewardStr);
             Done();
             startingPosition = transform.position;
         }
