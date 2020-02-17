@@ -34,9 +34,7 @@ TagManager:
   - walkableSurface
   - asteroid
   - bullet
-  - timer_text
-  - wave_text
-  - asteroid_barrier
+  - platform
   - floor
   layers:
   - Default

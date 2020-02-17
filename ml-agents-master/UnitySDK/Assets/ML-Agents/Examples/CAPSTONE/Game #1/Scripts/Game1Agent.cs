@@ -12,7 +12,9 @@ public class Game1Agent : Agent
     private GameObject floorObj;
     private TextMesh cumulativeRewardText;
     private GameObject closestFloor;
-    private float consecutiveGoals = 0;
+    private float initialDistanceToGoal;
+    private float cumulativeDistance;
+    private Vector3 startingPosition;
     public float fallMultiplier = 2.5f;
     public float speed = 6.0F;
     public float jumpSpeed = 8.0F;
@@ -148,12 +150,11 @@ public class Game1Agent : Agent
     private void Start()
     {
         //controller = GetComponent<CharacterController>();
+        startingPosition = transform.position;
         rayPerception = GetComponent<RayPerception3D>();
         currentGoal = GetClosestGoal();
-
-        spawnPointOne = GameObject.Find("SP #1");
-        //startPosition.position = this.transform.position;
-        floorObj = GameObject.FindGameObjectWithTag("floor");
+        cumulativeDistance = Vector3.Distance(startingPosition, currentGoal.transform.position);
+        //initialDistanceToGoal = Vector3.Distance(currentGoal.transform.position, transform.position);
     }
     private GameObject GetClosestGoal()
     {
@@ -198,48 +199,62 @@ public class Game1Agent : Agent
     private void FixedUpdate()
     {
         //cumulativeRewardText.SendMessage(value);
-
-
         //Checks if agent falls off
-
         if (transform.position.y <= closestFloor.transform.position.y - 2)
         {
             String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
-            Debug.Log(rewardStr);
-            //Debug.Log("Floor pos: " + closestFloor.transform.position + "To my pos: " + this.transform.position);
-            AddReward(-0.5f);
+            //Debug.Log(rewardStr);
+            //changes reward depending on distance from goal when failed
+            //float distanceReward = Mathf.Log(Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance) * 0.2f;
+            float distanceReward = Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance;
+            AddReward(-1f * distanceReward);
             //Score negation, punishment for falling off the edge.
-            consecutiveGoals = 0;
-            //resets player position
             currentGoal = GetClosestGoal();
             GetComponent<PlayerMovement>().ResetPlayer();
-            //AgentReset();
+            Done();
+            startingPosition = transform.position;
+            cumulativeDistance = Vector3.Distance(startingPosition, currentGoal.transform.position);
         }
     }
+    //TODO: Urgent refactoring
     private void OnTriggerEnter(Collider collision)
     {
         //hitting a wall gives negative rewards (may change)
         if (collision.transform.CompareTag("wall"))
         {
-            AddReward(-0.1f);
+            //changes reward depending on distance from goal when failed
+            //This reward is mysterious but it reduces the negative effects of hitting a wall/falling if it gets to later stages
+            //float distanceReward = Mathf.Log(Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance) * 0.2f;
 
+            float distanceReward = Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance;
+            //this is supposed to reduce the negative effects of this punishment for falling off/hitting a wall
+            AddReward(-1f * distanceReward);
             String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
             currentGoal = GetClosestGoal();
-            consecutiveGoals = 0;
             Debug.Log("Wall hit!");
             Debug.Log(rewardStr);
+            GetComponent<PlayerMovement>().ResetPlayer();
+            Done();
+            startingPosition = transform.position;
+            cumulativeDistance = Vector3.Distance(startingPosition, currentGoal.transform.position);
         }
         //hitting a goal is positive!
         else if (collision.transform.CompareTag("goal"))
         {
-            //consecutive goal hits increases reward! max reward of 1f.
-            AddReward(0.125f);
-            Debug.Log("Goal hit! Reward of " + (0.5f + 0.25f*consecutiveGoals) + " added, " + consecutiveGoals + " consecutive goals.");
+            AddReward(1f);
+            Debug.Log("Goal hit! 0.5f added");
             //Debug.Log("My current goal was at: " + currentGoal.transform.position);
+            cumulativeDistance += Vector3.Distance(startingPosition,currentGoal.transform.position);
             currentGoal = GetClosestGoal();
-            //AgentReset();
             String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
             Debug.Log(rewardStr);
+            Done();
+            startingPosition = transform.position;
+        }
+        else if (collision.transform.CompareTag("platform"))
+        {
+            AddReward(0.1f);
+            Debug.Log(gameObject.name + "Platform hit.");
         }
     }
 }
