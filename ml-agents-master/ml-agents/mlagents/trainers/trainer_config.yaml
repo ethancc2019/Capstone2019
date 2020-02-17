@@ -291,6 +291,5 @@ Game1Learning:
     summary_freq: 5000
     time_horizon: 128
     batch_size: 256
-    hiden_units: 128
     beta: 1.0e-2
     max_steps: 1.0e6

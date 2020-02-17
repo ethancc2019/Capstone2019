@@ -9,11 +9,13 @@ public class Game1Agent : Agent
 {
     // Start is called before the first frame update
     private RayPerception3D rayPerception;
+    private RayPerception3D floorPerception;
     private CharacterController controller;
     private GameObject currentGoal;
     private TextMesh cumulativeRewardText;
     private GameObject closestFloor;
     private float consecutiveGoals = 0;
+    public float fallMultiplier = 2.5f;
     public float speed = 6.0F;
     public float jumpSpeed = 8.0F;
     public float gravity = 20.0F;
@@ -48,10 +50,11 @@ public class Game1Agent : Agent
             strafe = 1f;
         }
 
-        //if(vectorAction[2] == 1f)
+        //if(vectorAction[2] > 0)
         //{
-        //    AddReward(-2f / agentParameters.maxStep);
-        //}
+            //AddReward(-2f / agentParameters.maxStep);
+            //Debug.Log("jumping: " + vectorAction[2]);
+       // }
 
         CharacterController controller = GetComponent<CharacterController>();
         // is the controller on the ground?
@@ -69,9 +72,15 @@ public class Game1Agent : Agent
                 moveDirection.y = jumpSpeed;
 
         }
+        else
+        {
+            moveDirection = new Vector3(forward, moveDirection.y, strafe);
+            moveDirection = transform.TransformDirection(moveDirection);
+            moveDirection.x *= speed;
+            moveDirection.z *= speed;
+        }
         //Applying gravity to the controller
-        moveDirection.y -= gravity * Time.deltaTime;
-        //Making the character move
+        moveDirection.y -= (-Physics2D.gravity.y) * (fallMultiplier - 1) * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
 
         AddReward(-1f / agentParameters.maxStep);
@@ -126,10 +135,15 @@ public class Game1Agent : Agent
         //startOffset: offset from center where to perceive from
         //endOffset: ending offset from where to perceive from
 
-        float rayDistance = 3f;
+        float rayDistance = 10f;
         float[] rayAngles = { 0f, 30f, 60f, 90f, 120f, 150f, 180f };
         string[] detectableObjects = { "wall", "goal", "platform" };
-        AddVectorObs(rayPerception.Perceive(rayDistance, rayAngles, detectableObjects, -0.5f, 0f));
+        AddVectorObs(rayPerception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
+
+        float floorDistance = 1f;
+        float[] floorAngles = {90f};
+        string[] detectableFloors = { "floor", "platform" };
+        AddVectorObs(rayPerception.Perceive(floorDistance, floorAngles, detectableFloors, 0f, -2f));
     }
     private void Start()
     {
@@ -183,11 +197,14 @@ public class Game1Agent : Agent
 
         if (transform.position.y <= closestFloor.transform.position.y - 2)
         {
+            String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
+            Debug.Log(rewardStr);
             //Debug.Log("Floor pos: " + closestFloor.transform.position + "To my pos: " + this.transform.position);
             AddReward(-0.5f);
             //Score negation, punishment for falling off the edge.
             consecutiveGoals = 0;
             //resets player position
+            currentGoal = GetClosestGoal();
             GetComponent<PlayerMovement>().ResetPlayer();
             //AgentReset();
         }
@@ -198,7 +215,9 @@ public class Game1Agent : Agent
         if (collision.transform.CompareTag("wall"))
         {
             AddReward(-0.1f);
-            String rewardStr = String.Format("Reward currently: {0} ", GetCumulativeReward());
+
+            String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
+            currentGoal = GetClosestGoal();
             consecutiveGoals = 0;
             Debug.Log("Wall hit!");
             Debug.Log(rewardStr);
@@ -207,15 +226,12 @@ public class Game1Agent : Agent
         else if (collision.transform.CompareTag("goal"))
         {
             //consecutive goal hits increases reward! max reward of 1f.
-            AddReward(0.5f + 0.25f*consecutiveGoals);
+            AddReward(0.125f);
             Debug.Log("Goal hit! Reward of " + (0.5f + 0.25f*consecutiveGoals) + " added, " + consecutiveGoals + " consecutive goals.");
-            if (consecutiveGoals < 4)
-            {
-                consecutiveGoals++;
-            }
+            //Debug.Log("My current goal was at: " + currentGoal.transform.position);
             currentGoal = GetClosestGoal();
             //AgentReset();
-            String rewardStr = String.Format("Reward currently: {0} ", GetCumulativeReward());
+            String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
             Debug.Log(rewardStr);
         }
     }

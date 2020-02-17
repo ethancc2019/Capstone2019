@@ -41,7 +41,7 @@ public class Movement : MonoBehaviour
         controller.Move(moveDirection * Time.deltaTime);
 
 
-        if(player.transform.position.y <= -1)
+        if(player.transform.position.y <= -3)
         {
             resetPlayer();
         }
