@@ -171,6 +171,7 @@ public class Game1Agent : Agent
             {
                 shortestDistance = distanceFromFloor;
                 closestGoal = goal;
+                break;
             }
         }
         return closestGoal;
@@ -188,6 +189,8 @@ public class Game1Agent : Agent
             {
                 shortestDistance = distance;
                 closestFloor = floor;
+                break;
+                
             }
         }
         return closestFloor;
