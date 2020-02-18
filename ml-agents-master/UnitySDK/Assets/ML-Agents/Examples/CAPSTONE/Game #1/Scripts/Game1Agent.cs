@@ -144,10 +144,10 @@ public class Game1Agent : Agent
         string[] detectableObjects = { "wall", "goal", "platform" };
         AddVectorObs(rayPerception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
 
-        float floorDistance = 1f;
+        float floorDistance = 3f;
         float[] floorAngles = {0f,45f,90f,135f,180f,225f,270f,315f};
         string[] detectableFloors = { "floor", "platform" };
-        AddVectorObs(rayPerception.Perceive(floorDistance, floorAngles, detectableFloors, 0f, -1.5f));
+        AddVectorObs(rayPerception.Perceive(floorDistance, floorAngles, detectableFloors, 0f, -2f));
     }
     private void Start()
     {
