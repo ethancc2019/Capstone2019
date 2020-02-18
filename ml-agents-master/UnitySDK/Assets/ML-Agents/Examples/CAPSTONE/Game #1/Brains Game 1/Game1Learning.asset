@@ -22,5 +22,5 @@ MonoBehaviour:
     - Strafe left/right
     - Jump
     vectorActionSpaceType: 0
-  model: {fileID: 0}
+  model: {fileID: 5022602860645237092, guid: 87e6282834e804a4bbd12524a1b6722a, type: 3}
   inferenceDevice: 0

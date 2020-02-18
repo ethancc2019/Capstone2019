@@ -7,7 +7,7 @@ public class IncreaseScore : MonoBehaviour {
 
     public GameObject spawnPoint;
     public GameObject player;
-    public GameObject gameManager;
+    //public GameObject gameManager;
 
     void Start()
     {
@@ -16,7 +16,7 @@ public class IncreaseScore : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        gameManager.GetComponent<GameManager>().increaseScore();
+        //gameManager.GetComponent<GameManager>().increaseScore();
         player.transform.position = spawnPoint.transform.position;
     }
 }

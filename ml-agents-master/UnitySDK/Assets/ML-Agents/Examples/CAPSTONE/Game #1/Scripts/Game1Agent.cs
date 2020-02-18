@@ -8,6 +8,7 @@ using TMPro;
 public class Game1Agent : Agent
 {
     // Start is called before the first frame update
+    public Game1Area game1Area;
     private RayPerception3D rayPerception;
     private RayPerception3D floorPerception;
     private CharacterController controller;
@@ -92,6 +93,7 @@ public class Game1Agent : Agent
     {
         //gets next goal after reset (might not work)
         currentGoal = GetClosestGoal();
+        game1Area.ResetArea();
         //Debug.Log("My current goal is at: " + currentGoal.transform.position);
         //String rewardStr = String.Format("Reward currently: {0} ", GetCumulativeReward());
         //Debug.Log(rewardStr);

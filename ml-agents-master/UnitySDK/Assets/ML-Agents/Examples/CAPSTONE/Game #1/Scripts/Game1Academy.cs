@@ -5,15 +5,20 @@ using MLAgents;
 
 public class Game1Academy : Academy
 {
+    private Game1Area[] game1Areas;
     // Start is called before the first frame update
-    void Start()
+    public override void AcademyReset()
     {
-        
-    }
+        /*
+        if(game1Areas == null)
+        {
+            game1Areas = FindObjectsOfType<Game1Area>();
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        foreach(Game1Area game1Area in game1Areas)
+        {
+            game1Area.ResetArea();
+        }
+        */
     }
 }
