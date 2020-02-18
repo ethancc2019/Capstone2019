@@ -75,7 +75,7 @@ public class Game1Area : Area
         {
             float randomX = Random.Range(-2.5f, 2.5f);
             //float randomY = Random.Range(-0.2f, 0.2f);
-            //float randomZ = Random.Range(-2.5f, 2.5f);
+            float randomZ = Random.Range(-2.5f, 0.5f);
             Vector3 randomizedVector = new Vector3(randomX, 0, 0);
             platform.transform.localPosition = initialPlatformPositions[index] + randomizedVector;
             index++;
