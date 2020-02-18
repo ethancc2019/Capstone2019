@@ -160,7 +160,10 @@ public class Game1Agent : Agent
     {
         //Returns closest goal relative to the current floor gameObject that player is standing on
         closestFloor = GetClosestFloor();
-        GameObject[] Goals = GameObject.FindGameObjectsWithTag("goal");
+        GameObject[] Goals = GameObject.FindGameObjectsWithTag("goal_1");
+        Goals = GameObject.FindGameObjectsWithTag("goal_2");
+        Goals = GameObject.FindGameObjectsWithTag("goal_3");
+        Goals = GameObject.FindGameObjectsWithTag("goal_4");
         GameObject closestGoal = null;
         float shortestDistance = Mathf.Infinity;
 
@@ -208,6 +211,7 @@ public class Game1Agent : Agent
             //float distanceReward = Mathf.Log(Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance) * 0.2f;
             float distanceReward = Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance;
             AddReward(-1f * distanceReward);
+            Debug.Log("Player fell");
             //Score negation, punishment for falling off the edge.
             currentGoal = GetClosestGoal();
             GetComponent<PlayerMovement>().ResetPlayer();
@@ -228,7 +232,7 @@ public class Game1Agent : Agent
 
             float distanceReward = Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance;
             //this is supposed to reduce the negative effects of this punishment for falling off/hitting a wall
-            AddReward(-1f * distanceReward);
+            AddReward(-1f);
             //String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
             currentGoal = GetClosestGoal();
             Debug.Log("Wall hit!");
@@ -239,12 +243,48 @@ public class Game1Agent : Agent
             cumulativeDistance = Vector3.Distance(startingPosition, currentGoal.transform.position);
         }
         //hitting a goal is positive!
-        else if (collision.transform.CompareTag("goal"))
+        else if (collision.transform.CompareTag("goal_1"))
         {
-            AddReward(1f);
-            Debug.Log("Goal hit! 0.5f added");
+            AddReward(0.3f);
+            Debug.Log("Goal 1 hit! 0.3f added");
             //Debug.Log("My current goal was at: " + currentGoal.transform.position);
             cumulativeDistance += Vector3.Distance(startingPosition,currentGoal.transform.position);
+            currentGoal = GetClosestGoal();
+            //String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
+            //Debug.Log(rewardStr);
+            Done();
+            startingPosition = transform.position;
+        }
+        else if (collision.transform.CompareTag("goal_2"))
+        {
+            AddReward(0.5f);
+            Debug.Log("Goal 2 hit! 0.5f added");
+            //Debug.Log("My current goal was at: " + currentGoal.transform.position);
+            cumulativeDistance += Vector3.Distance(startingPosition, currentGoal.transform.position);
+            currentGoal = GetClosestGoal();
+            //String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
+            //Debug.Log(rewardStr);
+            Done();
+            startingPosition = transform.position;
+        }
+        else if (collision.transform.CompareTag("goal_3"))
+        {
+            AddReward(0.8f);
+            Debug.Log("Goal 3 hit! 0.8f added");
+            //Debug.Log("My current goal was at: " + currentGoal.transform.position);
+            cumulativeDistance += Vector3.Distance(startingPosition, currentGoal.transform.position);
+            currentGoal = GetClosestGoal();
+            //String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
+            //Debug.Log(rewardStr);
+            Done();
+            startingPosition = transform.position;
+        }
+        else if (collision.transform.CompareTag("goal_4"))
+        {
+            AddReward(1f);
+            Debug.Log("Goal 4 hit! 1f added. Agent has finished game");
+            //Debug.Log("My current goal was at: " + currentGoal.transform.position);
+            cumulativeDistance += Vector3.Distance(startingPosition, currentGoal.transform.position);
             currentGoal = GetClosestGoal();
             //String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
             //Debug.Log(rewardStr);

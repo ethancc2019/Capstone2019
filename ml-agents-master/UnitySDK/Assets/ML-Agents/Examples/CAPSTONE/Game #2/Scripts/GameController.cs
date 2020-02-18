@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour
 	    if (gameTwoScript.score < 0)
 	    {
 	        Debug.Log("Game over");
-	        EditorApplication.ExecuteMenuItem("Edit/Play");
+	       // EditorApplication.ExecuteMenuItem("Edit/Play");
 
         }
 		if(this.timer <= 0.0)
