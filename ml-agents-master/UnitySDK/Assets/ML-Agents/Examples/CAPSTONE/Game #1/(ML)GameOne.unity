@@ -289,6 +289,15 @@ PrefabInstance:
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 1102552728}
+    - target: {fileID: 3300082837589682, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
+      propertyPath: goalMarkerPrefab
+      value: 
+      objectReference: {fileID: 6577899586175602448, guid: 18cddad5745eb13488f8aad97cd0eb44,
+        type: 3}
+    - target: {fileID: 3300081454622862, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
 --- !u!1 &25258282 stripped
@@ -365,6 +374,19 @@ PrefabInstance:
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 1102552728}
+    - target: {fileID: 3300082837589682, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
+      propertyPath: goalMarkerPrefab
+      value: 
+      objectReference: {fileID: 6577899586175602448, guid: 18cddad5745eb13488f8aad97cd0eb44,
+        type: 3}
+    - target: {fileID: 3300083194370480, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300083194370480, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
 --- !u!1 &242952537 stripped
@@ -441,6 +463,11 @@ PrefabInstance:
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 1102552728}
+    - target: {fileID: 3300082837589682, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
+      propertyPath: goalMarkerPrefab
+      value: 
+      objectReference: {fileID: 6577899586175602448, guid: 18cddad5745eb13488f8aad97cd0eb44,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
 --- !u!1 &400127177 stripped
@@ -517,6 +544,11 @@ PrefabInstance:
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 1102552728}
+    - target: {fileID: 3300082837589682, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
+      propertyPath: goalMarkerPrefab
+      value: 
+      objectReference: {fileID: 6577899586175602448, guid: 18cddad5745eb13488f8aad97cd0eb44,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
 --- !u!1 &457346570 stripped
@@ -593,6 +625,11 @@ PrefabInstance:
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 1102552728}
+    - target: {fileID: 3300082837589682, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
+      propertyPath: goalMarkerPrefab
+      value: 
+      objectReference: {fileID: 6577899586175602448, guid: 18cddad5745eb13488f8aad97cd0eb44,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
 --- !u!1 &641405480 stripped
@@ -958,6 +995,11 @@ PrefabInstance:
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 1102552728}
+    - target: {fileID: 3300082837589682, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
+      propertyPath: goalMarkerPrefab
+      value: 
+      objectReference: {fileID: 6577899586175602448, guid: 18cddad5745eb13488f8aad97cd0eb44,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
 --- !u!1 &1590309374 stripped
@@ -1034,6 +1076,11 @@ PrefabInstance:
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 1102552728}
+    - target: {fileID: 3300082837589682, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
+      propertyPath: goalMarkerPrefab
+      value: 
+      objectReference: {fileID: 6577899586175602448, guid: 18cddad5745eb13488f8aad97cd0eb44,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
 --- !u!1 &1678184179 stripped
@@ -1110,5 +1157,10 @@ PrefabInstance:
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 1102552728}
+    - target: {fileID: 3300082837589682, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
+      propertyPath: goalMarkerPrefab
+      value: 
+      objectReference: {fileID: 6577899586175602448, guid: 18cddad5745eb13488f8aad97cd0eb44,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1d52f6614fe0a84382c4833cc4a0d91, type: 3}
