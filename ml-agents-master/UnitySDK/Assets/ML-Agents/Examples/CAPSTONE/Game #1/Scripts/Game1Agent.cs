@@ -216,8 +216,9 @@ public class Game1Agent : Agent
             //float distanceReward = Mathf.Log(Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance) * 0.2f;
             float distanceReward = Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance;
             AddReward(-1f * distanceReward - 0.25f);
-            //Score negation, punishment for falling off the edge.    
-            Done();
+            //Score negation, punishment for falling off the edge.  
+            GetComponent<PlayerMovement>().ResetPlayer();
+            AgentReset();
             cumulativeDistance = Vector3.Distance(startingPosition, currentGoal.transform.position);
         }
     }
@@ -234,7 +235,8 @@ public class Game1Agent : Agent
             //this is supposed to reduce the negative effects of this punishment for falling off/hitting a wall
             AddReward(-1f * distanceReward - 0.25f);
             Debug.Log("Wall hit!");
-            Done();
+            GetComponent<PlayerMovement>().ResetPlayer();
+            AgentReset();
             cumulativeDistance = Vector3.Distance(startingPosition, currentGoal.transform.position);
         }
         //hitting a goal is good!
@@ -246,7 +248,7 @@ public class Game1Agent : Agent
             Debug.Log(rewardStr);
             //Debug.Log("My current goal was at: " + currentGoal.transform.position);
             cumulativeDistance += Vector3.Distance(startingPosition,currentGoal.transform.position);
-            Done();
+            AgentReset();
         }
         //hitting a platform is good
         else if (collision.transform.CompareTag("platform"))
