@@ -9,6 +9,8 @@ public class Game1Agent : Agent
 {
     // Start is called before the first frame update
     public Game1Area game1Area;
+    private List<GameObject> spawns;
+    private List<GameObject> goals;
     private RayPerception3D rayPerception;
     private RayPerception3D floorPerception;
     private CharacterController controller;
@@ -95,8 +97,10 @@ public class Game1Agent : Agent
     public override void AgentReset()
     {
         game1Area.ResetArea();
-        currentGoal = GetClosestGoal();
-        startingPosition = transform.position;
+        int index = UnityEngine.Random.Range(0, goals.Count()-1);
+
+        currentGoal = goals[index];
+        spawnMarker = spawns[index];
         CreateMarkers();
 
     }
@@ -156,8 +160,31 @@ public class Game1Agent : Agent
         //controller = GetComponent<CharacterController>();
         startingPosition = transform.position;
         rayPerception = GetComponent<RayPerception3D>();
-        currentGoal = GetClosestGoal();
         cumulativeDistance = Vector3.Distance(startingPosition, currentGoal.transform.position);
+        GameObject[] spawnGoals = GameObject.FindGameObjectsWithTag("spawnGoal");
+        spawns = new List<GameObject>();
+        goals = new List<GameObject>();
+        foreach (GameObject spawnGoal in spawnGoals)
+        {
+            //Could just do index 0 and 1 but we would need to always make sure its goal then spawn and no other objects
+            int index = 0;
+            GameObject gameObject;
+            while((gameObject=spawnGoal.transform.GetChild(index).gameObject) != null)
+            {
+                if (transform.tag == "goal")
+                {
+                    goals.Add(gameObject);
+                }
+                else if (transform.tag == "spawn")
+                {
+                    goals.Add(gameObject);
+                }
+                index++;
+            }
+            
+        }
+        currentGoal = goals[0];
+        spawnMarker = spawns[0];
         CreateMarkers();
         //initialDistanceToGoal = Vector3.Distance(currentGoal.transform.position, transform.position);
     }
