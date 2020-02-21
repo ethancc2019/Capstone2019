@@ -8,6 +8,9 @@ using TMPro;
 public class Game1Agent : Agent
 {
     // Start is called before the first frame update
+    public Material current;
+    public Material normal;
+    public String agentNum;
     public Game1Area game1Area;
     private List<GameObject> spawns;
     private List<GameObject> goals;
@@ -96,12 +99,16 @@ public class Game1Agent : Agent
 
     public override void AgentReset()
     {
-        game1Area.ResetArea();
+        //game1Area.ResetArea();
         int index = UnityEngine.Random.Range(0, goals.Count()-1);
-
+        currentGoal.GetComponent<MeshRenderer>().material = normal;
         currentGoal = goals[index];
+        currentGoal.GetComponent<MeshRenderer>().material = current;
         spawnMarker = spawns[index];
-        CreateMarkers();
+        //CreateMarkers();
+        transform.position = spawnMarker.transform.position;
+        closestFloor.GetComponent<MeshRenderer>().material = normal;
+        closestFloor = GetClosestFloor();
 
     }
     public override void CollectObservations()
@@ -160,32 +167,40 @@ public class Game1Agent : Agent
         //controller = GetComponent<CharacterController>();
         startingPosition = transform.position;
         rayPerception = GetComponent<RayPerception3D>();
-        cumulativeDistance = Vector3.Distance(startingPosition, currentGoal.transform.position);
-        GameObject[] spawnGoals = GameObject.FindGameObjectsWithTag("spawnGoal");
+
         spawns = new List<GameObject>();
         goals = new List<GameObject>();
-        foreach (GameObject spawnGoal in spawnGoals)
+        GameObject agentArena = GameObject.Find("SimpleLevels " + agentNum);
+        foreach(Transform stage in agentArena.transform)
         {
-            //Could just do index 0 and 1 but we would need to always make sure its goal then spawn and no other objects
-            int index = 0;
-            GameObject gameObject;
-            while((gameObject=spawnGoal.transform.GetChild(index).gameObject) != null)
+
+            foreach (Transform spawnGoal in stage)
             {
-                if (transform.tag == "goal")
+                //Could just do index 0 and 1 but we would need to always make sure its goal then spawn and no other objects
+
+                if(spawnGoal.tag == "spawnGoal")
                 {
-                    goals.Add(gameObject);
+                    foreach (Transform child in spawnGoal.transform)
+                    {
+                        if (child.tag == "goal")
+                        {
+                            goals.Add(child.gameObject);
+                        }
+                        else if (child.tag == "spawn")
+                        {
+                            spawns.Add(child.gameObject);
+                        }
+                    }
                 }
-                else if (transform.tag == "spawn")
-                {
-                    goals.Add(gameObject);
-                }
-                index++;
             }
-            
         }
+        
         currentGoal = goals[0];
+        cumulativeDistance = Vector3.Distance(startingPosition, currentGoal.transform.position);
         spawnMarker = spawns[0];
-        CreateMarkers();
+        //CreateMarkers();
+        transform.position = spawnMarker.transform.position;
+        closestFloor = GetClosestFloor();
         //initialDistanceToGoal = Vector3.Distance(currentGoal.transform.position, transform.position);
     }
     public void CreateMarkers()
@@ -230,14 +245,16 @@ public class Game1Agent : Agent
             {
                 shortestDistance = distance;
                 closestFloor = floor;
+                
             }
         }
+        closestFloor.GetComponent<MeshRenderer>().material = this.current;
         return closestFloor;
     }
     private void FixedUpdate()
     {
         //Checks if agent falls off
-        if (transform.localPosition.y <= closestFloor.transform.localPosition.y - 2)
+        if (transform.position.y <= closestFloor.transform.position.y - 2)
         {
             //changes reward depending on distance from goal when failed
             //float distanceReward = Mathf.Log(Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance) * 0.2f;

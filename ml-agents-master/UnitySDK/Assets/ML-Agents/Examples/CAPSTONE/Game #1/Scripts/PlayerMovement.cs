@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
     public void ResetPlayer()
     {
         //gameManger.GetComponent<GameManager>().decreaseScore();
-        spawnPointOne = this.area.getSpawnPointOne();
-        this.transform.position = spawnPointOne.transform.position;
+        //spawnPointOne = this.area.getSpawnPointOne();
+        //this.transform.position = spawnPointOne.transform.position;
     }
 }

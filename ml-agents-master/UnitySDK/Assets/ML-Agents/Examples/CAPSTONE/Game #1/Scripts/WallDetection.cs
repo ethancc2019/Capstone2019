@@ -15,7 +15,7 @@ public class WallDetection : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        spawnPointOne = area.getSpawnPointOne();
+        //spawnPointOne = area.getSpawnPointOne();
 	}
     private void OnTriggerEnter(Collider other)
     {
