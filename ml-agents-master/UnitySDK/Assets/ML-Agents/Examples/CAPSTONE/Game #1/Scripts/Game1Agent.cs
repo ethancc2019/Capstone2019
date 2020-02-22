@@ -43,12 +43,12 @@ public class Game1Agent : Agent
         if (vectorAction[0] == 1f)
         {
             //agent decides to move backwards
-            forward = -1f;
+            forward = 1f;
         }
         else if (vectorAction[0] == 2f)
         {
             //agent decides to move backwards
-            forward = 1f;
+            forward = -1f;
         }
 
         if (vectorAction[1] == 1f)
@@ -72,9 +72,9 @@ public class Game1Agent : Agent
         // is the controller on the ground?
         if (controller.isGrounded)
         {
-
+            Debug.Log("Grounded");
             //Feed moveDirection with input.
-            moveDirection = new Vector3(forward, 0, strafe);
+            moveDirection = new Vector3(strafe, 0, forward);
             moveDirection = transform.TransformDirection(moveDirection);
             //Debug.Log("Move direction: " + moveDirection);
             //Multiply it by speed.
@@ -94,20 +94,33 @@ public class Game1Agent : Agent
         moveDirection.y -= (-Physics2D.gravity.y) * (fallMultiplier - 1) * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
 
-        AddReward(-1f / agentParameters.maxStep);
+        //AddReward(-1f / agentParameters.maxStep);
+
+        //Checks if agent falls off
+        if (transform.position.y <= closestFloor.transform.position.y - 2)
+        {
+            //changes reward depending on distance from goal when failed
+            //float distanceReward = Mathf.Log(Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance) * 0.2f;
+            float distanceReward = Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance;
+            AddReward(-1f * distanceReward - 0.25f);
+            //Score negation, punishment for falling off the edge.  
+            GetComponent<PlayerMovement>().ResetPlayer();
+            AgentReset();
+            cumulativeDistance = Vector3.Distance(startingPosition, currentGoal.transform.position);
+        }
     }
 
     public override void AgentReset()
     {
         //game1Area.ResetArea();
         int index = UnityEngine.Random.Range(0, goals.Count()-1);
-        currentGoal.GetComponent<MeshRenderer>().material = normal;
+        //currentGoal.GetComponent<MeshRenderer>().material = normal;
         currentGoal = goals[index];
-        currentGoal.GetComponent<MeshRenderer>().material = current;
+        //currentGoal.GetComponent<MeshRenderer>().material = current;
         spawnMarker = spawns[index];
         //CreateMarkers();
         transform.position = spawnMarker.transform.position;
-        closestFloor.GetComponent<MeshRenderer>().material = normal;
+       // closestFloor.GetComponent<MeshRenderer>().material = normal;
         closestFloor = GetClosestFloor();
 
     }
@@ -248,23 +261,8 @@ public class Game1Agent : Agent
                 
             }
         }
-        closestFloor.GetComponent<MeshRenderer>().material = this.current;
+        //closestFloor.GetComponent<MeshRenderer>().material = this.current;
         return closestFloor;
-    }
-    private void FixedUpdate()
-    {
-        //Checks if agent falls off
-        if (transform.position.y <= closestFloor.transform.position.y - 2)
-        {
-            //changes reward depending on distance from goal when failed
-            //float distanceReward = Mathf.Log(Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance) * 0.2f;
-            float distanceReward = Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance;
-            AddReward(-1f * distanceReward - 0.25f);
-            //Score negation, punishment for falling off the edge.  
-            GetComponent<PlayerMovement>().ResetPlayer();
-            AgentReset();
-            cumulativeDistance = Vector3.Distance(startingPosition, currentGoal.transform.position);
-        }
     }
     //TODO: Urgent refactoring
     private void OnTriggerEnter(Collider collision)

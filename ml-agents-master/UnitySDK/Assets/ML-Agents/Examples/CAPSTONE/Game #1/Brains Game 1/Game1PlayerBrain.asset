@@ -15,11 +15,11 @@ MonoBehaviour:
   brainParameters:
     vectorObservationSize: 132
     numStackedVectorObservations: 1
-    vectorActionSize: 030000000300000002000000
+    vectorActionSize: 030000000300000003000000
     cameraResolutions: []
     vectorActionDescriptions:
     - Move Forward/Backwards
-    - Strafe left/right
+    - Left/Right
     - Jump
     vectorActionSpaceType: 0
   keyContinuousPlayerActions: []
