@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Game1Learning
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 132
+    vectorObservationSize: 93
     numStackedVectorObservations: 1
     vectorActionSize: 030000000300000002000000
     cameraResolutions: []
@@ -22,5 +22,5 @@ MonoBehaviour:
     - Strafe left/right
     - Jump
     vectorActionSpaceType: 0
-  model: {fileID: 5022602860645237092, guid: 019bdf8f2f861de41b55dc2fe394de3b, type: 3}
+  model: {fileID: 0}
   inferenceDevice: 0
