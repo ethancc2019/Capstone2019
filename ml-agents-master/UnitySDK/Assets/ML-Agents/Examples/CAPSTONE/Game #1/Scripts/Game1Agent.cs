@@ -22,6 +22,7 @@ public class Game1Agent : Agent
     private float initialDistanceToGoal;
     private float newDistance;
     private float cumulativeDistance;
+    private short jumpCount;
     private GameObject goalMarker;
     private GameObject spawnMarker;
     private Vector3 startingPosition;
@@ -78,7 +79,10 @@ public class Game1Agent : Agent
             moveDirection *= speed;
             //Jumping
             if (jump > 0)
+            {
                 moveDirection.y = jumpSpeed;
+                jumpCount++;
+            }
         }
         else
         {
@@ -92,24 +96,30 @@ public class Game1Agent : Agent
         controller.Move(moveDirection * Time.deltaTime);
         newDistance = initialDistanceToGoal;
         initialDistanceToGoal = Vector3.Distance(transform.position, currentGoal.transform.position);
-        if(initialDistanceToGoal < newDistance)
+        //Reward or penalty based on change in distance to goal.
+        //if(initialDistanceToGoal < newDistance)
+        //{
+        //    AddReward(0.1f/ agentParameters.maxStep);
+        //}
+        //else
+        //{
+        //    AddReward(-0.1f/ agentParameters.maxStep);
+        //}
+        //Slight Penalty for jumping too many times
+        if(jumpCount > 5)
         {
-            AddReward(0.1f/ agentParameters.maxStep);
-        }
-        else
-        {
-            AddReward(-0.1f/ agentParameters.maxStep);
+            AddReward(-0.025f / agentParameters.maxStep);
         }
 
         //AddReward(-1f / agentParameters.maxStep);
 
         //Checks if agent falls off
-        if (transform.position.y <= closestFloor.transform.position.y - 2)
+        if (transform.position.y < closestFloor.transform.position.y)
         {
             //changes reward depending on distance from goal when failed
             //float distanceReward = Mathf.Log(Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance) * 0.2f;
             float distanceReward = Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance;
-            AddReward(-1f);
+            //AddReward(-1f);
             //Score negation, punishment for falling off the edge.  
             GetComponent<PlayerMovement>().ResetPlayer();
             AgentReset();
@@ -125,12 +135,13 @@ public class Game1Agent : Agent
         currentGoal = goals[index];
         //currentGoal.GetComponent<MeshRenderer>().material = current;
         spawnMarker = spawns[index];
-        
+        currentGoal.transform.position = currentGoal.GetComponent<MoveGoal>().Move();
         //CreateMarkers();
         transform.position = spawnMarker.transform.position;
         // closestFloor.GetComponent<MeshRenderer>().material = normal;
         closestFloor = GetClosestFloor();
         initialDistanceToGoal = Vector3.Distance(currentGoal.transform.position, transform.position);
+        jumpCount = 0;
 
 
     }
@@ -168,6 +179,8 @@ public class Game1Agent : Agent
 
         //Player position
         AddVectorObs(this.transform.position);
+        AddVectorObs(moveDirection);
+      
 
         //player's velocity
         //AddVectorObs(GetComponent<Rigidbody>().velocity);
@@ -179,12 +192,12 @@ public class Game1Agent : Agent
         //startOffset: offset from center where to perceive from
         //endOffset: ending offset from where to perceive from
 
-        float rayDistance = 10f;
-        float[] rayAngles = { 0f, 22.5f, 45f, 67.5f, 90f, 112.5f, 135f, 157.5f,180f, 202.5f,225f, 247.5f, 270f, 292.5f, 315f, 337.5f };
-        string[] detectableObjects = { "wall", "goal", "platform" };
-        AddVectorObs(rayPerception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
-        
-        
+        //float rayDistance = 10f;
+        //float[] rayAngles = { 0f, 22.5f, 45f, 67.5f, 90f, 112.5f, 135f, 157.5f,180f, 202.5f,225f, 247.5f, 270f, 292.5f, 315f, 337.5f };
+        //string[] detectableObjects = { "wall", "goal", "platform" };
+        //AddVectorObs(rayPerception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
+
+
         //Not Needed for now
         //float floorDistance = 3f;
         //float[] floorAngles = {0f,45f,90f,135f,180f,225f,270f,315f};
@@ -224,7 +237,7 @@ public class Game1Agent : Agent
                 }
             }
         }
-        
+        jumpCount = 0;
         currentGoal = goals[0];
         cumulativeDistance = Vector3.Distance(startingPosition, currentGoal.transform.position);
         spawnMarker = spawns[0];
@@ -307,6 +320,7 @@ public class Game1Agent : Agent
             //Debug.Log("My current goal was at: " + currentGoal.transform.position);
             cumulativeDistance += Vector3.Distance(startingPosition,currentGoal.transform.position);
             AgentReset();
+            
         }
         //hitting a platform is good
         else if (collision.transform.CompareTag("platform"))

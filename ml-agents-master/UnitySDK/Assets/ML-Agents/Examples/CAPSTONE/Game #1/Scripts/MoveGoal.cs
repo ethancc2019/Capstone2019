@@ -5,15 +5,17 @@ using UnityEngine;
 public class MoveGoal : MonoBehaviour
 {
     public GameObject floor;
-    // Start is called before the first frame update
+    private  Vector3 goal;
     void Start()
     {
-        
+        goal = this.transform.position;
     }
-
-    // Update is called once per frame
-    void Update()
+    public Vector3 Move()
     {
-        
+        float x = floor.transform.position.x + UnityEngine.Random.Range(-6.0f, 6.0f);
+        float z = floor.transform.position.z + UnityEngine.Random.Range(-6.0f, 6.0f);
+        goal.x = x;
+        goal.z = z;
+        return goal;
     }
 }
