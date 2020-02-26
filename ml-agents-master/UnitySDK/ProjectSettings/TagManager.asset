@@ -43,6 +43,7 @@ TagManager:
   - goal_2
   - goal_3
   - goal_4
+  - barrier
   layers:
   - Default
   - TransparentFX
