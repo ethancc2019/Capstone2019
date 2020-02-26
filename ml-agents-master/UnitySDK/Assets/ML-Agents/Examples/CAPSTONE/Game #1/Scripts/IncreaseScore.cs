@@ -7,7 +7,7 @@ public class IncreaseScore : MonoBehaviour {
 
     public GameObject spawnPoint;
     public GameObject player;
-    public GameObject gameManager;
+    //public GameObject gameManager;
 
     void Start()
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class WallDetection : MonoBehaviour
 {
 
-    public GameObject gameManager;
+    //public GameObject gameManager;
     public GameObject player;
     public Game1Area area;
     private GameObject spawnPointOne;
@@ -19,7 +19,7 @@ public class WallDetection : MonoBehaviour
 	}
     private void OnTriggerEnter(Collider other)
     {
-        gameManager.GetComponent<GameManager>().decreaseScore();
-        player.transform.position = spawnPointOne.transform.position;
+        //gameManager.GetComponent<GameManager>().decreaseScore();
+        //player.transform.position = spawnPointOne.transform.position;
     }
 }
