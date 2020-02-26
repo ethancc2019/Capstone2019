@@ -22,20 +22,32 @@ public class Game3Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
-
-
+        
+        
         //Mouse rotations
         mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
+
+        //Bind player in screen bounds
+        Vector3 pos = cam.WorldToViewportPoint(transform.position);
+        pos.x = Mathf.Clamp01(pos.x);
+        pos.y = Mathf.Clamp01(pos.y);
+        transform.position = cam.ViewportToWorldPoint(pos);
+
     }
 
     void FixedUpdate()
     {
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
         rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
 
         Vector2 lookDirection = mousePosition - rb.position;
         float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
         rb.rotation = angle;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        
     }
 }

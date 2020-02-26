@@ -133,4 +133,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitEffect: {fileID: 1139144009997610643, guid: d5100317e7343234c86ac2c4f2547c7a,
     type: 3}
-  destroyTime: 0.3
+  destroyTime: 0.4
