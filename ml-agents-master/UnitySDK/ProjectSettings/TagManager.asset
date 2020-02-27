@@ -36,6 +36,8 @@ TagManager:
   - bullet
   - platform
   - floor
+  - spawn
+  - spawnGoal
   layers:
   - Default
   - TransparentFX
@@ -70,6 +72,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Game 1
+    uniqueID: 2423213997
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

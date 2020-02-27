@@ -288,7 +288,7 @@ BasicLearning:
 
 Game1Learning:
     use_curiosity: true
-    use_recurrent: true
+    use_recurrent: false
     memory_size: 256
     sequence_length: 64
     max_steps: 1.0e5
@@ -297,7 +297,7 @@ Game1Learning:
     batch_size: 256
     buffer_size: 2048
     hidden_units: 128
-    num_layers: 2
+    num_layers: 3
     beta: 1.0e-2
     max_steps: 1.0e5
     num_epoch: 2

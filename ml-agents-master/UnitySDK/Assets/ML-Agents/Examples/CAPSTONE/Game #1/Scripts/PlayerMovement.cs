@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log("moveDirection: " + moveDirection + "vel: " + controller.velocity);
 
         //Player fell off platform, reset him to the first spawn point
-        if (this.transform.position.y <= -3)
+        if (this.transform.position.y <= this.area.transform.position.y)
         {
             ResetPlayer();
         }
@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
     public void ResetPlayer()
     {
         //gameManger.GetComponent<GameManager>().decreaseScore();
-        spawnPointOne = this.area.getSpawnPointOne();
-        this.transform.position = spawnPointOne.transform.position;
+        //spawnPointOne = this.area.getSpawnPointOne();
+        //this.transform.position = spawnPointOne.transform.position;
     }
 }

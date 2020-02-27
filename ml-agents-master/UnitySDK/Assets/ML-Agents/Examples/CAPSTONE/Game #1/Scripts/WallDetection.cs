@@ -15,11 +15,11 @@ public class WallDetection : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        spawnPointOne = area.getSpawnPointOne();
+        //spawnPointOne = area.getSpawnPointOne();
 	}
     private void OnTriggerEnter(Collider other)
     {
         //gameManager.GetComponent<GameManager>().decreaseScore();
-        player.transform.position = spawnPointOne.transform.position;
+        //player.transform.position = spawnPointOne.transform.position;
     }
 }
