@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using MLAgents;
 using System.Linq;
 using System;
-using TMPro;
 public class Game1Agent : Agent
 {
     // Start is called before the first frame update
@@ -13,6 +10,7 @@ public class Game1Agent : Agent
     private RayPerception3D floorPerception;
     private CharacterController controller;
     private GameObject currentGoal;
+    private GameObject floorObj;
     private TextMesh cumulativeRewardText;
     private GameObject closestFloor;
     private float initialDistanceToGoal;
@@ -27,6 +25,8 @@ public class Game1Agent : Agent
     public float jumpSpeed = 8.0F;
     public float gravity = 20.0F;
     private Vector3 moveDirection = Vector3.zero;
+    private GameObject spawnPointOne;
+    private Transform startPosition;
     public override void AgentAction(float[] vectorAction, string textAction)
     {
         float forward = 0f;
@@ -174,7 +174,10 @@ public class Game1Agent : Agent
     {
         //Returns closest goal relative to the current floor gameObject that player is standing on
         closestFloor = GetClosestFloor();
-        GameObject[] Goals = GameObject.FindGameObjectsWithTag("goal");
+        GameObject[] Goals = GameObject.FindGameObjectsWithTag("goal_1");
+        Goals = GameObject.FindGameObjectsWithTag("goal_2");
+        Goals = GameObject.FindGameObjectsWithTag("goal_3");
+        Goals = GameObject.FindGameObjectsWithTag("goal_4");
         GameObject closestGoal = null;
         float shortestDistance = Mathf.Infinity;
 
@@ -186,6 +189,7 @@ public class Game1Agent : Agent
             {
                 shortestDistance = distanceFromFloor;
                 closestGoal = goal;
+                break;
             }
         }
         return closestGoal;
@@ -203,6 +207,8 @@ public class Game1Agent : Agent
             {
                 shortestDistance = distance;
                 closestFloor = floor;
+                break;
+                
             }
         }
         return closestFloor;

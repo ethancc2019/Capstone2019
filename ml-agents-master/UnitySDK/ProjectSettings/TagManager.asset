@@ -36,6 +36,16 @@ TagManager:
   - bullet
   - platform
   - floor
+  - asteroid_barrier
+  - timer_text
+  - wave_text
+  - goal_1
+  - goal_2
+  - goal_3
+  - goal_4
+  - barrier
+  - Player_2
+  - life
   layers:
   - Default
   - TransparentFX

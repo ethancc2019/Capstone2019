@@ -4,26 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameTwoMovement : MonoBehaviour {
+public class GameTwoMovement : MonoBehaviour
+{
 
     public float verticalInputAcceleration = 1;
     public float horizontalInputAcceleration = 20;
 
-    public float maxSpeed = 0.2f;
-    public float maxRotationSpeed = 100;
     
-
-    public float velocityDrag = 1;
-    public float rotationDrag = 1;
-
-    private Vector3 velocity;
-    private float rotationVelocity;
 
     //Vars for the shooting
     public GameObject bulletPrefab;
     public Transform point;
     public Rigidbody2D rb;
-   
+
 
     public Text scoreText;
     public int score = 0;
@@ -32,39 +25,40 @@ public class GameTwoMovement : MonoBehaviour {
     private GameObject spawnPointGameObject;
     private PowerUpSpawnner spawnPointScript;
 
+    //MOVEMENT RE-WORK
+    public float speed = 5f;
+    private Vector2 movement;
+    private Vector2 mousePosition;
+    public Camera cam;
 
     void Start()
     {
         //Camera.main.enabled = true;
-        //scoreText = GameObject.FindGameObjectWithTag("score_text").GetComponent<Text>();
+        scoreText = GameObject.FindGameObjectWithTag("score_text").GetComponent<Text>();
         spawnPointGameObject = GameObject.FindGameObjectWithTag("spawn_point_container");
         spawnPointScript = spawnPointGameObject.GetComponent<PowerUpSpawnner>();
+        rb = GetComponent<Rigidbody2D>();
+
     }
 
     private void Update()
     {
-        // apply forward input
-        Vector3 acceleration = Input.GetAxis("Vertical") * verticalInputAcceleration * transform.up;
-        velocity += acceleration * Time.deltaTime;
+        
+        //Mouse rotations
+        mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
 
-        // apply turn input
-        float turnAccleration = -1 * Input.GetAxis("Horizontal") * horizontalInputAcceleration;
-        rotationVelocity += turnAccleration * Time.deltaTime;
 
         ////Taking care of keeping the player in the screen bounds
         Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
         pos.x = Mathf.Clamp01(pos.x);
         pos.y = Mathf.Clamp01(pos.y);
         transform.position = Camera.main.ViewportToWorldPoint(pos);
+
         
-        //if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0)) //Can make this automatic firing if we want 
-        //{
-        //    Shoot();
-        //}
-        if (Input.GetKeyDown(KeyCode.Space)) //Can make this automatic firing if we want 
+        if (Input.GetButtonDown("Fire1")) //Can make this automatic firing if we want 
         {
             Shoot();
-            
+
         }
 
         scoreText.text = score.ToString();
@@ -83,22 +77,15 @@ public class GameTwoMovement : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        // apply velocity drag
-        velocity = velocity * (1 - Time.deltaTime * velocityDrag);
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
+        rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
 
-        // clamp to maxSpeed
-        velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+        Vector2 lookDirection = mousePosition - rb.position;
+        float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
+        rb.rotation = angle;
 
-        // apply rotation drag
-        rotationVelocity = rotationVelocity * (1 - Time.deltaTime * rotationDrag);
-
-        // clamp to maxRotationSpeed
-        rotationVelocity = Mathf.Clamp(rotationVelocity, -maxRotationSpeed, maxRotationSpeed);
-
-        // update transform
-        transform.position += velocity * Time.deltaTime;
-        transform.Rotate(0, 0, rotationVelocity * Time.deltaTime);
-
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -114,7 +101,7 @@ public class GameTwoMovement : MonoBehaviour {
 
         if (other.gameObject.CompareTag("asteroid"))
         {
-            Debug.Log("Goal hit!");
+            Debug.Log("Asteroid hit!");
             this.score--;
             //Either kill player here or decrement his score
         }
