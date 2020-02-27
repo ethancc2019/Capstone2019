@@ -10,15 +10,7 @@ public class GameTwoMovement : MonoBehaviour
     public float verticalInputAcceleration = 1;
     public float horizontalInputAcceleration = 20;
 
-    public float maxSpeed = 0.2f;
-    public float maxRotationSpeed = 100;
-
-
-    public float velocityDrag = 1;
-    public float rotationDrag = 1;
-
-    private Vector3 velocity;
-    private float rotationVelocity;
+    
 
     //Vars for the shooting
     public GameObject bulletPrefab;
@@ -33,6 +25,11 @@ public class GameTwoMovement : MonoBehaviour
     private GameObject spawnPointGameObject;
     private PowerUpSpawnner spawnPointScript;
 
+    //MOVEMENT RE-WORK
+    public float speed = 5f;
+    private Vector2 movement;
+    private Vector2 mousePosition;
+    public Camera cam;
 
     void Start()
     {
@@ -40,39 +37,15 @@ public class GameTwoMovement : MonoBehaviour
         scoreText = GameObject.FindGameObjectWithTag("score_text").GetComponent<Text>();
         spawnPointGameObject = GameObject.FindGameObjectWithTag("spawn_point_container");
         spawnPointScript = spawnPointGameObject.GetComponent<PowerUpSpawnner>();
+        rb = GetComponent<Rigidbody2D>();
+
     }
 
     private void Update()
     {
-        // apply forward input
-        Vector3 acceleration = verticalInputAcceleration * transform.up;
-        //velocity += acceleration * Time.deltaTime;
-
-        // apply turn input
-        float turnAccleration = 1 * horizontalInputAcceleration;
-        //rotationVelocity += turnAccleration * Time.deltaTime;
-        //Debug.Log("Vertical pressed: " + Input.GetAxis("Vertical"));
-        //Debug.Log("Horizonatal pressed: " + Input.GetAxis("Horizontal"));
-
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            velocity += acceleration * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            velocity -= acceleration * Time.deltaTime + transform.forward;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            rotationVelocity += turnAccleration * Time.deltaTime;
-
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            rotationVelocity += -1*turnAccleration * Time.deltaTime;
-
-        }
+        
+        //Mouse rotations
+        mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
 
 
         ////Taking care of keeping the player in the screen bounds
@@ -81,11 +54,8 @@ public class GameTwoMovement : MonoBehaviour
         pos.y = Mathf.Clamp01(pos.y);
         transform.position = Camera.main.ViewportToWorldPoint(pos);
 
-        //if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0)) //Can make this automatic firing if we want 
-        //{
-        //    Shoot();
-        //}
-        if (Input.GetKeyDown(KeyCode.Space)) //Can make this automatic firing if we want 
+        
+        if (Input.GetButtonDown("Fire1")) //Can make this automatic firing if we want 
         {
             Shoot();
 
@@ -107,22 +77,15 @@ public class GameTwoMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // apply velocity drag
-        velocity = velocity * (1 - Time.deltaTime * velocityDrag);
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
+        rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
 
-        // clamp to maxSpeed
-        velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+        Vector2 lookDirection = mousePosition - rb.position;
+        float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
+        rb.rotation = angle;
 
-        // apply rotation drag
-        rotationVelocity = rotationVelocity * (1 - Time.deltaTime * rotationDrag);
-
-        // clamp to maxRotationSpeed
-        rotationVelocity = Mathf.Clamp(rotationVelocity, -maxRotationSpeed, maxRotationSpeed);
-
-        // update transform
-        transform.position += velocity * Time.deltaTime;
-        transform.Rotate(0, 0, rotationVelocity * Time.deltaTime);
-
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
