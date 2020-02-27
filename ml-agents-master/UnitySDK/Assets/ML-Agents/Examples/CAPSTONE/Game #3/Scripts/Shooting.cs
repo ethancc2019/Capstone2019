@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
-
+    public int ammoCount = 10;
     public Transform firePoint;
 
     public GameObject bulletPrefab;
@@ -19,9 +19,11 @@ public class Shooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1")) //Left click
+        if (Input.GetButtonDown("Fire1") && ammoCount > 0) //Left click
         {
             Shoot();
+            ammoCount--;
+            Debug.Log(ammoCount.ToString());
         }
     }
 

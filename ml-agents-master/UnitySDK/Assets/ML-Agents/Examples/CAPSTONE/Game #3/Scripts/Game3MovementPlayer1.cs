@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Game3Movement : MonoBehaviour
+public class Game3MovementPlayer1 : MonoBehaviour
 {
-
+    private static int lifeIndex = 2;
+    public GameObject[] lives;
 
     public float speed = 5f;
-
     private Rigidbody2D rb;
 
     private Vector2 movement;
@@ -22,8 +22,13 @@ public class Game3Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        
+
+        if (lifeIndex < 0) //Player has 3 lives. When he is hit by a bullet decrement by 1. When lifeIndex is 0 game is over reset environment
+        {
+            //One of the players lost all three lives
+            Debug.Log("Game Over!");
+        }
+
         //Mouse rotations
         mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
 
@@ -37,6 +42,8 @@ public class Game3Movement : MonoBehaviour
 
     void FixedUpdate()
     {
+        
+
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
         rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
@@ -48,6 +55,12 @@ public class Game3Movement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        if (collision.collider.CompareTag("bullet"))
+        {
+            Debug.Log("Hit by bullet!: " + lifeIndex.ToString());
+            GameObject tempLife = lives[lifeIndex];
+            Destroy(tempLife);
+            lifeIndex--;
+        }
     }
 }
