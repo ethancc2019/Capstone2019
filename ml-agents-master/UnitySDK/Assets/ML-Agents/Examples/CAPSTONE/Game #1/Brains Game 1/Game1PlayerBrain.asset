@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: Game1PlayerBrain
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 93
+    vectorObservationSize: 16
     numStackedVectorObservations: 1
-    vectorActionSize: 030000000300000003000000
+    vectorActionSize: 0300000003000000
     cameraResolutions: []
     vectorActionDescriptions:
-    - Move Forward/Backwards
-    - Left/Right
-    - Jump
+    - 
+    - 
     vectorActionSpaceType: 0
   keyContinuousPlayerActions: []
   axisContinuousPlayerActions: []
@@ -37,6 +36,3 @@ MonoBehaviour:
   - key: 100
     branchIndex: 1
     value: 2
-  - key: 32
-    branchIndex: 2
-    value: 1

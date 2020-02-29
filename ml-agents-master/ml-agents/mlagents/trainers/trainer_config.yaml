@@ -299,5 +299,4 @@ Game1Learning:
     hidden_units: 128
     num_layers: 3
     beta: 1.0e-2
-    max_steps: 1.0e5
     num_epoch: 2

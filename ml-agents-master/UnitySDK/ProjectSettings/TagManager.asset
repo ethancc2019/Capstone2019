@@ -38,6 +38,8 @@ TagManager:
   - floor
   - spawn
   - spawnGoal
+  - stage
+  - move
   layers:
   - Default
   - TransparentFX
