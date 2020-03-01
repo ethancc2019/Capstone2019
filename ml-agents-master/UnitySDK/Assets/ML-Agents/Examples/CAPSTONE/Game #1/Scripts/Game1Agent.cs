@@ -29,6 +29,7 @@ public class Game1Agent : Agent
     private short jumpCount;
     private GameObject goalMarker;
     private GameObject spawnMarker;
+    private Boolean wallDetection;
     private Vector3 startingPosition;
     public GameObject spawnMarkerPrefab;
     public GameObject goalMarkerPrefab;
@@ -100,7 +101,7 @@ public class Game1Agent : Agent
         controller.Move(moveDirection * Time.deltaTime);
         newDistance = initialDistanceToGoal;
         initialDistanceToGoal = Vector3.Distance(transform.position, currentGoal.transform.position);
-        if(initialDistanceToGoal < 1.0f)
+        if (initialDistanceToGoal < 1.0f)
         {
             Debug.Log("Goal Hit");
             AddReward(1.0f);
@@ -142,29 +143,31 @@ public class Game1Agent : Agent
         currentStage.transform.position = inactivePosition.transform.position;
         //game1Area.ResetArea();
         int index = UnityEngine.Random.Range(0, goals.Count());
-        Debug.Log("Goals Count " + goals.Count());
         //currentGoal.GetComponent<MeshRenderer>().material = normal;
         currentStage = stages[index];
         currentStage.transform.position = levelPosition.transform.position;
-        foreach (Transform spawnGoal in currentStage.transform)
-        {
-            //Could just do index 0 and 1 but we would need to always make sure its goal then spawn and no other objects
+        //foreach (Transform spawnGoal in currentStage.transform)
+        //{
+        //    //Could just do index 0 and 1 but we would need to always make sure its goal then spawn and no other objects
 
-            if (spawnGoal.tag == "spawnGoal")
-            {
-                foreach (Transform child in spawnGoal.transform)
-                {
-                    if (child.tag == "goal")
-                    {
-                        currentStage = child.gameObject;
-                    }
-                    else if (child.tag == "spawn")
-                    {
-                        spawnMarker = child.gameObject;
-                    }
-                }
-            }
-        }
+        //    if (spawnGoal.tag == "spawnGoal")
+        //    {
+        //        foreach (Transform child in spawnGoal.transform)
+        //        {
+        //            if (child.tag == "goal")
+        //            {
+        //                currentStage = child.gameObject;
+        //            }
+        //            else if (child.tag == "spawn")
+        //            {
+        //                spawnMarker = child.gameObject;
+        //            }
+        //        }
+        //    }
+        //}
+        currentGoal = goals[index];
+        currentGoal.GetComponent<MoveGoal>().Move();
+        spawnMarker = spawns[index];
         //currentGoal = currentStage.transform.get;
         //currentGoal.GetComponent<MeshRenderer>().material = current;
         //spawnMarker = spawns[index];
@@ -263,7 +266,7 @@ public class Game1Agent : Agent
                         {
                             if (child.tag == "goal")
                             {
-                                Debug.Log("Adding Goal");
+
                                 goals.Add(child.gameObject);
                             }
                             else if (child.tag == "spawn")
@@ -286,6 +289,7 @@ public class Game1Agent : Agent
         transform.position = spawnMarker.transform.position;
         closestFloor = GetClosestFloor();
         initialDistanceToGoal = Vector3.Distance(currentGoal.transform.position, transform.position);
+        wallDetection = false;
     }
     public void CreateMarkers()
     {
@@ -336,37 +340,39 @@ public class Game1Agent : Agent
         return closestFloor;
     }
     //TODO: Urgent refactoring
-    //private void OnTriggerEnter(Collider collision)
-    //{
-    //    //hitting a wall gives some negative rewards 
-    //    if (collision.transform.CompareTag("wall"))
-    //    {
-    //        //changes reward depending on distance from goal when failed
-    //        //This reward is mysterious but it reduces the negative effects of hitting a wall/falling if it gets to later stages
-    //        //float distanceReward = Mathf.Log(Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance) * 0.2f;
-    //        float distanceReward = Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance;
-    //        //this is supposed to reduce the negative effects of this punishment for falling off/hitting a wall
-    //        AddReward(-1f);
-    //        Debug.Log("Wall hit!");
-    //        AgentReset();
-    //        cumulativeDistance += Vector3.Distance(startingPosition, currentGoal.transform.position);
-    //    }
-    //    //hitting a goal is good!
-    //    else if (collision.transform.CompareTag("goal"))
-    //    {
-    //        AddReward(1f);
-    //        Debug.Log("Goal hit! 0.5f added");
-    //        String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
-    //        Debug.Log(rewardStr);
-    //        //Debug.Log("My current goal was at: " + currentGoal.transform.position);
-    //        cumulativeDistance += Vector3.Distance(startingPosition,currentGoal.transform.position);
-    //        AgentReset();
-            
-    //    }
-    //    //hitting a platform is good
-    //    else if (collision.transform.CompareTag("platform"))
-    //    {
-    //        Debug.Log(gameObject.name + "Platform hit.");
-    //    }
-    //}
+    private void OnTriggerEnter(Collider collision)
+    {
+        //hitting a wall gives some negative rewards 
+        if (collision.transform.CompareTag("wall"))
+        {
+            ////changes reward depending on distance from goal when failed
+            ////This reward is mysterious but it reduces the negative effects of hitting a wall/falling if it gets to later stages
+            ////float distanceReward = Mathf.Log(Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance) * 0.2f;
+            //float distanceReward = Vector3.Distance(transform.position, currentGoal.transform.position) / cumulativeDistance;
+            ////this is supposed to reduce the negative effects of this punishment for falling off/hitting a wall
+            //AddReward(-1f);
+            //Debug.Log("Wall hit!");
+            //AgentReset();
+            //cumulativeDistance += Vector3.Distance(startingPosition, currentGoal.transform.position);
+            AddReward(-1);
+            Done();
+        }
+        //hitting a goal is good!
+        else if (collision.transform.CompareTag("goal"))
+        {
+            //AddReward(1f);
+            //Debug.Log("Goal hit! 0.5f added");
+            //String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
+            //Debug.Log(rewardStr);
+            ////Debug.Log("My current goal was at: " + currentGoal.transform.position);
+            //cumulativeDistance += Vector3.Distance(startingPosition, currentGoal.transform.position);
+            //AgentReset();
+
+        }
+        //hitting a platform is good
+        else if (collision.transform.CompareTag("platform"))
+        {
+            Debug.Log(gameObject.name + "Platform hit.");
+        }
+    }
 }
