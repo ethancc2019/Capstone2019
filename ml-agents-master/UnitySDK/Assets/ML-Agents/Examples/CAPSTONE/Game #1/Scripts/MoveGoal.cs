@@ -10,12 +10,20 @@ public class MoveGoal : MonoBehaviour
     {
         goal = this.transform.position;
     }
-    public Vector3 Move()
+    public void Move()
     {
         float x = floor.transform.position.x + UnityEngine.Random.Range(-6.0f, 6.0f);
         float z = floor.transform.position.z + UnityEngine.Random.Range(-6.0f, 6.0f);
         goal.x = x;
         goal.z = z;
-        return goal;
+        this.transform.position = goal;
+    }
+
+    public void OnTriggerEnter(Collider col)
+    {
+        if((col.transform.tag != "floor") || (col.transform.tag != "Player"))
+        {
+            Move();
+        }
     }
 }
