@@ -42,7 +42,7 @@ public class Game1Agent : Agent
     {
         float forward = 0f;
         float strafe = 0f;
-        //float jump = vectorAction[2];
+        float jump = vectorAction[2];
 
         //WASD Movement
         //vectorAction[0] will be forward/backward movement.
@@ -77,21 +77,22 @@ public class Game1Agent : Agent
         // is the controller on the ground?
         if (controller.isGrounded)
         {
+            speed = 6.0F;
             //Feed moveDirection with input.
             moveDirection = new Vector3(strafe, 0, forward);
             //Debug.Log("Move direction: " + moveDirection);
             //Multiply it by speed.
             moveDirection *= speed;
             //Jumping
-            //if (jump > 0)
-            //{
-            //    moveDirection.y = jumpSpeed;
-            //    jumpCount++;
-            //}
+            if (jump > 0)
+            {
+                moveDirection.y = jumpSpeed;
+                jumpCount++;
+            }
         }
         else
         {
-
+            speed = 4.0F;
             moveDirection = new Vector3(strafe, moveDirection.y, forward);
             moveDirection.x *= speed;
             moveDirection.z *= speed;
@@ -122,7 +123,6 @@ public class Game1Agent : Agent
         //    AddReward(-0.025f / agentParameters.maxStep);
         //}
 
-        //AddReward(-1f / agentParameters.maxStep);
 
         //Checks if agent falls off
         if (transform.position.y < closestFloor.transform.position.y)
@@ -136,6 +136,7 @@ public class Game1Agent : Agent
             Done();
             cumulativeDistance = Vector3.Distance(startingPosition, currentGoal.transform.position);
         }
+        AddReward(-1f / agentParameters.maxStep);
     }
 
     public override void AgentReset()
@@ -216,7 +217,7 @@ public class Game1Agent : Agent
         //Player position
         AddVectorObs(this.transform.position);
         AddVectorObs(controller.velocity);
-      
+
 
         //player's velocity
         //AddVectorObs(GetComponent<Rigidbody>().velocity);
@@ -228,17 +229,17 @@ public class Game1Agent : Agent
         //startOffset: offset from center where to perceive from
         //endOffset: ending offset from where to perceive from
 
-        //float rayDistance = 10f;
-        //float[] rayAngles = { 0f, 22.5f, 45f, 67.5f, 90f, 112.5f, 135f, 157.5f,180f, 202.5f,225f, 247.5f, 270f, 292.5f, 315f, 337.5f };
-        //string[] detectableObjects = { "wall", "goal", "platform" };
-        //AddVectorObs(rayPerception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
+        float rayDistance = 20f;
+        float[] rayAngles = { 0f, 45f, 90f, 135f, 180f, 225f, 270f, 315f,};
+        string[] detectableObjects = { "wall", "goal", "platform" };
+        AddVectorObs(rayPerception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
 
 
         //Not Needed for now
-        //float floorDistance = 3f;
-        //float[] floorAngles = {0f,45f,90f,135f,180f,225f,270f,315f};
-        //string[] detectableFloors = { "floor", "platform" };
-        //AddVectorObs(rayPerception.Perceive(floorDistance, floorAngles, detectableFloors, 0f, -2f));
+        float floorDistance = 6f;
+        float[] floorAngles = { 0f,90f,180f,270f};
+        string[] detectableFloors = { "floor", "platform" };
+        AddVectorObs(rayPerception.Perceive(floorDistance, floorAngles, detectableFloors, 0f, -2f));
     }
     public override void InitializeAgent()
     {
@@ -262,11 +263,10 @@ public class Game1Agent : Agent
 
                     if (spawnGoal.tag == "spawnGoal")
                     {
-                        foreach (Transform child in spawnGoal.transform)
+                        foreach (Transform child in spawnGoal)
                         {
                             if (child.tag == "goal")
                             {
-
                                 goals.Add(child.gameObject);
                             }
                             else if (child.tag == "spawn")
@@ -374,5 +374,9 @@ public class Game1Agent : Agent
         {
             Debug.Log(gameObject.name + "Platform hit.");
         }
+    }
+    public GameObject GetCurrentGoal()
+    {
+        return this.currentGoal;
     }
 }
