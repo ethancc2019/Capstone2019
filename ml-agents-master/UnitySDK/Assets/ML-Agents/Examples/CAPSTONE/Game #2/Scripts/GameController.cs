@@ -8,7 +8,8 @@ public class GameController : MonoBehaviour
 {
 
     private GameObject GameTwoGameObject;
-    private GameTwoMovement gameTwoScript;
+    private GameObject player;
+    private Game2Agent game2Agent;
 
 	public Text timerText;
 
@@ -18,14 +19,14 @@ public class GameController : MonoBehaviour
 	{
 		//Get the 
 		timerText = GameObject.FindGameObjectWithTag("timer_text").GetComponent<Text>();
-	    gameTwoScript = GameObject.FindGameObjectWithTag("Player").GetComponent<GameTwoMovement>();
+        game2Agent = player.GetComponent<Game2Agent>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
         //Here we can stop training, rest the game environment for next training iteration, or debug game mechanics
-	    if (gameTwoScript.score < 0)
+	    if (game2Agent.score < 0)
 	    {
 	        Debug.Log("Game over");
 	       // EditorApplication.ExecuteMenuItem("Edit/Play");

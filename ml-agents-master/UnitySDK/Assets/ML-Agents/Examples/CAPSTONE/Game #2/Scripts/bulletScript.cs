@@ -6,42 +6,31 @@ using Input = UnityEngine.Input;
 
 public class bulletScript : MonoBehaviour
 {
+    public Transform firePoint;
 
+    public GameObject bulletPrefab;
 
+    public float bulletSpeed = 20f;
 
-    private GameObject player;
-    private GameObject asteroid;
-
-    private GameTwoMovement gameTwoScript; //Using this reference to increment the score when the player destorys a asteroid
-
-    public float spped;
-    // Use this for initialization
-    void Start()
+    public void Shoot()
     {
-        player = GameObject.Find("Player");
-        GetComponent<Rigidbody2D>().AddForce(player.transform.up * spped);
-        gameTwoScript = GameObject.FindGameObjectWithTag("Player").GetComponent<GameTwoMovement>();
-
+        GameObject bulletTemp = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Rigidbody2D rb = bulletTemp.GetComponent<Rigidbody2D>();
+        rb.AddForce(firePoint.up * bulletSpeed, ForceMode2D.Impulse);
     }
 
 
-
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        //Debug.Log("tesd");
+        if(collider.tag == "asteroid")
+        {
+            Destroy(collider.gameObject);
+        }
 
-        if (other.gameObject.CompareTag("Finish"))
+        else if(collider.tag == "Finish")
         {
             Destroy(gameObject);
-
+            Debug.Log("Destroy Bullet");
         }
-        if (other.gameObject.CompareTag("asteroid"))
-        {
-            Destroy(GameObject.FindGameObjectWithTag("asteroid"));
-            gameTwoScript.score++;
-        }
-       
-
-
     }
 }
