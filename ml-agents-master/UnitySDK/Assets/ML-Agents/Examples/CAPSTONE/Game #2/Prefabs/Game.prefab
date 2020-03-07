@@ -1524,7 +1524,6 @@ GameObject:
   - component: {fileID: 6300641440947734425}
   - component: {fileID: 6300641440947734431}
   - component: {fileID: 6300641440947734430}
-  - component: {fileID: 3031251222520199609}
   - component: {fileID: 8515645358835901582}
   m_Layer: 0
   m_Name: Player
@@ -1560,7 +1559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c6f1cca4fee95740b0758d13be800ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brain: {fileID: 11400000, guid: bf1c4cc382605a94b9deece1889b6b4d, type: 2}
+  brain: {fileID: 11400000, guid: 799342bb690cb464c815832f58817da7, type: 2}
   agentParameters:
     agentCameras: []
     agentRenderTextures: []
@@ -1575,6 +1574,8 @@ MonoBehaviour:
     type: 3}
   point: {fileID: 6300641441598967314}
   cam: {fileID: 0}
+  firePoint: {fileID: 0}
+  bulletSpeed: 20
 --- !u!212 &6300641440947734425
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1671,22 +1672,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &3031251222520199609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6300641440947734427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a12e2c67de5399439ed81a0a96c974c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firePoint: {fileID: 6300641441598967314}
-  bulletPrefab: {fileID: 1049884114466022, guid: 2897ca0462040d44da59c0cc433ca51e,
-    type: 3}
-  bulletSpeed: 20
 --- !u!114 &8515645358835901582
 MonoBehaviour:
   m_ObjectHideFlags: 0

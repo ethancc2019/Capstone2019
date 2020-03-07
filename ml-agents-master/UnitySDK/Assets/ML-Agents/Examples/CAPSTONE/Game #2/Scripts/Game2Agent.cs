@@ -18,7 +18,6 @@ public class Game2Agent : Agent
     public GameObject bulletPrefab;
     public Transform point;
     private Rigidbody2D rb;
-    private bulletScript shooting;
 
     private Vector2 movement;
     private Vector2 mousePosition;
@@ -32,7 +31,7 @@ public class Game2Agent : Agent
         if (vectorAction[3] == 1f && shootTime <= 0)
         {
             shootTime = 0.5f;
-            shooting.Shoot();
+            Shoot();
         }
         float angle = transform.rotation.z;
         //WASD Movement
@@ -109,7 +108,6 @@ public class Game2Agent : Agent
         spawnPointGameObject = GameObject.FindGameObjectWithTag("spawn_point_container");
         spawnPointScript = spawnPointGameObject.GetComponent<PowerUpSpawnner>();
         rb = GetComponent<Rigidbody2D>();
-        shooting = GetComponent<bulletScript>();
         shootTime = 0f;
         rayPerception = GetComponent<RayPerception2D>();
     }
@@ -139,5 +137,20 @@ public class Game2Agent : Agent
         shootTime -= Time.fixedDeltaTime;
         Mathf.Clamp(shootTime, 0, 0.5f);
 
+    }
+
+
+
+
+
+    public Transform firePoint;
+
+    public float bulletSpeed = 20f;
+
+    public void Shoot()
+    {
+        GameObject bulletTemp = Instantiate(bulletPrefab, point.position, point.rotation);
+        Rigidbody2D rb = bulletTemp.GetComponent<Rigidbody2D>();
+        rb.AddForce(point.up * bulletSpeed, ForceMode2D.Impulse);
     }
 }
