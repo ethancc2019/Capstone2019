@@ -23,7 +23,7 @@ public class Shooting : MonoBehaviour
         {
             Shoot();
             ammoCount--;
-            Debug.Log(ammoCount.ToString());
+           // Debug.Log(ammoCount.ToString());
         }
     }
 
