@@ -21,7 +21,8 @@ public class BulletDetection : MonoBehaviour
 
         if (other.tag == "Finish")
         {
-            Destroy(gameObject);
+            Destroy(other.gameObject);
+            Debug.Log("Destroy bullet");
         }
 
     }
