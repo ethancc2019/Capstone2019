@@ -19,7 +19,6 @@ public class WallDetection : MonoBehaviour
 	}
     private void OnTriggerEnter(Collider other)
     {
-        //gameManager.GetComponent<GameManager>().decreaseScore();
-        //player.transform.position = spawnPointOne.transform.position;
+
     }
 }

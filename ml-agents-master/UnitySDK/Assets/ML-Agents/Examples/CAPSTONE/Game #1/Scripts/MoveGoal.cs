@@ -21,14 +21,5 @@ public class MoveGoal : MonoBehaviour
 
     public void OnTriggerEnter(Collider col)
     { 
-        if((col.transform.tag != "floor") && (col.transform.tag != "Player"))
-        {
-            Debug.Log("Collider transform tag: " + col.transform.tag);
-            if (col.transform == GetComponent<Game1Agent>().GetCurrentGoal().transform)
-            {
-                Debug.Log("Moving current goal.");
-                Move();
-            }
-        }
     }
 }

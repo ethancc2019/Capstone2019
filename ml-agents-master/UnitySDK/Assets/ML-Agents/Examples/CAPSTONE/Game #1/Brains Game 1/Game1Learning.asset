@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Game1Learning
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 72
+    vectorObservationSize: 115
     numStackedVectorObservations: 1
-    vectorActionSize: 030000000300000002000000
+    vectorActionSize: 03000000030000000200000003000000
     cameraResolutions: []
     vectorActionDescriptions:
+    - 
     - 
     - 
     - 

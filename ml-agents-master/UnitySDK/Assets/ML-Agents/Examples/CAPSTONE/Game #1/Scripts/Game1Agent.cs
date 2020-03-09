@@ -18,6 +18,8 @@ public class Game1Agent : Agent
     private List<GameObject> goals;
     private List<GameObject> stages;
     private RayPerception3D rayPerception;
+    private RayPerception3D rayPerceptionFloor;
+    private RayPerception3D rayPerceptionCeiling;
     private CharacterController controller;
     private GameObject currentGoal;
     private GameObject currentStage;
@@ -37,11 +39,13 @@ public class Game1Agent : Agent
     public float speed = 6.0F;
     public float jumpSpeed = 8.0F;
     public float gravity = 20.0F;
+    public float rotationSpeed = 1f;
     private Vector3 moveDirection = Vector3.zero;
     public override void AgentAction(float[] vectorAction, string textAction)
     {
         float forward = 0f;
         float strafe = 0f;
+        float rotate = 0f;
         float jump = vectorAction[2];
 
         //WASD Movement
@@ -56,7 +60,6 @@ public class Game1Agent : Agent
             //agent decides to move backwards
             forward = -1f;
         }
-
         if (vectorAction[1] == 1f)
         {
             //agent decides to move left
@@ -67,12 +70,21 @@ public class Game1Agent : Agent
             //agent decides to move right
             strafe = 1f;
         }
-
+        if (vectorAction[3] == 1f)
+        {
+            //agent decides to move left
+            rotate = -1f;
+        }
+        else if (vectorAction[3] == 2f)
+        {
+            //agent decides to move right
+            rotate = 1f;
+        }
         //if(vectorAction[2] > 0)
         //{
-            //AddReward(-2f / agentParameters.maxStep);
-            //Debug.Log("jumping: " + vectorAction[2]);
-       // }
+        //AddReward(-2f / agentParameters.maxStep);
+        //Debug.Log("jumping: " + vectorAction[2]);
+        // }
 
         // is the controller on the ground?
         if (controller.isGrounded)
@@ -100,29 +112,16 @@ public class Game1Agent : Agent
         //Applying gravity to the controller
         moveDirection.y -= (-Physics2D.gravity.y) * (fallMultiplier) * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
+        transform.Rotate(0, rotate * rotationSpeed, 0);
         newDistance = initialDistanceToGoal;
         initialDistanceToGoal = Vector3.Distance(transform.position, currentGoal.transform.position);
         if (initialDistanceToGoal < 1.0f)
         {
             Debug.Log("Goal Hit");
-            AddReward(1.0f);
+            AddReward(1);
             Done();
+            LevelReset();
         }
-        //Reward or penalty based on change in distance to goal.
-        //if(initialDistanceToGoal < newDistance)
-        //{
-        //    AddReward(0.1f/ agentParameters.maxStep);
-        //}
-        //else
-        //{
-        //    AddReward(-0.1f/ agentParameters.maxStep);
-        //}
-        //Slight Penalty for jumping too many times
-        //if(jumpCount > 5)
-        //{
-        //    AddReward(-0.025f / agentParameters.maxStep);
-        //}
-
 
         //Checks if agent falls off
         if (transform.position.y < closestFloor.transform.position.y)
@@ -134,6 +133,7 @@ public class Game1Agent : Agent
             //Score negation, punishment for falling off the edge.  
             GetComponent<PlayerMovement>().ResetPlayer();
             Done();
+            LevelReset();
             cumulativeDistance = Vector3.Distance(startingPosition, currentGoal.transform.position);
         }
         AddReward(-1f / agentParameters.maxStep);
@@ -141,46 +141,56 @@ public class Game1Agent : Agent
 
     public override void AgentReset()
     {
+        closestFloor = GetClosestFloor();
+    }
+    public void LevelReset()
+    {
         currentStage.transform.position = inactivePosition.transform.position;
-        //game1Area.ResetArea();
         int index = UnityEngine.Random.Range(0, goals.Count());
-        //currentGoal.GetComponent<MeshRenderer>().material = normal;
         currentStage = stages[index];
         currentStage.transform.position = levelPosition.transform.position;
-        //foreach (Transform spawnGoal in currentStage.transform)
-        //{
-        //    //Could just do index 0 and 1 but we would need to always make sure its goal then spawn and no other objects
-
-        //    if (spawnGoal.tag == "spawnGoal")
-        //    {
-        //        foreach (Transform child in spawnGoal.transform)
-        //        {
-        //            if (child.tag == "goal")
-        //            {
-        //                currentStage = child.gameObject;
-        //            }
-        //            else if (child.tag == "spawn")
-        //            {
-        //                spawnMarker = child.gameObject;
-        //            }
-        //        }
-        //    }
-        //}
         currentGoal = goals[index];
         currentGoal.GetComponent<MoveGoal>().Move();
         spawnMarker = spawns[index];
-        //currentGoal = currentStage.transform.get;
-        //currentGoal.GetComponent<MeshRenderer>().material = current;
-        //spawnMarker = spawns[index];
-
-        //CreateMarkers();
         transform.position = spawnMarker.transform.position;
-        // closestFloor.GetComponent<MeshRenderer>().material = normal;
         closestFloor = GetClosestFloor();
         initialDistanceToGoal = Vector3.Distance(currentGoal.transform.position, transform.position);
         jumpCount = 0;
-
-
+        List<GameObject> walls = new List<GameObject>();
+        walls = GetWalls();
+        foreach (GameObject wall in walls)
+        {
+            if (currentGoal.GetComponent<MeshRenderer>().bounds.Intersects(wall.GetComponent<MeshRenderer>().bounds))
+            {
+                //Debug.Log("Goal intersects walls");
+                LevelReset();
+                break;
+            }
+        }
+        moveDirection = Vector3.zero;
+    }
+    public List<GameObject> GetWalls()
+    {
+        GameObject agentArena = GameObject.Find("SimpleLevels " + agentNum);
+        List<GameObject> wallList = new List<GameObject>();
+        foreach (Transform walls in currentStage.transform)
+        {
+            if (walls.name == "Walls")
+            {
+                foreach (Transform wall in walls)
+                {
+                    if (wall.tag == "wall")
+                    {
+                        wallList.Add(wall.gameObject);
+                    }
+                }
+            }
+            else if (walls.tag == "wall")
+            {
+                wallList.Add(walls.gameObject);
+            }
+        }
+        return wallList;
     }
     public override void CollectObservations()
     {
@@ -192,13 +202,13 @@ public class Game1Agent : Agent
         //AddVectorObs((currentGoal.transform.position - transform.position).normalized);
         AddVectorObs(currentGoal.transform.position);
         //Agent's direction
-        //AddVectorObs(transform.forward);
+        AddVectorObs(transform.forward);
 
         //TODO: Floor Detection
         //center position of floor
-        AddVectorObs(closestFloor.transform.position);
+        //AddVectorObs(closestFloor.transform.position);
         //current floor dimensions based on what the Collider component for the gameObject contains
-        AddVectorObs(closestFloor.GetComponent<Collider>().bounds.size);
+        //AddVectorObs(closestFloor.GetComponent<Collider>().bounds.size);
         //compare x pos to left edge of floor
         //float playerX = transform.position.x;
         //float playerZ = transform.position.z;
@@ -230,22 +240,28 @@ public class Game1Agent : Agent
         //endOffset: ending offset from where to perceive from
 
         float rayDistance = 20f;
-        float[] rayAngles = { 0f, 45f, 90f, 135f, 180f, 225f, 270f, 315f,};
-        string[] detectableObjects = { "wall", "goal", "platform" };
+        float[] rayAngles = {45f, 60f, 75f, 90f, 105f, 120f, 135f};
+        string[] detectableObjects = { "wall", "goal", "platform", "floor" };
         AddVectorObs(rayPerception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
 
+        float floorDistance = 20f;
+        float[] floorAngles = { 75f, 82.5f, 90f, 97.5f, 105f };
+        string[] detectableFloors = { "floor", "platform", "goal", "wall" };
+        AddVectorObs(rayPerceptionFloor.Perceive(floorDistance, floorAngles, detectableFloors, 0f, -4f));
 
-        //Not Needed for now
-        float floorDistance = 6f;
-        float[] floorAngles = { 0f,90f,180f,270f};
-        string[] detectableFloors = { "floor", "platform" };
-        AddVectorObs(rayPerception.Perceive(floorDistance, floorAngles, detectableFloors, 0f, -2f));
+        float ceilingDistance = 20f;
+        float[] ceilingAngles = {75f, 82.5f, 90f, 97.5f, 105f };
+        string[] detectableCeilings = { "floor", "platform", "goal", "wall" };
+        AddVectorObs(rayPerceptionCeiling.Perceive(ceilingDistance, ceilingAngles, detectableCeilings, 0f, 4f));
     }
     public override void InitializeAgent()
     {
         //controller = GetComponent<CharacterController>();
         startingPosition = transform.position;
         rayPerception = GetComponent<RayPerception3D>();
+        rayPerceptionFloor = GetComponent<RayPerception3D>();
+        rayPerceptionCeiling = GetComponent<RayPerception3D>();
+
         controller = GetComponent<CharacterController>();
 
         spawns = new List<GameObject>();
@@ -356,17 +372,11 @@ public class Game1Agent : Agent
             //cumulativeDistance += Vector3.Distance(startingPosition, currentGoal.transform.position);
             AddReward(-1);
             Done();
+            LevelReset();
         }
         //hitting a goal is good!
         else if (collision.transform.CompareTag("goal"))
         {
-            //AddReward(1f);
-            //Debug.Log("Goal hit! 0.5f added");
-            //String rewardStr = String.Format("{0}: Reward currently: {1} ", gameObject.name, GetCumulativeReward());
-            //Debug.Log(rewardStr);
-            ////Debug.Log("My current goal was at: " + currentGoal.transform.position);
-            //cumulativeDistance += Vector3.Distance(startingPosition, currentGoal.transform.position);
-            //AgentReset();
 
         }
         //hitting a platform is good
