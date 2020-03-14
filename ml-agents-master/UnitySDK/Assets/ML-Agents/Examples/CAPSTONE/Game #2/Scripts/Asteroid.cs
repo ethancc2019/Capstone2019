@@ -22,7 +22,7 @@ public class Asteroid : MonoBehaviour {
 	//will be executed once at script start
 	void Start()
 	{
-        playerGameObject = GameObject.FindGameObjectWithTag("Player");
+        playerGameObject = transform.parent.gameObject;
 	    lastPlayerPosition = playerGameObject.transform.position;
 		//reference to Rigidbody2D
 	    startLocationVector2 = transform.position;
@@ -36,14 +36,6 @@ public class Asteroid : MonoBehaviour {
 		maxRotationSpeed = 50;
 		//rotSpeed = Random.insideUnitSphere * maxRotationSpeed;
 	}
-
-
-
-	//// Update is called once per frame
-	//void Update () {
-
-		
-	//}
 
     void Update()
     {
@@ -65,7 +57,6 @@ public class Asteroid : MonoBehaviour {
 
         if (other.gameObject.CompareTag("asteroid_barrier"))
         {
-            Debug.Log("Goal hit!");
             Destroy(gameObject);
             //spawnPointScript.activePowerups--;
         }

@@ -8,16 +8,20 @@ public class Game2Agent : Agent
 {
     private RayPerception2D rayPerception;
 
+    
     public Text scoreText;
     public int score = 0;
     public GameObject goal;
 
-    private GameObject spawnPointGameObject;
+    public GameObject asteroidControllerObject;
+    private AsteroidController asteroidController;
+    public GameObject spawnPointGameObject;
     private PowerUpSpawnner spawnPointScript;
 
     public GameObject bulletPrefab;
     public Transform point;
     private Rigidbody2D rb;
+    public float bulletSpeed = 20f;
 
     private Vector2 movement;
     private Vector2 mousePosition;
@@ -76,10 +80,10 @@ public class Game2Agent : Agent
         Mathf.Clamp(rb.rotation, 0, 360);
         rb.MovePosition(rb.position + movement * speed * Time.deltaTime);
 
-        Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+        Vector3 pos = cam.WorldToViewportPoint(transform.position);
         pos.x = Mathf.Clamp01(pos.x);
         pos.y = Mathf.Clamp01(pos.y);
-        transform.position = Camera.main.ViewportToWorldPoint(pos);
+        transform.position = cam.ViewportToWorldPoint(pos);
     }
 
     public override void CollectObservations()
@@ -98,23 +102,25 @@ public class Game2Agent : Agent
 
     public override void AgentReset()
     {
-
-
+        asteroidController.ResetAsteroids();
+        this.transform.position = transform.parent.transform.position;
+        score = 0;
     }
 
     public override void InitializeAgent()
     {
-        scoreText = GameObject.FindGameObjectWithTag("score_text").GetComponent<Text>();
-        spawnPointGameObject = GameObject.FindGameObjectWithTag("spawn_point_container");
+        transform.position = transform.parent.transform.position;
+        Debug.Log("Agent Position " + transform.position);
         spawnPointScript = spawnPointGameObject.GetComponent<PowerUpSpawnner>();
         rb = GetComponent<Rigidbody2D>();
         shootTime = 0f;
         rayPerception = GetComponent<RayPerception2D>();
+        asteroidController = asteroidControllerObject.GetComponent<AsteroidController>();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (other.gameObject.CompareTag("goal"))
+        if (collider.gameObject.CompareTag("goal"))
         {
             Debug.Log("Goal hit!");
             this.score++;
@@ -123,9 +129,10 @@ public class Game2Agent : Agent
             //spawnPointScript.activePowerups--;
         }
 
-        if (other.gameObject.CompareTag("asteroid"))
+        if (collider.gameObject.CompareTag("asteroid"))
         {
-            AddReward(-1f);
+            Destroy(collider.gameObject);
+            Done();
             Debug.Log("Asteroid hit!");
             this.score--;
             //Either kill player here or decrement his score
@@ -138,14 +145,6 @@ public class Game2Agent : Agent
         Mathf.Clamp(shootTime, 0, 0.5f);
 
     }
-
-
-
-
-
-    public Transform firePoint;
-
-    public float bulletSpeed = 20f;
 
     public void Shoot()
     {

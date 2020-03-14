@@ -1191,7 +1191,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6300641440872729946}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!1 &6300641440882515864
 GameObject:
   m_ObjectHideFlags: 0
@@ -1540,12 +1540,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6300641440947734427}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11, y: 50, z: 152.03249}
-  m_LocalScale: {x: 115.880295, y: 107.75543, z: 2.84705}
+  m_LocalPosition: {x: 0, y: 0, z: 0.00013282601}
+  m_LocalScale: {x: 0.961606, y: 0.89418375, z: 0.023625592}
   m_Children:
   - {fileID: 6300641441598967314}
-  m_Father: {fileID: 6300641442246501692}
-  m_RootOrder: 1
+  m_Father: {fileID: 8031314208761311327}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &444169771668294286
 MonoBehaviour:
@@ -1570,12 +1570,13 @@ MonoBehaviour:
   scoreText: {fileID: 6300641440796243588}
   score: 0
   goal: {fileID: 1393099436906762, guid: 79711b043082f9841aa7cf672ef09e77, type: 3}
+  asteroidControllerObject: {fileID: 6300641442048533890}
+  spawnPointGameObject: {fileID: 6300641442117545397}
   bulletPrefab: {fileID: 1049884114466022, guid: 2897ca0462040d44da59c0cc433ca51e,
     type: 3}
   point: {fileID: 6300641441598967314}
-  cam: {fileID: 0}
-  firePoint: {fileID: 0}
   bulletSpeed: 20
+  cam: {fileID: 6300641440872729945}
 --- !u!212 &6300641440947734425
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2715,7 +2716,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6300641442246501692}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3024,6 +3025,8 @@ MonoBehaviour:
   asteroids:
   - {fileID: 1457815118711868, guid: e566b2ad40729824ea9546ec3dbd83ce, type: 3}
   - {fileID: 1172687384403420, guid: a383ec3eca9e7aa4dab3a2deed1639a9, type: 3}
+  player: {fileID: 6300641440947734427}
+  waveText: {fileID: 6300641442424873533}
   asteroidSpawns:
   - {fileID: 6300641440602823081}
   - {fileID: 6300641441309742856}
@@ -3607,8 +3610,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 8031314208761311327}
   - {fileID: 6300641441745153169}
-  - {fileID: 6300641440947734426}
   - {fileID: 6300641441458344755}
   - {fileID: 6300641440796243589}
   - {fileID: 6300641442117545396}
@@ -4169,3 +4172,34 @@ RectTransform:
   m_AnchoredPosition: {x: -985, y: -906}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &7903347005749523351
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8031314208761311327}
+  m_Layer: 0
+  m_Name: Spawn
+  m_TagString: spawn
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8031314208761311327
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7903347005749523351}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11, y: 50, z: 152.03}
+  m_LocalScale: {x: 120.50705, y: 120.50705, z: 120.50705}
+  m_Children:
+  - {fileID: 6300641440947734426}
+  m_Father: {fileID: 6300641442246501692}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

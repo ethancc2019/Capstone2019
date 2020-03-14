@@ -7,6 +7,6 @@ public class Game2Academy : Academy
 {
     public override void AcademyReset()
     {
-        base.AcademyReset();
+
     }
 }

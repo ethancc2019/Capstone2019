@@ -46,6 +46,7 @@ TagManager:
   - barrier
   - Player_2
   - life
+  - spawn
   layers:
   - Default
   - TransparentFX

@@ -16,12 +16,14 @@ public class AsteroidController : MonoBehaviour
     private float max = 0.8f;
     private float asteroidSpeed = 5f;
 
+    public GameObject player;
+
 
 
     private int waveNum;
     private int numOfAsteroids;
 
-    private Text waveText;
+    public Text waveText;
 
 	public GameObject[] asteroidSpawns;
     // Use this for initialization
@@ -29,7 +31,6 @@ public class AsteroidController : MonoBehaviour
     {
         numOfAsteroids = 0;
         waveNum = 1;
-        waveText = GameObject.FindGameObjectWithTag("wave_text").GetComponent<Text>();
         waveText.text = waveNum.ToString();
 
     }
@@ -41,7 +42,6 @@ public class AsteroidController : MonoBehaviour
 	    if (spawn_time <= 0)
 	    {
 	        numOfAsteroids++;
-            Debug.Log("Spawning " + numOfAsteroids.ToString() + " asteroids");
             SpawnAsteroids();
 	    }
         //asteroid_temp.GetComponent<Rigidbody2D>().AddForce(transform.forward * 500);
@@ -49,8 +49,6 @@ public class AsteroidController : MonoBehaviour
 
     public void SpawnAsteroids()
     {
-
-        Debug.Log("Asteroid incoming!");
 
         //var ranAsteroid = Random.Range(0, asteroids.Length);
         //asteroid_temp = asteroids[ranAsteroid];
@@ -62,7 +60,7 @@ public class AsteroidController : MonoBehaviour
             var ranAsteroid = Random.Range(0, asteroids.Length); //Get a random Asteroid
             asteroid_temp = asteroids[ranAsteroid]; //Instantiate temp asteroid for Destroy() method
             var spawnLoc = asteroidSpawns[ran].transform.position; //Get random spawnLocation
-            Instantiate(asteroid_temp, spawnLoc, Quaternion.identity); //Make the asteroid
+            Instantiate(asteroid_temp, spawnLoc, Quaternion.identity, player.transform); //Make the asteroid
 
         }
 
@@ -71,6 +69,13 @@ public class AsteroidController : MonoBehaviour
 
         waveNum++;// Increase wave
         //update text
+        waveText.text = waveNum.ToString();
+    }
+    
+    public void ResetAsteroids()
+    {
+        numOfAsteroids = 0;
+        waveNum = 1;
         waveText.text = waveNum.ToString();
     }
 }

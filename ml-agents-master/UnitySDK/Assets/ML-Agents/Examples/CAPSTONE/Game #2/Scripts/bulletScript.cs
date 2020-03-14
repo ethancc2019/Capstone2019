@@ -16,7 +16,6 @@ public class bulletScript : MonoBehaviour
         else if(collider.tag == "Finish")
         {
             Destroy(gameObject);
-            Debug.Log("Destroy Bullet");
         }
     }
 }

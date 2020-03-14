@@ -17,12 +17,10 @@ public class BulletDetection : MonoBehaviour
 	}
     private void OnCollisionEnter2d(Collider other)
     {
-        Debug.Log("Hit the boundary");
 
         if (other.tag == "Finish")
         {
             Destroy(other.gameObject);
-            Debug.Log("Destroy bullet");
         }
 
     }
