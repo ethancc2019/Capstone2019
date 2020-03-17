@@ -13,29 +13,56 @@ public class Asteroid : MonoBehaviour {
 	private float maxRotationSpeed;
 	//private Vector3 rotSpeed;
 	public float degreesPerSec = 360f;
+    private Vector2 lastPlayerPosition;
 
+
+    private GameObject playerGameObject;
+    private Vector2 startLocationVector2;
 
 	//will be executed once at script start
 	void Start()
 	{
+        playerGameObject = transform.parent.gameObject;
+	    lastPlayerPosition = playerGameObject.transform.position;
 		//reference to Rigidbody2D
+	    startLocationVector2 = transform.position;
 		rb = GetComponent<Rigidbody2D>();
-		//declare direction vector for moving (this will be along the Y-axe)
-		Vector3 move = new Vector3(0, -1, 0);
-		//change velocity (moving speed and direction)
-		rb.velocity = move * speed;
+	    Vector2 tempDir = (Vector2)playerGameObject.transform.position - (Vector2)transform.position;
+
+        rb.AddForce(tempDir * speed,ForceMode2D.Force);
+		//declare direction vector for moving (this will be along the Y-axis)
+		
 
 		maxRotationSpeed = 50;
 		//rotSpeed = Random.insideUnitSphere * maxRotationSpeed;
 	}
 
+    void Update()
+    {
+        float rotAmount = degreesPerSec * Time.deltaTime;
+        float curRot = transform.localRotation.eulerAngles.z;
+        //transform.localRotation = Quaternion.Euler(new Vector3(0, 0, curRot + rotAmount));
+        
+       // rb.AddForce(lastPlayerPosition.normalized * 1000, ForceMode2D.Force);
 
 
-	// Update is called once per frame
-	void Update () {
+        //transform.position = Vector2.MoveTowards(startLocationVector2, lastPlayerPosition, 5f);
+        //transform.position = Vector2.Lerp(transform.position, lastPlayerPosition, 5f);
 
-		float rotAmount = degreesPerSec * Time.deltaTime;
-		float curRot = transform.localRotation.eulerAngles.z;
-		transform.localRotation = Quaternion.Euler(new Vector3(0, 0, curRot + rotAmount));
-	}
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+
+        if (other.gameObject.CompareTag("asteroid_barrier"))
+        {
+            Destroy(gameObject);
+            //spawnPointScript.activePowerups--;
+        }
+
+        
+    }
+
+
 }

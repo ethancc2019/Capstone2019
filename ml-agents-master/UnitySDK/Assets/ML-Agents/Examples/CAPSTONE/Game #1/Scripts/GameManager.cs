@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
 
-    public Text scoreText;
+    //public Text scoreText;
     public GameObject player;
     public static int score = 0;
 
@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-	    scoreText.text = score.ToString();
+	    //scoreText.text = score.ToString();
 	}
 
     public void increaseScore()
