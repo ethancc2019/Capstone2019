@@ -232,6 +232,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SimpleLevels (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 138675268192447248, guid: c11216dfbf5ff4c4089752e8c130378c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 138675268192447255, guid: c11216dfbf5ff4c4089752e8c130378c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -401,6 +406,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SimpleLevels (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 138675268192447248, guid: c11216dfbf5ff4c4089752e8c130378c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 138675268192447255, guid: c11216dfbf5ff4c4089752e8c130378c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -506,6 +516,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SimpleLevels (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 138675268192447248, guid: c11216dfbf5ff4c4089752e8c130378c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 138675268192447255, guid: c11216dfbf5ff4c4089752e8c130378c,
         type: 3}
@@ -714,6 +729,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SimpleLevels (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 138675268192447248, guid: c11216dfbf5ff4c4089752e8c130378c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 138675268192447255, guid: c11216dfbf5ff4c4089752e8c130378c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -853,6 +873,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SimpleLevels (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 138675268192447248, guid: c11216dfbf5ff4c4089752e8c130378c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 138675268192447255, guid: c11216dfbf5ff4c4089752e8c130378c,
         type: 3}
@@ -1203,6 +1228,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SimpleLevels (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 138675268192447248, guid: c11216dfbf5ff4c4089752e8c130378c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 138675268192447255, guid: c11216dfbf5ff4c4089752e8c130378c,
         type: 3}
@@ -1636,6 +1666,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SimpleLevels (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 138675268192447248, guid: c11216dfbf5ff4c4089752e8c130378c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 138675268192447255, guid: c11216dfbf5ff4c4089752e8c130378c,
         type: 3}
