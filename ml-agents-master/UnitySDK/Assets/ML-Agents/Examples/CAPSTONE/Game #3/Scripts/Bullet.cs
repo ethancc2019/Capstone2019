@@ -17,6 +17,10 @@ public class Bullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else if (collision.collider.CompareTag("Player_2"))
+        {
+            Debug.Log("Hit another Player!");
+        }
     }
 
 }

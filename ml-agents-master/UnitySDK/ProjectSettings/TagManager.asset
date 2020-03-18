@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - agent
+  - iWall
+  - banana
+  - wall
+  - badBanana
+  - pit
+  - frozenAgent
+  - ball
+  - redGoal
+  - blueGoal
+  - blueAgent
+  - redAgent
+  - redBlock
+  - goal
+  - ground
+  - orangeBlock
+  - block
+  - switchOff
+  - pyramid
+  - switchOn
+  - stone
+  - player
+  - start
+  - boundry
+  - score_text
+  - spawn_point_container
+  - target
+  - walkableSurface
+  - asteroid
+  - bullet
+  - platform
+  - floor
+  - spawn
+  - spawnGoal
+  - stage
+  - move
+  - asteroid_barrier
+  - timer_text
+  - wave_text
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - invisible
+  - ball
+  - goalieWall
+  - goalie
+  - strikerWall
+  - striker
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Game 1
+    uniqueID: 2423213997
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
