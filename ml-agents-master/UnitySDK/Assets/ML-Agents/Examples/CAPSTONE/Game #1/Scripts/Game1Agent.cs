@@ -2,6 +2,8 @@
 using MLAgents;
 using System.Linq;
 using System;
+using System.Collections.Generic;
+
 public class Game1Agent : Agent
 {
     // Start is called before the first frame update
@@ -19,11 +21,8 @@ public class Game1Agent : Agent
     private RayPerception3D rayPerceptionCeiling;
     private CharacterController controller;
     private GameObject currentGoal;
-<<<<<<< HEAD
     private GameObject currentStage;
-=======
     private GameObject floorObj;
->>>>>>> 3362118d98a9e480d750d92a293a1865d7d550bb
     private TextMesh cumulativeRewardText;
     private GameObject closestFloor;
     private float initialDistanceToGoal;
@@ -356,10 +355,7 @@ public class Game1Agent : Agent
             {
                 shortestDistance = distance;
                 closestFloor = floor;
-<<<<<<< HEAD
-=======
                 break;
->>>>>>> 3362118d98a9e480d750d92a293a1865d7d550bb
                 
             }
         }

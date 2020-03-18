@@ -30,6 +30,9 @@ public class Asteroid : MonoBehaviour {
 	    Vector2 tempDir = (Vector2)playerGameObject.transform.position - (Vector2)transform.position;
 
         rb.AddForce(tempDir * speed,ForceMode2D.Force);
+        float randomSize = Random.Range(0.2f, 1f);
+        transform.localScale = new Vector3(randomSize, randomSize, randomSize);
+
 		//declare direction vector for moving (this will be along the Y-axis)
 		
 
