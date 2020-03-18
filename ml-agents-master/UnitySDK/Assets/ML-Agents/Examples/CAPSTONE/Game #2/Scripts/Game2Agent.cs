@@ -26,7 +26,7 @@ public class Game2Agent : Agent
     private Vector2 movement;
     private Vector2 mousePosition;
     public Camera cam;
-    public static float speed = 5f;
+    public static float speed = 0.5f;
     public static float turnSpeed = 10f;
     private float shootTime;
 
@@ -78,7 +78,8 @@ public class Game2Agent : Agent
             rb.rotation += -1 * turnSpeed;
         }
         Mathf.Clamp(rb.rotation, 0, 360);
-        rb.MovePosition(rb.position + movement * speed * Time.deltaTime);
+        Debug.Log(rb.velocity);
+        rb.AddForce(movement * speed * Time.deltaTime);
 
         Vector3 pos = cam.WorldToViewportPoint(transform.position);
         pos.x = Mathf.Clamp01(pos.x);
@@ -143,7 +144,6 @@ public class Game2Agent : Agent
     {
         shootTime -= Time.fixedDeltaTime;
         Mathf.Clamp(shootTime, 0, 0.5f);
-
     }
 
     public void Shoot()
