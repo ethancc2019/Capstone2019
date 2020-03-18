@@ -29,6 +29,7 @@ public class Game2Agent : Agent
     public static float speed = 0.5f;
     public static float turnSpeed = 10f;
     private float shootTime;
+    private float previousX, previousY;
 
     public override void AgentAction(float [] vectorAction, string textAction)
     {
@@ -78,9 +79,10 @@ public class Game2Agent : Agent
             rb.rotation += -1 * turnSpeed;
         }
         Mathf.Clamp(rb.rotation, 0, 360);
-        Debug.Log(rb.velocity);
-        rb.AddForce(movement * speed * Time.deltaTime);
-
+        float currentSpeed = GetSpeed();
+        Debug.Log(currentSpeed);
+        Vector2 moveDir = movement * speed;
+        rb.AddForce(movement * speed * (Time.deltaTime) + -(rb.velocity * Time.deltaTime/50));
         Vector3 pos = cam.WorldToViewportPoint(transform.position);
         pos.x = Mathf.Clamp01(pos.x);
         pos.y = Mathf.Clamp01(pos.y);
@@ -151,5 +153,13 @@ public class Game2Agent : Agent
         GameObject bulletTemp = Instantiate(bulletPrefab, point.position, point.rotation);
         Rigidbody2D rb = bulletTemp.GetComponent<Rigidbody2D>();
         rb.AddForce(point.up * bulletSpeed, ForceMode2D.Impulse);
+    }
+    
+    private float GetSpeed()
+    {
+        float speed = Mathf.Sqrt(Mathf.Abs(transform.position.x - previousX) + Mathf.Abs(transform.position.y - previousY));
+        previousX = transform.position.x;
+        previousY = transform.position.y;
+        return speed;
     }
 }
