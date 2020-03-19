@@ -18,6 +18,8 @@ public class AsteroidController : MonoBehaviour
 
     public GameObject player;
 
+    private List<GameObject> activeAsteroids;
+
 
 
     private int waveNum;
@@ -61,7 +63,6 @@ public class AsteroidController : MonoBehaviour
             asteroid_temp = asteroids[ranAsteroid]; //Instantiate temp asteroid for Destroy() method
             var spawnLoc = asteroidSpawns[ran].transform.position; //Get random spawnLocation
             Instantiate(asteroid_temp, spawnLoc, Quaternion.identity, player.transform); //Make the asteroid
-
         }
 
         //Reset the spawn timer
@@ -77,5 +78,24 @@ public class AsteroidController : MonoBehaviour
         numOfAsteroids = 0;
         waveNum = 1;
         waveText.text = waveNum.ToString();
+        List<GameObject> activeAsteroids = GetAllTagged(player.transform, "asteroid");
+        foreach(GameObject active in activeAsteroids)
+        {
+            Destroy(active);
+        }
+    }
+    private List<GameObject> GetAllTagged(Transform parent, string tag)
+    {
+        //searches down hierarchy for specific tagged GameObjs
+        List<GameObject> arrayOfTagged = new List<GameObject>();
+        foreach (Transform child in parent)
+        {
+            if (child.gameObject.tag == tag)
+            {
+                arrayOfTagged.Add(child.gameObject);
+            }
+            GetAllTagged(child, tag);
+        }
+        return arrayOfTagged;
     }
 }

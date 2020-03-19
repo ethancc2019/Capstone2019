@@ -80,7 +80,7 @@ public class Game2Agent : Agent
         }
         Mathf.Clamp(rb.rotation, 0, 360);
         float currentSpeed = GetSpeed();
-        Debug.Log(currentSpeed);
+        //Debug.Log(currentSpeed);
         Vector2 moveDir = movement * speed;
         rb.AddForce(movement * speed * (Time.deltaTime) + -(rb.velocity * Time.deltaTime/50));
         Vector3 pos = cam.WorldToViewportPoint(transform.position);
@@ -105,9 +105,13 @@ public class Game2Agent : Agent
 
     public override void AgentReset()
     {
+        score = 0;
+    }
+
+    public void LevelReset()
+    {
         asteroidController.ResetAsteroids();
         this.transform.position = transform.parent.transform.position;
-        score = 0;
     }
 
     public override void InitializeAgent()
@@ -135,6 +139,7 @@ public class Game2Agent : Agent
         if (collider.gameObject.CompareTag("asteroid"))
         {
             Destroy(collider.gameObject);
+            LevelReset();
             Done();
             Debug.Log("Asteroid hit!");
             this.score--;
