@@ -6,7 +6,8 @@ public class Asteroid : MonoBehaviour {
 
 
 	//variable for flying speed
-	public float speed;
+	public static float speed;
+    public static float size;
 	//reference for Rigidbody2D
 	Rigidbody2D rb;
 
@@ -30,13 +31,12 @@ public class Asteroid : MonoBehaviour {
 	    Vector2 tempDir = (Vector2)playerGameObject.transform.position - (Vector2)transform.position;
 
         rb.AddForce(tempDir * speed,ForceMode2D.Force);
-        float randomSize = Random.Range(0.2f, 2f);
+        float randomSize = Random.Range(size, 1.5f);
         transform.localScale = new Vector3(randomSize, randomSize, randomSize);
 		//declare direction vector for moving (this will be along the Y-axis)
 		
-
 		maxRotationSpeed = 50;
-		//rotSpeed = Random.insideUnitSphere * maxRotationSpeed;
+        Debug.Log("Speed: " + speed);
 	}
 
     void Update()

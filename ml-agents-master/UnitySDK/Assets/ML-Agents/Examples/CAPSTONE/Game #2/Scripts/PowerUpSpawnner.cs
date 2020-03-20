@@ -13,8 +13,10 @@ public class PowerUpSpawnner : MonoBehaviour
 
 	private GameObject tempPowerup;
     public int ActivePowerups = 1;
-	// Use this for initialization
-	void Start ()
+    public static float size = 1600;
+
+    // Use this for initialization
+    void Start ()
 	{
 	    //ActivePowerups = 0;
         spawnPowerUp();
@@ -31,6 +33,8 @@ public class PowerUpSpawnner : MonoBehaviour
     {
         int randomPos = Random.Range(0, spawnPoints.Length - 1);
 		tempPowerup = Instantiate(powerUpPrefab, spawnPoints[randomPos].transform.position,Quaternion.identity,gameObject.transform);
+        tempPowerup.gameObject.transform.localScale = new Vector3(size, size, 1);
+        
         currentPosition = spawnPoints[randomPos].transform.position;
         ActivePowerups++;
     }
