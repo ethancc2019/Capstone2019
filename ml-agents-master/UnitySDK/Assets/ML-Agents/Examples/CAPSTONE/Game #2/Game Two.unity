@@ -157,7 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   broadcastHub:
     broadcastingBrains:
-    - {fileID: 11400000, guid: bf1c4cc382605a94b9deece1889b6b4d, type: 2}
+    - {fileID: 11400000, guid: 799342bb690cb464c815832f58817da7, type: 2}
     _brainsToControl:
     - {fileID: 11400000, guid: 799342bb690cb464c815832f58817da7, type: 2}
   maxSteps: 5000
@@ -165,7 +165,7 @@ MonoBehaviour:
     width: 80
     height: 80
     qualityLevel: 1
-    timeScale: 1
+    timeScale: 25
     targetFrameRate: -1
   inferenceConfiguration:
     width: 1280
@@ -577,7 +577,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &555582188
 Transform:
   m_ObjectHideFlags: 0

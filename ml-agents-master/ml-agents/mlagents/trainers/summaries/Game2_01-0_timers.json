@@ -1,74 +1,97 @@
 {
   "name": "root",
-  "total": 51.3401821,
+  "gauges": [
+    {
+      "name": "Game2Learning.mean_reward",
+      "value": -0.6,
+      "min": -1.0,
+      "max": -0.2857142857142857,
+      "count": 15
+    }
+  ],
+  "total": 725.907156,
   "count": 1,
-  "self": 36.23916299999976,
+  "self": 19.418411100003937,
   "children": [
     {
       "name": "TrainerController.advance",
-      "total": 15.101019100000237,
-      "count": 2001,
-      "self": 1.612992600000318,
+      "total": 706.488744899996,
+      "count": 76021,
+      "self": 63.0096643999907,
       "children": [
         {
           "name": "env_step",
-          "total": 13.488026499999918,
-          "count": 2001,
-          "self": 11.727115600000019,
+          "total": 578.1634194000053,
+          "count": 76021,
+          "self": 511.35332720000446,
           "children": [
             {
               "name": "SubprocessEnvManager._take_step",
-              "total": 1.7427443999999284,
-              "count": 2001,
-              "self": 0.02765839999982944,
+              "total": 66.06890009998739,
+              "count": 76021,
+              "self": 1.185738100005267,
               "children": [
                 {
                   "name": "PPOPolicy.evaluate",
-                  "total": 1.715086000000099,
-                  "count": 2001,
-                  "self": 1.715086000000099
+                  "total": 64.88316199998212,
+                  "count": 76021,
+                  "self": 64.88316199998212
                 }
               ]
             },
             {
               "name": "workers",
-              "total": 0.01816649999997111,
-              "count": 2000,
+              "total": 0.7411921000134534,
+              "count": 76020,
               "self": 0.0,
               "children": [
                 {
                   "name": "worker_root",
-                  "total": 45.95690620000002,
-                  "count": 2000,
+                  "total": 717.9333718999959,
+                  "count": 76020,
                   "is_parallel": true,
-                  "self": 35.519549599999905,
+                  "self": 256.9750190999939,
                   "children": [
                     {
                       "name": "UnityEnvironment.step",
-                      "total": 10.437356600000111,
-                      "count": 2000,
+                      "total": 460.958352800002,
+                      "count": 76005,
                       "is_parallel": true,
-                      "self": 0.9873239000004865,
+                      "self": 38.92630410001664,
                       "children": [
                         {
                           "name": "UnityEnvironment._generate_step_input",
-                          "total": 0.20759389999980726,
-                          "count": 2000,
+                          "total": 8.14483039998592,
+                          "count": 76005,
                           "is_parallel": true,
-                          "self": 0.20759389999980726
+                          "self": 8.14483039998592
                         },
                         {
                           "name": "communicator.exchange",
-                          "total": 9.242438799999817,
-                          "count": 2000,
+                          "total": 413.88721829999946,
+                          "count": 76005,
                           "is_parallel": true,
-                          "self": 9.242438799999817
+                          "self": 413.88721829999946
                         }
                       ]
                     }
                   ]
                 }
               ]
+            }
+          ]
+        },
+        {
+          "name": "update_policy",
+          "total": 65.31566110000003,
+          "count": 29,
+          "self": 30.22981969999916,
+          "children": [
+            {
+              "name": "PPOPolicy.update",
+              "total": 35.08584140000087,
+              "count": 1740,
+              "self": 35.08584140000087
             }
           ]
         }

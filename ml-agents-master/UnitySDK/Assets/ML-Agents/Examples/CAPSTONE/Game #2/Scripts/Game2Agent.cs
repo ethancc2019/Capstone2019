@@ -115,7 +115,6 @@ public class Game2Agent : Agent
     public override void InitializeAgent()
     {
         transform.position = transform.parent.transform.position;
-        Debug.Log("Agent Position " + transform.position);
         spawnPointScript = spawnPointGameObject.GetComponent<PowerUpSpawnner>();
         rb = GetComponent<Rigidbody2D>();
         shootTime = 0f;
@@ -129,7 +128,6 @@ public class Game2Agent : Agent
         {
             this.score++;
             AddReward(1f);
-            Debug.Log(GetCumulativeReward());
             spawnPointScript.DestoryPowerUp();
             //spawnPointScript.activePowerups--;
             
@@ -139,7 +137,6 @@ public class Game2Agent : Agent
         {
             Destroy(collider.gameObject);
             AddReward(-1f);
-            Debug.Log(GetCumulativeReward());
             LevelReset();
             Done();
             this.score--;
