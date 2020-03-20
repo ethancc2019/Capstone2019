@@ -79,7 +79,7 @@ public class Game2Agent : Agent
             rb.rotation += -1 * turnSpeed;
         }
         Mathf.Clamp(rb.rotation, 0, 360);
-        rb.AddForce(movement * speed * (Time.deltaTime) + -(rb.velocity * Time.deltaTime/50));
+        rb.AddForce(movement * speed/30 + -(rb.velocity * Time.deltaTime/50));
         Vector3 pos = cam.WorldToViewportPoint(transform.position);
         pos.x = Mathf.Clamp01(pos.x);
         pos.y = Mathf.Clamp01(pos.y);
