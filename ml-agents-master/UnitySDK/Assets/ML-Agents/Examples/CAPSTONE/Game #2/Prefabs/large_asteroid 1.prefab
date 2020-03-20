@@ -222,6 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  size: 1
   degreesPerSec: 50
 --- !u!114 &114191404040409622
 MonoBehaviour:
