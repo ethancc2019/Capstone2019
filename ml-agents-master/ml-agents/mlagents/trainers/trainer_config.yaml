@@ -295,3 +295,13 @@ Game1Learning:
     hidden_units: 256
     num_layers: 3
     beta: 1.0e-2
+    
+Game2Learning:
+    use_curiosity: false
+    max_steps: 2.0e5
+    buffer_size: 20480
+    batch_size: 1024
+    summary_freq: 5000
+    hidden_units: 256
+    num_layers: 3
+    beta: 1.0e-2

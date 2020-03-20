@@ -26,7 +26,7 @@ public class Game2Agent : Agent
     private Vector2 movement;
     private Vector2 mousePosition;
     public Camera cam;
-    public static float speed = 0.15f;
+    public static float speed = 0.10f;
     public static float turnSpeed = 10f;
     private float shootTime;
     private float previousX, previousY;
