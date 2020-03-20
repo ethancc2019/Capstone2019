@@ -26,7 +26,7 @@ public class Game2Agent : Agent
     private Vector2 movement;
     private Vector2 mousePosition;
     public Camera cam;
-    public static float speed = 0.5f;
+    public static float speed = 0.15f;
     public static float turnSpeed = 10f;
     private float shootTime;
     private float previousX, previousY;
@@ -79,9 +79,6 @@ public class Game2Agent : Agent
             rb.rotation += -1 * turnSpeed;
         }
         Mathf.Clamp(rb.rotation, 0, 360);
-        float currentSpeed = GetSpeed();
-        //Debug.Log(currentSpeed);
-        Vector2 moveDir = movement * speed;
         rb.AddForce(movement * speed * (Time.deltaTime) + -(rb.velocity * Time.deltaTime/50));
         Vector3 pos = cam.WorldToViewportPoint(transform.position);
         pos.x = Mathf.Clamp01(pos.x);
@@ -93,12 +90,13 @@ public class Game2Agent : Agent
     {
         AddVectorObs(this.transform.position);
         AddVectorObs(rb.velocity);
+        AddVectorObs(transform.forward);
 
         //Position of goal
         AddVectorObs(spawnPointScript.currentPosition);
 
         //float[] rayAngles = { 0f, 22.5f, 45f, 67.5f, 90f, 112.5f, 135f, 157.5f, 180f, 202.5f, 225f, 247.5f, 270f, 292.5f, 315f, 337.5f };
-        float[] angles = { 0f, 45f, 90f, 135f, 180f, 225f, 270f, 315f };
+        float[] angles = { 0f, 45f, 60f, 75f, 90f, 105f, 120f, 135f, 180f, 225f, 270f, 315f };
         string[] tags = { "asteroid", "wall" };
         AddVectorObs(rayPerception.Perceive(7f, angles, tags));
     }
@@ -129,21 +127,24 @@ public class Game2Agent : Agent
     {
         if (collider.gameObject.CompareTag("goal"))
         {
-            Debug.Log("Goal hit!");
             this.score++;
             AddReward(1f);
+            Debug.Log(GetCumulativeReward());
             spawnPointScript.DestoryPowerUp();
             //spawnPointScript.activePowerups--;
+            
         }
 
         if (collider.gameObject.CompareTag("asteroid"))
         {
             Destroy(collider.gameObject);
+            AddReward(-1f);
+            Debug.Log(GetCumulativeReward());
             LevelReset();
             Done();
-            Debug.Log("Asteroid hit!");
             this.score--;
             //Either kill player here or decrement his score
+            
         }
     }
 
