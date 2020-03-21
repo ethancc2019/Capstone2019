@@ -174,7 +174,13 @@ MonoBehaviour:
     timeScale: 1
     targetFrameRate: 60
   resetParameters:
-    resetParameters: []
+    resetParameters:
+    - key: asteroid_speed
+      value: 3
+    - key: asteroid_size
+      value: 0.5
+    - key: goal_size
+      value: 1600
 --- !u!4 &49919652
 Transform:
   m_ObjectHideFlags: 0
