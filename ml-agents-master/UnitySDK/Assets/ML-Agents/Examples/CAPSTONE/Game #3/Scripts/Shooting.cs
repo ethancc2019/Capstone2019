@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
-    public int ammoCount = 10;
+    public int ammoCount = 100;
     public Transform firePoint;
 
     public GameObject bulletPrefab;

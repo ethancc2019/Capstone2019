@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
-        Destroy(effect,destroyTime); //Destroy after 5 seconds
+        Destroy(effect,destroyTime); //Destroy after 0.5 seconds
         Destroy(gameObject);
 
         if (collision.collider.CompareTag("barrier"))
@@ -21,6 +21,7 @@ public class Bullet : MonoBehaviour
         {
             Debug.Log("Hit another Player!");
         }
+        
     }
 
 }
