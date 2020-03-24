@@ -22,14 +22,16 @@ public class TargetSpawnner : MonoBehaviour
     {
         if (activeTargets <= 0)
         {
-            Debug.Log("All targets hit!");
+            //Debug.Log("All targets hit!");
+            //Call game controller reset area or call Agent Reset
+
         }
     }
 
     public void spawnTargets()
     {
         int randomIndex = 0;
-        for (int i = 0; i < maxNumOfTargetsToSpawn; i++)
+        for (int i = 0; i < maxNumOfTargetsToSpawn + 1; i++)
         {
             randomIndex = Random.Range(0, targetSpawnPoints.Length); //Get random index from the array
             GameObject temp = Instantiate(TargetPrefabGameObject,targetSpawnPoints[randomIndex].transform.position,Quaternion.identity);

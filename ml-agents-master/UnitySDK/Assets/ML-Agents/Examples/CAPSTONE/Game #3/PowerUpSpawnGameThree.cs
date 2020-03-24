@@ -23,8 +23,9 @@ public class PowerUpSpawnGameThree : MonoBehaviour
     {
         if (activePowerUps == 0)
         {
-            spawnPowerUps();
-            activePowerUps = numOfPowerUpsToSpawn;
+            //spawnPowerUps();
+            //activePowerUps = numOfPowerUpsToSpawn;
+            Debug.Log("All powerups collected!");
             
         }
     }

@@ -7,6 +7,8 @@ public class SpawnPointController : MonoBehaviour
 
 
     public GameObject[] spawnPoints;
+
+    private GameObject player;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +21,8 @@ public class SpawnPointController : MonoBehaviour
         
     }
 
-    void NewSpawnPoint()
+    void SpawnPlayerInRandomPoint()
     {
-        int random = Random.Range(0, spawnPoints.Length - 1);
 
     }
 }

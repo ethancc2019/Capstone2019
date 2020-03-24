@@ -47,6 +47,8 @@ TagManager:
   - Player_2
   - life
   - target_container
+  - power_container
+  - player_container
   layers:
   - Default
   - TransparentFX
