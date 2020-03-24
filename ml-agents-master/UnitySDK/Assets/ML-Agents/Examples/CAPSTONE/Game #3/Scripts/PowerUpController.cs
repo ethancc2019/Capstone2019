@@ -25,6 +25,9 @@ public class PowerUpController : MonoBehaviour
         {
             Debug.Log("+5 Ammo Added!");
             GameObject.FindGameObjectWithTag(collider.tag).GetComponent<Shooting>().ammoCount += 5; //Grab either player_1 or player_2
+            GameObject.FindGameObjectWithTag("power_container").GetComponent<PowerUpSpawnGameThree>().activePowerUps--;
+           
+            //Debug.Log(GameObject.FindGameObjectWithTag("power_container").GetComponent<PowerUpSpawnGameThree>().activePowerUps.ToString());
             //Add +5 ammo to the player referencing his Shooting script
             GameObject temp = gameObject;
             Destroy(temp);

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Game3MovementPlayer1 : MonoBehaviour
 {
-    private static int lifeIndex = 2;
-    public GameObject[] lives;
+    //private static int lifeIndex = 2;
+    //public GameObject[] lives;
 
     public float speed = 5f;
     private Rigidbody2D rb;
@@ -23,11 +23,11 @@ public class Game3MovementPlayer1 : MonoBehaviour
     void Update()
     {
 
-        if (lifeIndex < 0) //Player has 3 lives. When he is hit by a bullet decrement by 1. When lifeIndex is 0 game is over reset environment
-        {
-            //One of the players lost all three lives
-            Debug.Log("Game Over!");
-        }
+        //if (lifeIndex < 0) //Player has 3 lives. When he is hit by a bullet decrement by 1. When lifeIndex is 0 game is over reset environment
+        //{
+        //    //One of the players lost all three lives
+        //    Debug.Log("Game Over!");
+        //}
 
         //Mouse rotations
         mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
@@ -55,12 +55,12 @@ public class Game3MovementPlayer1 : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("bullet"))
-        {
-            Debug.Log("Hit by bullet!: " + lifeIndex.ToString());
-            GameObject tempLife = lives[lifeIndex];
-            Destroy(tempLife);
-            lifeIndex--;
-        }
+        //if (collision.collider.CompareTag("bullet"))
+        //{
+        //    Debug.Log("Hit by bullet!: " + lifeIndex.ToString());
+        //    GameObject tempLife = lives[lifeIndex];
+        //    Destroy(tempLife);
+        //    lifeIndex--;
+        //}
     }
 }
