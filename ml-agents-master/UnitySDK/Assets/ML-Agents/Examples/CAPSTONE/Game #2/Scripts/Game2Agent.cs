@@ -88,17 +88,14 @@ public class Game2Agent : Agent
 
     public override void CollectObservations()
     {
-        AddVectorObs(this.transform.position);
         AddVectorObs(rb.velocity);
         AddVectorObs(transform.forward);
 
-        //Position of goal
-        AddVectorObs(spawnPointScript.currentPosition);
 
         //float[] rayAngles = { 0f, 22.5f, 45f, 67.5f, 90f, 112.5f, 135f, 157.5f, 180f, 202.5f, 225f, 247.5f, 270f, 292.5f, 315f, 337.5f };
         float[] angles = { 0f, 45f, 60f, 75f, 90f, 105f, 120f, 135f, 180f, 225f, 270f, 315f };
-        string[] tags = { "asteroid", "wall" };
-        AddVectorObs(rayPerception.Perceive(7f, angles, tags));
+        string[] tags = { "asteroid", "wall" , "goal"};
+        AddVectorObs(rayPerception.Perceive(10f, angles, tags));
     }
 
     public override void AgentReset()
