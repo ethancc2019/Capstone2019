@@ -181,6 +181,8 @@ MonoBehaviour:
       value: 0.5
     - key: goal_size
       value: 1600
+    - key: wave_time
+      value: 20
 --- !u!4 &49919652
 Transform:
   m_ObjectHideFlags: 0
@@ -915,5 +917,90 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 799342bb690cb464c815832f58817da7,
         type: 2}
+    - target: {fileID: 543601166002815990, guid: 9d655d38623e9674f8db2238abb0ce60,
+        type: 3}
+      propertyPath: agentParameters.maxStep
+      value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 543601166002815990, guid: 9d655d38623e9674f8db2238abb0ce60,
+        type: 3}
+      propertyPath: agentParameters.resetOnDone
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7210255158738633604, guid: 9d655d38623e9674f8db2238abb0ce60,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7210255158738633604, guid: 9d655d38623e9674f8db2238abb0ce60,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589560979933477426, guid: 9d655d38623e9674f8db2238abb0ce60,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589560979933477426, guid: 9d655d38623e9674f8db2238abb0ce60,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589560979933477426, guid: 9d655d38623e9674f8db2238abb0ce60,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589560979933477426, guid: 9d655d38623e9674f8db2238abb0ce60,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589560979933477426, guid: 9d655d38623e9674f8db2238abb0ce60,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589560979933477426, guid: 9d655d38623e9674f8db2238abb0ce60,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589560979933477426, guid: 9d655d38623e9674f8db2238abb0ce60,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6507473323204084957, guid: 9d655d38623e9674f8db2238abb0ce60,
+        type: 3}
+      propertyPath: m_PlaneDistance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6507473323204084957, guid: 9d655d38623e9674f8db2238abb0ce60,
+        type: 3}
+      propertyPath: m_PixelPerfect
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6507473323204084957, guid: 9d655d38623e9674f8db2238abb0ce60,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8627342402777077621, guid: 9d655d38623e9674f8db2238abb0ce60,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 781842865632877467, guid: 9d655d38623e9674f8db2238abb0ce60,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 790071671487623865, guid: 9d655d38623e9674f8db2238abb0ce60,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d655d38623e9674f8db2238abb0ce60, type: 3}

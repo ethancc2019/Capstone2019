@@ -8,7 +8,11 @@ public class Game2Agent : Agent
 {
     private RayPerception2D rayPerception;
 
-    
+    private float greatestTimeAlive = -1f;
+    private float timeAlive = 0f;
+
+    private Vector3[] closestAsteroids;
+
     public Text scoreText;
     public int score = 0;
     public GameObject goal;
@@ -84,15 +88,73 @@ public class Game2Agent : Agent
         pos.x = Mathf.Clamp01(pos.x);
         pos.y = Mathf.Clamp01(pos.y);
         transform.position = cam.ViewportToWorldPoint(pos);
-    }
+        AddReward(-1f / agentParameters.maxStep);
 
+    }
+    private Vector3[] GetClosestAsteroids()
+    {
+        closestAsteroids = new Vector3[5];
+        List<GameObject> allAsteroids = GetAllTagged(this.transform, "asteroid");
+        
+        float shortestDistance = Mathf.Infinity;
+        GameObject closestAsteroid = null;
+        for (int i = 0; i < closestAsteroids.Length; i++)
+        { 
+            foreach (GameObject asteroid in allAsteroids)
+            {
+                float currentDistance = Vector3.Distance(asteroid.transform.position, transform.position);
+                if (currentDistance < shortestDistance)
+                {
+                    closestAsteroid = asteroid;
+                    shortestDistance = currentDistance;
+                }
+            }
+            if (closestAsteroid != null)
+            {
+                closestAsteroids[i] = closestAsteroid.transform.position;
+                closestAsteroids[i][0] = (transform.parent.parent.position.x - closestAsteroids[i][0]) / 8.5f; //normalized to bounds of canvas
+                closestAsteroids[i][1] = (transform.parent.parent.position.y - closestAsteroids[i][1]) / 4.8f; //normalized to bounds of canvas
+                closestAsteroids[i][2] = 0;
+                //Debug.Log("Asteroids: " + closestAsteroid);
+                allAsteroids.Remove(closestAsteroid);
+            }
+        }
+        
+        return closestAsteroids;
+    }
+    private List<GameObject> GetAllTagged(Transform parent, string tag)
+    {
+        //searches down hierarchy for specific tagged GameObjs (Does not have to be in play area)
+        List<GameObject> arrayOfTagged = new List<GameObject>();
+        foreach (Transform child in parent)
+        {
+            if (child.gameObject.tag == tag)
+            {
+                arrayOfTagged.Add(child.gameObject);
+            }
+            GetAllTagged(child, tag);
+        }
+        return arrayOfTagged;
+    }
     public override void CollectObservations()
     {
-        AddVectorObs(rb.velocity);
-        AddVectorObs(transform.forward);
+        AddVectorObs(rb.velocity/8.3f); //normalized 8.3f is the max velocity possible
+        AddVectorObs(transform.rotation.z); //normalized
 
+        AddVectorObs((transform.parent.parent.position.x - transform.position.x) / 8.5f); //normalized
+        AddVectorObs((transform.parent.parent.position.y - transform.position.y) / 4.8f); //normalized
 
-        //float[] rayAngles = { 0f, 22.5f, 45f, 67.5f, 90f, 112.5f, 135f, 157.5f, 180f, 202.5f, 225f, 247.5f, 270f, 292.5f, 315f, 337.5f };
+        Vector3 [] incomingAsteroids = GetClosestAsteroids(); //normalized positions
+        //Asteroid Positions
+        AddVectorObs(incomingAsteroids[0]);
+        AddVectorObs(incomingAsteroids[1]);
+        AddVectorObs(incomingAsteroids[2]);
+        AddVectorObs(incomingAsteroids[3]);
+        AddVectorObs(incomingAsteroids[4]);
+
+        AddVectorObs((transform.parent.parent.position.x - spawnPointScript.currentPosition.x) / 8.5f); //normalized(bounds of game area)
+        AddVectorObs((transform.parent.parent.position.y - spawnPointScript.currentPosition.y) / 4.8f); //normalized (bounds of game area)
+
         float[] angles = { 0f, 45f, 60f, 75f, 90f, 105f, 120f, 135f, 180f, 225f, 270f, 315f };
         string[] tags = { "asteroid", "wall" , "goal"};
         AddVectorObs(rayPerception.Perceive(10f, angles, tags));
@@ -125,16 +187,29 @@ public class Game2Agent : Agent
         {
             this.score++;
             AddReward(1f);
+            //sort of a highscore tracker, encourages to do better each iteration
+            if (timeAlive >= greatestTimeAlive)
+            {
+                AddReward(0.5f);
+                greatestTimeAlive = timeAlive;
+                timeAlive = 0f;
+            }
             spawnPointScript.DestoryPowerUp();
             //spawnPointScript.activePowerups--;
-            
+
         }
 
         if (collider.gameObject.CompareTag("asteroid"))
         {
             Destroy(collider.gameObject);
             AddReward(-1f);
+            if (timeAlive <= greatestTimeAlive)
+            {
+                AddReward(-0.5f);
+                timeAlive = 0f;
+            }
             LevelReset();
+            spawnPointScript.DestoryPowerUp();
             Done();
             this.score--;
             //Either kill player here or decrement his score
@@ -146,6 +221,7 @@ public class Game2Agent : Agent
     {
         shootTime -= Time.fixedDeltaTime;
         Mathf.Clamp(shootTime, 0, 0.5f);
+        timeAlive += Time.deltaTime;
     }
 
     public void Shoot()
@@ -162,4 +238,5 @@ public class Game2Agent : Agent
         previousY = transform.position.y;
         return speed;
     }
+
 }

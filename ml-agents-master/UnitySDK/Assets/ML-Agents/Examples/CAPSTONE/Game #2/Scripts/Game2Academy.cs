@@ -10,5 +10,6 @@ public class Game2Academy : Academy
         Asteroid.speed = resetParameters["asteroid_speed"];
         Asteroid.size = resetParameters["asteroid_size"];
         PowerUpSpawnner.size = resetParameters["goal_size"];
+        AsteroidController.spawn_time = resetParameters["wave_time"];
     }
 }

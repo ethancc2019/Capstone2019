@@ -2087,10 +2087,10 @@ MonoBehaviour:
   agentParameters:
     agentCameras: []
     agentRenderTextures: []
-    maxStep: 0
+    maxStep: 10000
     resetOnDone: 1
     onDemandDecision: 0
-    numberOfActionsBetweenDecisions: 1
+    numberOfActionsBetweenDecisions: 5
   scoreText: {fileID: 2019539358759952289}
   score: 0
   goal: {fileID: 1393099436906762, guid: 79711b043082f9841aa7cf672ef09e77, type: 3}
