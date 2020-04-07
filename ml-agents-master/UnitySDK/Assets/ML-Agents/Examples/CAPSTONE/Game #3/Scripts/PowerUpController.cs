@@ -21,12 +21,12 @@ public class PowerUpController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Player") || collider.CompareTag("Player_2"))
+        if (collider.CompareTag("Player"))
         {
             Debug.Log("+5 Ammo Added!");
-            GameObject.FindGameObjectWithTag(collider.tag).GetComponent<Shooting>().ammoCount += 5; //Grab either player_1 or player_2
-            GameObject.FindGameObjectWithTag("power_container").GetComponent<PowerUpSpawnGameThree>().activePowerUps--;
-           
+
+            playerGameObject = GameObject.FindGameObjectWithTag("Player"); //This may need to be fixed
+            playerGameObject.GetComponent<Shooting>().ammoCount += 5;
             //Debug.Log(GameObject.FindGameObjectWithTag("power_container").GetComponent<PowerUpSpawnGameThree>().activePowerUps.ToString());
             //Add +5 ammo to the player referencing his Shooting script
             GameObject temp = gameObject;

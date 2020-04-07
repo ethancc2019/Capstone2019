@@ -5,14 +5,13 @@ using UnityEngine;
 public class SpawnPointController : MonoBehaviour
 {
 
-
+    public GameObject player;
     public GameObject[] spawnPoints;
 
-    private GameObject player;
     // Start is called before the first frame update
     void Start()
     {
-        
+        SpawnPlayerInRandomPoint();
     }
 
     // Update is called once per frame
@@ -21,8 +20,10 @@ public class SpawnPointController : MonoBehaviour
         
     }
 
-    void SpawnPlayerInRandomPoint()
+    public void SpawnPlayerInRandomPoint()
     {
+        int randomIndex = Random.Range(0, spawnPoints.Length);
+        player.transform.position = spawnPoints[randomIndex].transform.position;
 
     }
 }

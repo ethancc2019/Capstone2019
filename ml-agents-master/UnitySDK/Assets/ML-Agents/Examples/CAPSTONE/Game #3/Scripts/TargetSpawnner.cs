@@ -10,31 +10,52 @@ public class TargetSpawnner : MonoBehaviour
     public int maxNumOfTargetsToSpawn;
     public int activeTargets;
 
+    public List<GameObject> ActiveTargetsGameObjects;
+
     // Start is called before the first frame update
     void Start()
     {
         activeTargets = maxNumOfTargetsToSpawn;
-        spawnTargets();
+        //spawnTargets();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (activeTargets <= 0)
-        {
-            //Debug.Log("All targets hit!");
-            //Call game controller reset area or call Agent Reset
-
-        }
-    }
 
     public void spawnTargets()
     {
+        ActiveTargetsGameObjects.Clear();
+        List<int> tempPoint = new List<int>();
         int randomIndex = 0;
-        for (int i = 0; i < maxNumOfTargetsToSpawn + 1; i++)
+        for (int i = 0; i < maxNumOfTargetsToSpawn; i++)
         {
+            RESTART:
             randomIndex = Random.Range(0, targetSpawnPoints.Length); //Get random index from the array
-            GameObject temp = Instantiate(TargetPrefabGameObject,targetSpawnPoints[randomIndex].transform.position,Quaternion.identity);
+            if (!tempPoint.Contains(randomIndex))
+            {
+                tempPoint.Add(randomIndex);
+                GameObject temp = Instantiate(TargetPrefabGameObject, targetSpawnPoints[randomIndex].transform.position, Quaternion.identity);
+                ActiveTargetsGameObjects.Add(temp);
+            }
+            else
+            {
+                goto RESTART; //Random index used choose a new one
+            }
+            
+
         }
+        //activeTargets = maxNumOfTargetsToSpawn;
+
+    }
+
+    public void destroyAllTargets()
+    {
+        if (ActiveTargetsGameObjects.Count > 0)
+        {
+            foreach (var activeTarget in ActiveTargetsGameObjects)
+            {
+                Destroy(activeTarget);
+                ActiveTargetsGameObjects.Remove(activeTarget);
+            }
+        }
+        
     }
 }
