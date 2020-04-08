@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameControllerGameThree : MonoBehaviour
@@ -16,10 +17,13 @@ public class GameControllerGameThree : MonoBehaviour
     
     //Reference to player 
     public GameObject playerSpawnContainer;
-
     public GameObject player;
+    private Shooting ammoDetails;
 
     private int playerAmmoCount = 0;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,14 +33,15 @@ public class GameControllerGameThree : MonoBehaviour
 
         targetScript.spawnTargets();
         powerUpScript.spawnPowerUps();
-        playerAmmoCount = player.GetComponent<Shooting>().ammoCount;
+
+        ammoDetails = player.GetComponent<Shooting>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerAmmoCount == 0 && targetScript.activeTargets >= 1 && powerUpScript.activePowerUps <= 0)
+        if (ammoDetails.ammoCount == 0 && targetScript.activeTargets > 0 && powerUpScript.activePowerUps <= 0)
         {
             //Bad player still has active targets and cannot pick up any more ammo.
             //Give player bad reward or call agent reset, set resetArea to true
@@ -53,31 +58,35 @@ public class GameControllerGameThree : MonoBehaviour
             
             ResetGameArea();
         }
-        //Debug.Log("Active Targets: " + targetScript.activeTargets);
+        Debug.Log("Ammo: " + ammoDetails.ammoCount);
+        Debug.Log("Targets: " + targetScript.activeTargets);
+        Debug.Log("Powerups: " + powerUpScript.activePowerUps);
 
-        
+
 
 
     }
 
-   
+
 
     public void ResetGameArea()
     {
-
-        Debug.Log("Ammo Count: " + playerAmmoCount);
-        Debug.Log("PowerUp Count: " + powerUpScript.activePowerUps.ToString());
-        Debug.Log("Target Count: " + targetScript.activeTargets.ToString());
-
         RestPowerups();
-        //ResetTargets();
-       // ResetPlayer();
-        gameOver = false;
+        ResetTargets();
+        ResetPlayer();
 
     }
 
     public void ResetPlayer()
     {
+
+
+        List<GameObject> powerUps = GetAllTagged(this.transform.parent, "bullet");
+
+        foreach (var goal in powerUps)
+        {
+            Destroy(goal);
+        }
         //Here choose new spawn point for the player
         playerSpawnContainer.GetComponent<SpawnPointController>().SpawnPlayerInRandomPoint();
         player.GetComponent<Shooting>().ammoCount = 5;
@@ -85,17 +94,48 @@ public class GameControllerGameThree : MonoBehaviour
 
     private void ResetTargets()
     {
-        targetContainer.GetComponent<TargetSpawnner>().destroyAllTargets();
+
+        List<GameObject> activeTargets = GetAllTagged(this.transform.parent, "target");
+
+        foreach (var target in activeTargets)
+        {
+            Destroy(target);
+        }
+
         targetContainer.GetComponent<TargetSpawnner>().spawnTargets();
-        targetScript.activeTargets = targetContainer.GetComponent<TargetSpawnner>().activeTargets;
-        //throw new System.NotImplementedException();
+        targetScript.activeTargets = targetContainer.GetComponent<TargetSpawnner>().maxNumOfTargetsToSpawn;
+
+       
     }
 
     private void RestPowerups()
     {
-        //Here, delete all powerup and calculate new spawn locations
-        powerUpContainer.GetComponent<PowerUpSpawnGameThree>().DestroyAllPowerups();
+
+        List<GameObject> powerUps = GetAllTagged(this.transform.parent, "goal");
+
+        foreach (var goal in powerUps)
+        {
+            Destroy(goal);
+        }
+
         powerUpContainer.GetComponent<PowerUpSpawnGameThree>().spawnPowerUps();
         powerUpScript.activePowerUps = powerUpContainer.GetComponent<PowerUpSpawnGameThree>().numOfPowerUpsToSpawn;
     }
+
+
+    public List<GameObject> GetAllTagged(Transform parent, string tag)
+    {
+        //searches down hierarchy for specific tagged GameObjs (Does not have to be in play area)
+        List<GameObject> arrayOfTagged = new List<GameObject>();
+        foreach (Transform child in parent)
+        {
+            if (child.gameObject.tag == tag)
+            {
+                arrayOfTagged.Add(child.gameObject);
+            }
+            GetAllTagged(child, tag);
+        }
+        return arrayOfTagged;
+    }
+
 }

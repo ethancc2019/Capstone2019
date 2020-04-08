@@ -33,6 +33,7 @@ public class PowerUpSpawnGameThree : MonoBehaviour
             {
                 tempPU.Add(randomIndex);
                 GameObject temp = Instantiate(powerUpPrefab, powerUpSpawnPoints[randomIndex].transform.position, Quaternion.identity);
+                temp.transform.parent = this.transform.parent;
                 ActivePowerGameObjects.Add(temp);
             }
             else

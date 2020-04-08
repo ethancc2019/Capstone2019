@@ -178,6 +178,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -8.02
       objectReference: {fileID: 0}
+    - target: {fileID: 2381129416287766436, guid: 58036fc131119c24f9698f1b1500a0b0,
+        type: 3}
+      propertyPath: ammoCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2381129416458436778, guid: 58036fc131119c24f9698f1b1500a0b0,
+        type: 3}
+      propertyPath: maxNumOfTargetsToSpawn
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2381129417035662477, guid: 58036fc131119c24f9698f1b1500a0b0,
         type: 3}
       propertyPath: player

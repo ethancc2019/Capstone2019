@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TargetSpawnner : MonoBehaviour
@@ -33,6 +34,7 @@ public class TargetSpawnner : MonoBehaviour
             {
                 tempPoint.Add(randomIndex);
                 GameObject temp = Instantiate(TargetPrefabGameObject, targetSpawnPoints[randomIndex].transform.position, Quaternion.identity);
+                temp.transform.parent = this.transform.parent;
                 ActiveTargetsGameObjects.Add(temp);
             }
             else
@@ -50,7 +52,7 @@ public class TargetSpawnner : MonoBehaviour
     {
         if (ActiveTargetsGameObjects.Count > 0)
         {
-            foreach (var activeTarget in ActiveTargetsGameObjects)
+            foreach (var activeTarget in ActiveTargetsGameObjects.ToList())
             {
                 Destroy(activeTarget);
                 ActiveTargetsGameObjects.Remove(activeTarget);
