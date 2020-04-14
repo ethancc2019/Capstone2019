@@ -26,7 +26,6 @@ public class PowerUpController : MonoBehaviour
             
 
             Debug.Log("+5 Ammo Added!");
-            
             playerGameObject = GameObject.FindGameObjectWithTag("Player"); //This may need to be fixed
             playerGameObject.GetComponent<Shooting>().ammoCount += 5;
             GameObject.FindGameObjectWithTag("power_container").GetComponent<PowerUpSpawnGameThree>().activePowerUps--;

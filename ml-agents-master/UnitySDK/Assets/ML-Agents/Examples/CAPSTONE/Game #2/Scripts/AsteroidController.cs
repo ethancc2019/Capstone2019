@@ -10,7 +10,7 @@ public class AsteroidController : MonoBehaviour
     public GameObject[] asteroids; //Container for large and small asteroids. We will randomly select which one to spawn
     private GameObject asteroid_temp;
 
-    private float spawn_time = 20f; //Spawn asteroids in 10 seconds
+    private float spawn_time = 5f; //Spawn asteroids in 10 seconds
     //private float start_time = 5f; //TESTING
     private float min = 0.0f;
     private float max = 0.8f;
