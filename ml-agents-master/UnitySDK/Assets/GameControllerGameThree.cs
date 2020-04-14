@@ -22,7 +22,7 @@ public class GameControllerGameThree : MonoBehaviour
 
     private int playerAmmoCount = 0;
 
-
+    public GameObject gameArea;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +33,7 @@ public class GameControllerGameThree : MonoBehaviour
 
         targetScript.spawnTargets();
         powerUpScript.spawnPowerUps();
+        player = GetAllTagged(gameArea.transform, "Player")[0];
 
         ammoDetails = player.GetComponent<Shooting>();
 
@@ -81,7 +82,7 @@ public class GameControllerGameThree : MonoBehaviour
     {
 
 
-        List<GameObject> powerUps = GetAllTagged(this.transform.parent, "bullet");
+        List<GameObject> powerUps = GetAllTagged(gameArea.transform, "bullet");
 
         foreach (var goal in powerUps)
         {
@@ -95,10 +96,10 @@ public class GameControllerGameThree : MonoBehaviour
     private void ResetTargets()
     {
 
-        List<GameObject> activeTargets = GetAllTagged(this.transform.parent, "target");
+        List<GameObject> activeTargets = GetAllTagged(gameArea.transform, "target");
 
         foreach (var target in activeTargets)
-        {
+        { 
             Destroy(target);
         }
 
@@ -111,7 +112,7 @@ public class GameControllerGameThree : MonoBehaviour
     private void RestPowerups()
     {
 
-        List<GameObject> powerUps = GetAllTagged(this.transform.parent, "goal");
+        List<GameObject> powerUps = GetAllTagged(gameArea.transform, "goal");
 
         foreach (var goal in powerUps)
         {

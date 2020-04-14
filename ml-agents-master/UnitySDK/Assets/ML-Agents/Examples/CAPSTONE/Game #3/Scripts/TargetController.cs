@@ -15,7 +15,9 @@ public class TargetController : MonoBehaviour
             //Add reward here
             GetComponent<SpriteRenderer>().color = Color.red;
             Destroy(gameObject, 1f);
-            GameObject.FindGameObjectWithTag("target_container").GetComponent<TargetSpawnner>().activeTargets--;
+            GameObject temp = this.transform.parent.Find("Target Container").gameObject;
+            temp.GetComponent<TargetSpawnner>().activeTargets--;
+            //GameObject.Find(this.transform.parent.ToString() + "/target_container").GetComponent<TargetSpawnner>().activeTargets--;
         }
         
     }
