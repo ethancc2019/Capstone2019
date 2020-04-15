@@ -12,7 +12,8 @@ public class Game2Agent : Agent
     private float timeAlive = 0f;
 
     private Vector2[,] closestAsteroids;
-    private Vector2[,] bullets;
+    private GameObject[] bullets = new GameObject[3];
+    private int bulletsShot;
 
     public Text scoreText;
     public int score = 0;
@@ -128,37 +129,29 @@ public class Game2Agent : Agent
     }
     private Vector2[,] GetActiveBullets()
     {
-        bullets = new Vector2[2, 2]; //5 possible asteroids with 2 attributes per asteroid (position, velocity)
-        List<GameObject> allBullets = GetAllTagged(this.transform, "ball");
+        Vector2[,] bulletObservations = new Vector2[3, 2];
 
-        float shortestDistance = Mathf.Infinity;
-        GameObject closestBullet = null;
         for (int i = 0; i < bullets.GetLength(0); i++)
         {
-            foreach (GameObject bullet in allBullets)
+            if (bullets[i] != null)
             {
-                float currentDistance = Vector3.Distance(bullet.transform.position, transform.position);
-                if (currentDistance < shortestDistance)
-                {
-                    closestBullet = bullet;
-                    shortestDistance = currentDistance;
-                }
+                GameObject currentBullet = bullets[i];
+                bulletObservations[i, 0] = new Vector2(currentBullet.transform.position[0], currentBullet.transform.position[1]);
+                bulletObservations[i, 0][0] = (bulletObservations[i, 0][0] - transform.parent.parent.position.x); // normalized to bound within bullet barriers
+                bulletObservations[i, 0][1] = (bulletObservations[i, 0][1] - transform.parent.parent.position.y); // normalized to bound within bullet barriers
+                bulletObservations[i, 1] = new Vector2(currentBullet.GetComponent<Rigidbody2D>().velocity[0], currentBullet.GetComponent<Rigidbody2D>().velocity[1]);
+                bulletObservations[i, 1][0] = bulletObservations[i, 1][0] / (bulletSpeed * 2f); // normalized to max speed of bullet
+                bulletObservations[i, 1][1] = bulletObservations[i, 1][1] / (bulletSpeed * 2f); // normalized to max speed of bullet
             }
-            if (closestBullet != null)
+            else
             {
-                bullets[i, 0] = new Vector2(closestBullet.transform.position[0], closestBullet.transform.position[1]);
-                bullets[i, 0][0] = (bullets[i, 0][0] - transform.parent.parent.position.x) / 45f; // normalized to bound within bullet barriers
-                bullets[i, 0][1] = (bullets[i, 0][1] - transform.parent.parent.position.y) / 27f; // normalized to bound within bullet barriers
-                bullets[i, 1] = new Vector2(closestBullet.GetComponent<Rigidbody2D>().velocity[0], closestBullet.GetComponent<Rigidbody2D>().velocity[1]);
-                bullets[i, 1][0] = bullets[i, 1][0] / (bulletSpeed * 2f); // normalized to max speed of bullet
-                bullets[i, 1][1] = bullets[i, 1][1] / (bulletSpeed * 2f); // normalized to max speed of bullet
+                bulletObservations[i, 0] = Vector2.zero;
+                bulletObservations[i, 1] = Vector2.zero;
+            }
 
-                //Debug.Log("Asteroids: " + closestAsteroid);
-                allBullets.Remove(closestBullet);
-            }
         }
         //2 dimensional array of position, velocity of asteroids
-        return bullets;
+        return bulletObservations;
     }
 
     private List<GameObject> GetAllTagged(Transform parent, string tag)
@@ -205,18 +198,22 @@ public class Game2Agent : Agent
         //Bullet Positions
         AddVectorObs(activeBullets[0, 0]);
         AddVectorObs(activeBullets[1, 0]);
+        AddVectorObs(activeBullets[2, 0]);
         //Bullet Velocities
-        //AddVectorObs(activeBullets[0, 1]);
-        //AddVectorObs(activeBullets[1, 1]);
+        AddVectorObs(activeBullets[0, 1]);
+        AddVectorObs(activeBullets[1, 1]);
+        AddVectorObs(activeBullets[2, 1]);
+        //Debug.Log("Player: " + this.transform.parent.parent.parent.name + " Bullet: " + activeBullets[0,0] + activeBullets[0,1]);
 
         //Powerup Position
         AddVectorObs((spawnPointScript.currentPosition.x - transform.parent.parent.position.x) / 8.5f);
         AddVectorObs((spawnPointScript.currentPosition.y - transform.parent.parent.position.y) / 4.8f);
-
+        /*
         //Raycasts
         float[] angles = { 0f, 45f, 60f, 75f, 90f, 105f, 120f, 135f, 180f, 225f, 270f, 315f };
         string[] tags = { "asteroid", "wall", "goal" };
         AddVectorObs(rayPerception.Perceive(10f, angles, tags));
+        */
     }
 
     public override void AgentReset()
@@ -249,7 +246,7 @@ public class Game2Agent : Agent
             //sort of a highscore tracker, encourages to do better each iteration
             if (timeAlive >= greatestTimeAlive)
             {
-                AddReward(0.5f);
+                AddReward(1);
                 greatestTimeAlive = timeAlive;
                 timeAlive = 0f;
             }
@@ -264,7 +261,7 @@ public class Game2Agent : Agent
             AddReward(-1f);
             if (timeAlive <= greatestTimeAlive)
             {
-                AddReward(-0.5f);
+                AddReward(-1f);
                 timeAlive = 0f;
             }
             LevelReset();
@@ -288,6 +285,8 @@ public class Game2Agent : Agent
         GameObject bulletTemp = Instantiate(bulletPrefab, point.position, point.rotation, transform);
         Rigidbody2D rb = bulletTemp.GetComponent<Rigidbody2D>();
         rb.AddForce(point.up * bulletSpeed, ForceMode2D.Impulse);
+        bullets[bulletsShot % 3] = bulletTemp;
+        bulletsShot++;
     }
 
     private float GetSpeed()

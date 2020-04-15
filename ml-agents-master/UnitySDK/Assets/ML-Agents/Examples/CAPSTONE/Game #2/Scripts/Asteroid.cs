@@ -17,7 +17,7 @@ public class Asteroid : MonoBehaviour {
     private Vector2 lastPlayerPosition;
 
 
-    private GameObject playerGameObject;
+    public GameObject playerGameObject;
     private Vector2 startLocationVector2;
 
 	//will be executed once at script start

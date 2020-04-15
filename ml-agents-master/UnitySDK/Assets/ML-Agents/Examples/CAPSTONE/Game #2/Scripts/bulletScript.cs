@@ -8,8 +8,9 @@ public class bulletScript : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if(collider.tag == "asteroid")
+        if (collider.tag == "asteroid")
         {
+            collider.GetComponent<Asteroid>().playerGameObject.GetComponent<Game2Agent>().AddReward(0.1f);
             Destroy(collider.gameObject);
         }
 
