@@ -11,9 +11,11 @@ public class Game2Agent : Agent
     private float greatestTimeAlive = -1f;
     private float timeAlive = 0f;
 
-    private Vector2[,] closestAsteroids;
+    private Vector2[,] trackedAsteroids;
     private GameObject[] bullets = new GameObject[3];
+    public GameObject[] asteroids = new GameObject[5];
     private int bulletsShot;
+    public int totalAsteroids;
 
     public Text scoreText;
     public int score = 0;
@@ -95,58 +97,53 @@ public class Game2Agent : Agent
     }
     private Vector2[,] GetClosestAsteroids()
     {
-        closestAsteroids = new Vector2[5, 2]; //5 possible asteroids with 2 attributes per asteroid (position, velocity)
-        List<GameObject> allAsteroids = GetAllTagged(this.transform, "asteroid");
+        trackedAsteroids = new Vector2[5, 2]; //5 possible asteroids with 2 attributes per asteroid (position, velocity)
 
-        float shortestDistance = Mathf.Infinity;
-        GameObject closestAsteroid = null;
-        for (int i = 0; i < closestAsteroids.GetLength(0); i++)
+        GameObject currentAsteroid = null;
+        for (int i = 0; i < asteroids.Length; i++)
         {
-            foreach (GameObject asteroid in allAsteroids)
+            if (asteroids[i] != null)
             {
-                float currentDistance = Vector3.Distance(asteroid.transform.position, transform.position);
-                if (currentDistance < shortestDistance)
-                {
-                    closestAsteroid = asteroid;
-                    shortestDistance = currentDistance;
-                }
+                currentAsteroid = asteroids[i];
+                trackedAsteroids[i, 0] = new Vector2(currentAsteroid.transform.position.x, currentAsteroid.transform.position.y);
+                trackedAsteroids[i, 0].x = (trackedAsteroids[i, 0].x - transform.parent.parent.position.x) / 8.5f; //normalized to bounds of canvas
+                trackedAsteroids[i, 0].y = (trackedAsteroids[i, 0].y - transform.parent.parent.position.y) / 4.8f; //normalized to bounds of canvas
+                trackedAsteroids[i, 1] = new Vector2(currentAsteroid.GetComponent<Rigidbody2D>().velocity.x, currentAsteroid.GetComponent<Rigidbody2D>().velocity.y);
+                trackedAsteroids[i, 1].x = trackedAsteroids[i, 1].x / Asteroid.speed; //normalized to asteroid speed given by curricula
+                trackedAsteroids[i, 1].y = trackedAsteroids[i, 1].y / Asteroid.speed; //normalized to asteroid speed given by curricula
+                //Debug.Log("Asteroids: " + trackedAsteroids[i,0] + trackedAsteroids[i,1]);
             }
-            if (closestAsteroid != null)
+            else
             {
-                closestAsteroids[i, 0] = new Vector2(closestAsteroid.transform.position[0], closestAsteroid.transform.position[1]);
-                closestAsteroids[i, 0][0] = (closestAsteroids[i, 0][0] - transform.parent.parent.position.x) / 44f; //normalized to bounds of canvas
-                closestAsteroids[i, 0][1] = (closestAsteroids[i, 0][1] - transform.parent.parent.position.y) / 40f; //normalized to bounds of canvas
-                closestAsteroids[i, 1] = new Vector2(closestAsteroid.GetComponent<Rigidbody2D>().velocity[0], closestAsteroid.GetComponent<Rigidbody2D>().velocity[1]);
-                closestAsteroids[i, 1][0] = closestAsteroids[i, 1][0] / Asteroid.speed; //normalized to asteroid speed given by curricula
-                closestAsteroids[i, 1][1] = closestAsteroids[i, 1][1] / Asteroid.speed; //normalized to asteroid speed given by curricula
-
-                //Debug.Log("Asteroids: " + closestAsteroid);
-                allAsteroids.Remove(closestAsteroid);
+                trackedAsteroids[i, 0] = new Vector2(-1, -1);
+                trackedAsteroids[i, 1] = new Vector2(-1, -1);
+                //Debug.Log("Asteroids: " + trackedAsteroids[i,0] + trackedAsteroids[i,1]);
             }
         }
+        
         //2 dimensional array of position, velocity of asteroids
-        return closestAsteroids;
+        return trackedAsteroids;
     }
     private Vector2[,] GetActiveBullets()
     {
         Vector2[,] bulletObservations = new Vector2[3, 2];
 
-        for (int i = 0; i < bullets.GetLength(0); i++)
+        for (int i = 0; i < bullets.Length; i++)
         {
             if (bullets[i] != null)
             {
                 GameObject currentBullet = bullets[i];
-                bulletObservations[i, 0] = new Vector2(currentBullet.transform.position[0], currentBullet.transform.position[1]);
-                bulletObservations[i, 0][0] = (bulletObservations[i, 0][0] - transform.parent.parent.position.x); // normalized to bound within bullet barriers
-                bulletObservations[i, 0][1] = (bulletObservations[i, 0][1] - transform.parent.parent.position.y); // normalized to bound within bullet barriers
-                bulletObservations[i, 1] = new Vector2(currentBullet.GetComponent<Rigidbody2D>().velocity[0], currentBullet.GetComponent<Rigidbody2D>().velocity[1]);
-                bulletObservations[i, 1][0] = bulletObservations[i, 1][0] / (bulletSpeed * 2f); // normalized to max speed of bullet
-                bulletObservations[i, 1][1] = bulletObservations[i, 1][1] / (bulletSpeed * 2f); // normalized to max speed of bullet
+                bulletObservations[i, 0] = new Vector2(currentBullet.transform.position.x, currentBullet.transform.position.y);
+                bulletObservations[i, 0].x = (bulletObservations[i, 0].x - transform.parent.parent.position.x)/8.5f; // normalized to bound within bullet barriers
+                bulletObservations[i, 0].y = (bulletObservations[i, 0].y - transform.parent.parent.position.y)/4.8f; // normalized to bound within bullet barriers
+                bulletObservations[i, 1] = new Vector2(currentBullet.GetComponent<Rigidbody2D>().velocity.x, currentBullet.GetComponent<Rigidbody2D>().velocity.y);
+                bulletObservations[i, 1].x = bulletObservations[i, 1].x / (bulletSpeed * 2f); // normalized to max speed of bullet
+                bulletObservations[i, 1].y = bulletObservations[i, 1].y / (bulletSpeed * 2f); // normalized to max speed of bullet
             }
             else
             {
-                bulletObservations[i, 0] = Vector2.zero;
-                bulletObservations[i, 1] = Vector2.zero;
+                bulletObservations[i, 0] = new Vector2(-1, -1);
+                bulletObservations[i, 1] = new Vector2(-1, -1);
             }
 
         }

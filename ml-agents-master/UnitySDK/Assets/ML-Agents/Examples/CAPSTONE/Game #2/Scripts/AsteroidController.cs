@@ -57,19 +57,24 @@ public class AsteroidController : MonoBehaviour
 
         //var ranAsteroid = Random.Range(0, asteroids.Length);
         //asteroid_temp = asteroids[ranAsteroid];
-       // var randomPos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(min, max), 1, 10));
-
+        // var randomPos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(min, max), 1, 10));
+        GameObject asteroid;
         for (int i = 0; i < numOfAsteroids; i++)
         {
             var ran = Random.Range(0, asteroidSpawns.Length); //Get a random index
             var ranAsteroid = Random.Range(0, asteroids.Length); //Get a random Asteroid
             asteroid_temp = asteroids[ranAsteroid]; //Instantiate temp asteroid for Destroy() method
             var spawnLoc = asteroidSpawns[ran].transform.position; //Get random spawnLocation
-            Instantiate(asteroid_temp, spawnLoc, Quaternion.identity, player.transform); //Make the asteroid
+            asteroid = Instantiate(asteroid_temp, spawnLoc, Quaternion.identity, player.transform); //Make the asteroid
+            int totalAsteroids = player.GetComponent<Game2Agent>().totalAsteroids;
+            player.GetComponent<Game2Agent>().asteroids[totalAsteroids % 5] = asteroid;
+            player.GetComponent<Game2Agent>().totalAsteroids++;
+
         }
 
         //Reset the spawn timer
         spawn_time = 20f;
+
 
         waveNum++;// Increase wave
         //update text
