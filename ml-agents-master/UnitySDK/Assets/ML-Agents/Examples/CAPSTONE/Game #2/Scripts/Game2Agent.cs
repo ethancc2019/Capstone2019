@@ -35,7 +35,7 @@ public class Game2Agent : Agent
     private Vector2 mousePosition;
     public Camera cam;
     public static float speed = 0.10f;
-    public static float turnSpeed = 10f;
+    public static float turnSpeed = 5f;
     private float shootTime;
     private float previousX, previousY;
 
@@ -51,30 +51,30 @@ public class Game2Agent : Agent
         if (vectorAction[0] == 1f)
         {
             //W
-            movement.y = 1f;
+            //movement.y = 1f;
         }
         else if (vectorAction[0] == 2f)
         {
             //S
-            movement.y = -1f;
+            //movement.y = -1f;
         }
         else
         {
-            movement.y = 0f;
+            //movement.y = 0f;
         }
         if (vectorAction[1] == 1f)
         {
             //A
-            movement.x = -1f;
+            //movement.x = -1f;
         }
         else if (vectorAction[1] == 2f)
         {
             //D
-            movement.x = 1f;
+            //movement.x = 1f;
         }
         else
         {
-            movement.x = 0;
+            //movement.x = 0;
         }
         if (vectorAction[2] == 1f)
         {
@@ -111,7 +111,6 @@ public class Game2Agent : Agent
                 trackedAsteroids[i, 1] = new Vector2(currentAsteroid.GetComponent<Rigidbody2D>().velocity.x, currentAsteroid.GetComponent<Rigidbody2D>().velocity.y);
                 trackedAsteroids[i, 1].x = trackedAsteroids[i, 1].x / Asteroid.speed; //normalized to asteroid speed given by curricula
                 trackedAsteroids[i, 1].y = trackedAsteroids[i, 1].y / Asteroid.speed; //normalized to asteroid speed given by curricula
-                //Debug.Log("Asteroids: " + trackedAsteroids[i,0] + trackedAsteroids[i,1]);
             }
             else
             {
@@ -165,13 +164,23 @@ public class Game2Agent : Agent
         }
         return arrayOfTagged;
     }
+
+    public float GetAngleFromPlayer(Vector2 from, Vector2 to)
+    {
+        float angle = Mathf.Tan((to.y - from.y) / (to.x - from.x));
+        angle += 90f;
+        angle *= 360f;
+        return angle%360f;
+    }
+
     public override void CollectObservations()
     {
         //\\=====All observations are normalized from the range of [-1 , +1]=====//\\ 
         //Player Velocity and Current Rotation
         AddVectorObs(rb.velocity / 8.3f); //normalized 8.3f is the max velocity possible
-        AddVectorObs(transform.rotation.z);
 
+        AddVectorObs(transform.eulerAngles.z / 360f) ;
+        
         //Player Position
         AddVectorObs((transform.position.x - transform.parent.parent.position.x) / 8.5f);
         AddVectorObs((transform.position.y - transform.parent.parent.position.y) / 4.8f);
@@ -190,8 +199,37 @@ public class Game2Agent : Agent
         AddVectorObs(incomingAsteroids[2, 1]);
         AddVectorObs(incomingAsteroids[3, 1]);
         AddVectorObs(incomingAsteroids[4, 1]);
+        float playerPosX = (transform.position.x - transform.parent.parent.position.x) / 8.5f;
+        float playerPosY = (transform.position.y - transform.parent.parent.position.y) / 4.8f;
+        //Asteroid Relative Angles
 
-        Vector2[,] activeBullets = GetActiveBullets();
+        for (int i = 0; i < asteroids.Length; i++)
+        {
+            float angle = 0.0f;
+            if (asteroids[i] != null)
+            { 
+                playerPosX = (transform.position.x - transform.parent.parent.position.x) / 8.5f;
+                playerPosY = (transform.position.y - transform.parent.parent.position.y) / 4.8f;
+                angle = GetAngleFromPlayer(new Vector2(playerPosX,playerPosY), incomingAsteroids[i,0]);
+                if (!(angle > 0.0001f && angle < 0.0001f) && transform.rotation.z > (angle - 0.1f) && transform.rotation.z < (angle + 0.1f))
+                {
+                    asteroids[i].GetComponent<SpriteRenderer>().color = Color.green;
+                    
+                    //AddReward(0.1f);
+                }
+                else
+                {
+                    asteroids[i].GetComponent<SpriteRenderer>().color = Color.red;
+                }
+                Debug.Log("asteroid at: " + angle + " compared to transform: " + transform.eulerAngles.z);
+            }
+            
+            AddVectorObs(angle);
+            //Debug.Log(i + ", Recorded angle: " + angle);
+        
+        }
+
+        /*Vector2[,] activeBullets = GetActiveBullets();
         //Bullet Positions
         AddVectorObs(activeBullets[0, 0]);
         AddVectorObs(activeBullets[1, 0]);
@@ -199,7 +237,7 @@ public class Game2Agent : Agent
         //Bullet Velocities
         AddVectorObs(activeBullets[0, 1]);
         AddVectorObs(activeBullets[1, 1]);
-        AddVectorObs(activeBullets[2, 1]);
+        AddVectorObs(activeBullets[2, 1]);*/
         //Debug.Log("Player: " + this.transform.parent.parent.parent.name + " Bullet: " + activeBullets[0,0] + activeBullets[0,1]);
 
         //Powerup Position
@@ -211,6 +249,7 @@ public class Game2Agent : Agent
         string[] tags = { "asteroid", "wall", "goal" };
         AddVectorObs(rayPerception.Perceive(10f, angles, tags));
         */
+
     }
 
     public override void AgentReset()

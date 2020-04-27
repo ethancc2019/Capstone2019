@@ -10,7 +10,7 @@ public class bulletScript : MonoBehaviour
     {
         if (collider.tag == "asteroid")
         {
-            collider.GetComponent<Asteroid>().playerGameObject.GetComponent<Game2Agent>().AddReward(0.1f);
+            collider.GetComponent<Asteroid>().playerGameObject.GetComponent<Game2Agent>().AddReward(1f);
             Destroy(collider.gameObject);
         }
 
