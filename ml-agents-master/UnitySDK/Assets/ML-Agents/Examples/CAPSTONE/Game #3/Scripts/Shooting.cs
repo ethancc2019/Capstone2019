@@ -22,7 +22,7 @@ public class Shooting : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && ammoCount > 0) //Left click
         {
             Shoot();
-            ammoCount--;
+            //ammoCount--;
            // Debug.Log(ammoCount.ToString());
         }
     }

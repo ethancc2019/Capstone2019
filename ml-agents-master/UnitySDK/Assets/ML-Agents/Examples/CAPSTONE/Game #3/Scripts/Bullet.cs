@@ -9,6 +9,8 @@ public class Bullet : MonoBehaviour
    
     void OnCollisionEnter2D(Collision2D collision)
     {
+        GameObject playerGameObject = this.transform.parent.Find("Player_1").gameObject;
+        
         GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
         Destroy(effect,destroyTime); //Destroy after 0.5 seconds
         Destroy(gameObject);
@@ -17,11 +19,8 @@ public class Bullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        else if (collision.collider.CompareTag("Player_2"))
-        {
-            Debug.Log("Hit another Player!");
-        }
-        
+        playerGameObject.GetComponent<Shooting>().ammoCount--;
+
     }
 
 }
