@@ -34,3 +34,47 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/3DBall/TFModels/3DBallHardLearning.nn.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/3DBall/TFModels/3DBallLearning.nn.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/BananaCollectors/TFModels/BananaLearning.nn.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/Basic/TFModels/BasicLearning.nn.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/Bouncer/TFModels/BouncerLearning.nn.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/CAPSTONE/Game #1/Brains Game 1/Game1Learning.nn.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/CAPSTONE/Game #3/Asset Store/AstarPathfindingProject/ExampleScenes/Example6_Navmesh/example6.fbx.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/CAPSTONE/Game #3/Asset Store/AstarPathfindingProject/Plugins/DotNetZip/Pathfinding.Ionic.Zip.Reduced.dll.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/Crawler/TFModels/CrawlerDynamicLearning.nn.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/Crawler/TFModels/CrawlerStaticLearning.nn.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/GridWorld/TFModels/GridWorldLearning.nn.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/Hallway/TFModels/HallwayLearning.nn.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/PushBlock/TFModels/PushBlockLearning.nn.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/Pyramids/TFModels/PyramidsLearning.nn.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/Reacher/TFModels/ReacherLearning.nn.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/Tennis/TFModels/TennisLearning.nn.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/Walker/TFModels/WalkerLearning.nn.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/WallJump/TFModels/BigWallJumpLearning.nn.meta
+
+ml-agents-master/UnitySDK/Assets/ML-Agents/Examples/WallJump/TFModels/SmallWallJumpLearning.nn.meta
+
+ml-agents-master/UnitySDK/ProjectSettings/ProjectSettings.asset
+
+ml-agents-master/UnitySDK/ProjectSettings/ProjectVersion.txt
+
+ml-agents-master/UnitySDK/ProjectSettings/TagManager.asset

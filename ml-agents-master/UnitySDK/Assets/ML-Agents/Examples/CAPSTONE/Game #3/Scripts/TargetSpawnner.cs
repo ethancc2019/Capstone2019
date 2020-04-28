@@ -35,6 +35,7 @@ public class TargetSpawnner : MonoBehaviour
                 tempPoint.Add(randomIndex);
                 GameObject temp = Instantiate(TargetPrefabGameObject, targetSpawnPoints[randomIndex].transform.position, Quaternion.identity);
                 temp.transform.parent = this.transform.parent;
+                temp.layer = 16; 
                 ActiveTargetsGameObjects.Add(temp);
             }
             else
