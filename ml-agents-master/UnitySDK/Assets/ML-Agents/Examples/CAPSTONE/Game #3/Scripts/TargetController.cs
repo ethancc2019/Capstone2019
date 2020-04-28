@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class TargetController : MonoBehaviour
 {
-  
-   
+    public bool isDestroyed;
+    private void Start()
+    {
+        isDestroyed = false;
+    }
+
+
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.collider.CompareTag("bullet"))
+        if (col.collider.CompareTag("bullet") && isDestroyed == false)
         {
+            isDestroyed = true;
             Debug.Log("Target Hit!");
             //numOfActiveTargets--;
             //Add reward here
