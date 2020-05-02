@@ -92,7 +92,7 @@ public class Game3Agent : Agent
         //powerupsCount / maxPowerUps;
         //targetCount / maxTargets;
         //ammoCount / (currentAmmo + powerupsCount * 3);
-        AddVectorObs(shooting.ammoCount/ ())
+        //AddVectorObs(shooting.ammoCount/ ())
 
         //foreach targetsInFOV[i]
         //{
