@@ -56,10 +56,7 @@ public class Game3Agent : Agent
         }
         Mathf.Clamp(rb.rotation, 0, 360);
         rb.AddForce(movement * speed / 30 + -(rb.velocity * Time.deltaTime / 50));
-        Vector3 pos = cam.WorldToViewportPoint(transform.position);
-        pos.x = Mathf.Clamp01(pos.x);
-        pos.y = Mathf.Clamp01(pos.y);
-        transform.position = cam.ViewportToWorldPoint(pos);
+        
         AddReward(-1f / agentParameters.maxStep);
     }
     public override void InitializeAgent()
