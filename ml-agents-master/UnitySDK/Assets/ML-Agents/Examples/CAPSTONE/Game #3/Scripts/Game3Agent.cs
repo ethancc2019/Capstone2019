@@ -12,9 +12,12 @@ public class Game3Agent : Agent
     public Camera cam;
     public RayPerception2D rayPerception;
     public Transform gameArea;
-
+    public GameObject gameAreaObject;
+    private PowerUpSpawnGameThree powerUpController;
+    private TargetSpawnner targetController;
 
     public Shooting shooting;
+    public AgentFOV agentFOV;
 
     public override void AgentAction(float[] vectorAction, string textAction)
     {
@@ -75,8 +78,14 @@ public class Game3Agent : Agent
         transform.position = transform.parent.transform.position;
         rb = GetComponent<Rigidbody2D>();
         rayPerception = GetComponent<RayPerception2D>();
+
         gameArea = transform.parent;
+        gameAreaObject = gameArea.gameObject;
+        powerUpController = gameArea.GetComponent<GameControllerGameThree>().powerUpContainer.GetComponent<PowerUpSpawnGameThree>();
+        targetController = gameArea.GetComponent<GameControllerGameThree>().targetContainer.GetComponent<TargetSpawnner>();
+
         shooting = GetComponent<Shooting>();
+        agentFOV = GetComponent<AgentFOV>();
     }
 
     public override void CollectObservations()
@@ -91,8 +100,9 @@ public class Game3Agent : Agent
 
         //powerupsCount / maxPowerUps;
         //targetCount / maxTargets;
-        //ammoCount / (currentAmmo + powerupsCount * 3);
-        //AddVectorObs(shooting.ammoCount/ ())
+        //ammoLeft / maxAmmo;
+        AddVectorObs(targetController.activeTargets / targetController.maxNumOfTargetsToSpawn);
+        AddVectorObs((shooting.ammoCount) / (shooting.ammoCount + (powerUpController.numOfPowerUpsToSpawn * 3)));
 
         //foreach targetsInFOV[i]
         //{
@@ -101,16 +111,27 @@ public class Game3Agent : Agent
         //    maybe also x & y velocity of targets if we can moving target training
         //}
 
+        foreach (Transform target in agentFOV.visibleTargets)
+        {
+            AddVectorObs((target.position.x - gameArea.position.x) / 8.55f);
+            AddVectorObs((target.position.y - gameArea.position.y) / 4.81f);
+
+        }
         //foreach powerupsInFOV[i]
         //{
         //    (powerupsInFOV[i].pos.x - gameArea.pos.x) / sizeOfGameAreaX;
         //    (powerupsInFOV[i].pos.y - gameArea.pos.y) / sizeOfGameAreaY;
         //}
+        foreach (Transform powerup in agentFOV.visiblePowerups)
+        {
+            AddVectorObs((powerup.position.x - gameArea.position.x) / 8.55f);
+            AddVectorObs((powerup.position.y - gameArea.position.y) / 4.81f);
+        }
 
         //rayCasts at -45, 0, and 45 degree positions, relative to front of player, for wall detection
         float distance = 20f;
         float[] angles = { 0, 45, 315 };
-        string[] detectableObjects = { "wall", "target", "powerup" };
+        string[] detectableObjects = {"wall"};
         AddVectorObs(rayPerception.Perceive(distance, angles, detectableObjects));
     }
 }

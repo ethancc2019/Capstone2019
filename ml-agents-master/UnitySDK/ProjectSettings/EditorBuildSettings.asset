@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: 'Assets/ML-Agents/Examples/CAPSTONE/Game #1/(ML)GameOne.unity'
+    path: 'Assets/Game #1/(ML)GameOne.unity'
     guid: 150c0c33f94193a4b91bffa6b386c7ef
   m_configObjects: {}
