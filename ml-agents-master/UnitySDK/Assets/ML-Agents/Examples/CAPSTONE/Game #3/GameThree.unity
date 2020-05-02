@@ -156,31 +156,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1736734884}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1507894338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1507894337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4cbdf67e7f3e9744a87d17fcaf64b3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewRadius: 5
-  viewAngle: 90
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 65536
-  powerupMask:
-    serializedVersion: 2
-    m_Bits: 32768
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 16384
-  visibleTargets: []
-  visiblePowerups: []
 --- !u!1 &1655245233 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5614839888981890725, guid: 58036fc131119c24f9698f1b1500a0b0,
