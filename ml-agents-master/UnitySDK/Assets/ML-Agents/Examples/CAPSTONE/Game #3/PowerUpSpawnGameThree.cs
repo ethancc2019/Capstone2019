@@ -41,7 +41,6 @@ public class PowerUpSpawnGameThree : MonoBehaviour
             {
                 goto RESTART;
             }
-
         }
         activePowerUps = numOfPowerUpsToSpawn;
 

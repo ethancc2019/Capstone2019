@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shooting : MonoBehaviour
+public class Shooting:MonoBehaviour
 {
     public int ammoCount = 100;
     public Transform firePoint;
@@ -22,17 +22,14 @@ public class Shooting : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && ammoCount > 0) //Left click
         {
             Shoot();
-            //ammoCount--;
-           // Debug.Log(ammoCount.ToString());
         }
     }
 
-    void Shoot()
+    public void Shoot()
     {
         GameObject bulletTemp = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation) as GameObject;
         bulletTemp.transform.parent = this.transform.parent;
         Rigidbody2D rb = bulletTemp.GetComponent<Rigidbody2D>();
         rb.AddForce(firePoint.up * bulletSpeed, ForceMode2D.Impulse);
-
     }
 }
