@@ -13,6 +13,7 @@ public class Game3MovementPlayer1 : MonoBehaviour
     private Vector2 movement;
     private Vector2 mousePosition;
     public Camera cam;
+
     // Start is called before the first frame update
     void Start()
     {
