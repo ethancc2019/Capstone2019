@@ -23,7 +23,7 @@ public class SpawnPointController : MonoBehaviour
     public void SpawnPlayerInRandomPoint()
     {
         int randomIndex = Random.Range(0, spawnPoints.Length);
-        player.transform.position = spawnPoints[randomIndex].transform.position;
+       // player.transform.position = spawnPoints[randomIndex].transform.position;
 
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Game3Player
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 1
+    vectorObservationSize: 22
     numStackedVectorObservations: 1
     vectorActionSize: 03000000030000000200000004000000
     cameraResolutions: []
@@ -25,4 +25,25 @@ MonoBehaviour:
     vectorActionSpaceType: 0
   keyContinuousPlayerActions: []
   axisContinuousPlayerActions: []
-  discretePlayerActions: []
+  discretePlayerActions:
+  - key: 119
+    branchIndex: 0
+    value: 1
+  - key: 97
+    branchIndex: 1
+    value: 1
+  - key: 115
+    branchIndex: 0
+    value: 2
+  - key: 100
+    branchIndex: 1
+    value: 2
+  - key: 324
+    branchIndex: 3
+    value: 1
+  - key: 276
+    branchIndex: 2
+    value: 1
+  - key: 275
+    branchIndex: 2
+    value: 2

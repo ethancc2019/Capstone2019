@@ -14,11 +14,16 @@ public class AgentFOV : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask powerupMask;
     public LayerMask obstacleMask;
-
-    public List<Transform> visibleTargets = new List<Transform>();
-    public List<Transform> visiblePowerups = new List<Transform>();
+    int targetCounter = 0;
+    int powerupCounter = 0;
+    private GameObject[] visibleTargets = new GameObject[10];
+    private GameObject[] visiblePowerups = new GameObject[10];
+    public Vector3[] targetTransforms = new Vector3[10];
+    public Vector3[] powerupTransforms = new Vector3[10];
     void Start()
     {
+        targetTransforms = new Vector3[10];
+        powerupTransforms = new Vector3[10];
         StartCoroutine("FindTargetsWithDelay", .2f);
     }
 
@@ -35,8 +40,6 @@ public class AgentFOV : MonoBehaviour
     void FindVisibleTargets()
     {
         //finds targets AND powerups
-        visibleTargets.Clear();
-        visiblePowerups.Clear();
         Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y), viewRadius, targetMask);
         Collider2D[] powerupsInViewRadius = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y), viewRadius, powerupMask);
 
@@ -50,7 +53,12 @@ public class AgentFOV : MonoBehaviour
 
                 if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
-                    visibleTargets.Add(target);
+                    while (visibleTargets[targetCounter%10] != null)
+                    {
+                        targetCounter++;
+                    }
+                    visibleTargets[targetCounter%10] = target.gameObject;
+                    targetCounter++;
                 }
             }
         }
@@ -64,8 +72,24 @@ public class AgentFOV : MonoBehaviour
 
                 if (!Physics2D.Raycast(transform.position, dirToPowerup, dstToPowerup, obstacleMask))
                 {
-                    visiblePowerups.Add(powerup);
+                    while(visiblePowerups[powerupCounter%10] != null)
+                    {
+                        powerupCounter++;
+                    }
+                    visiblePowerups[powerupCounter%10] = powerup.gameObject;
+                    powerupCounter++;
                 }
+            }
+        }
+        for(int i = 0; i < visiblePowerups.Length; i++)
+        {
+            //if(visiblePowerups[i] != null)
+            //{
+            //    powerupTransforms[i] = visiblePowerups[i].transform;
+            //}
+            if (visibleTargets[i] != null)
+            {
+                targetTransforms[i] = visibleTargets[i].transform.position;
             }
         }
     }

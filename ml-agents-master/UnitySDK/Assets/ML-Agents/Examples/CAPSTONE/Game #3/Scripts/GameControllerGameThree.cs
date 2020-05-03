@@ -89,7 +89,7 @@ public class GameControllerGameThree : MonoBehaviour
             Destroy(goal);
         }
         //Here choose new spawn point for the player
-        playerSpawnContainer.GetComponent<SpawnPointController>().SpawnPlayerInRandomPoint();
+        player.transform.position = gameArea.transform.position;
         player.GetComponent<Shooting>().ammoCount = 5;
     }
 

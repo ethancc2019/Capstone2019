@@ -6,7 +6,7 @@ public class Game3Agent : Agent
 {
     private Vector2 movement;
     private Rigidbody2D rb;
-    public float speed = 5f;
+    public float speed = 50f;
     public static float turnSpeed = 5f;
 
     public Camera cam;
@@ -27,34 +27,34 @@ public class Game3Agent : Agent
         }
         float angle = transform.rotation.z;
         //WASD Movement
-        if (vectorAction[0] == 1f)
-        {
-            //W
-            //movement.y = 1f;
-        }
-        else if (vectorAction[0] == 2f)
-        {
-            //S
-            //movement.y = -1f;
-        }
-        else
-        {
-            //movement.y = 0f;
-        }
-        if (vectorAction[1] == 1f)
-        {
-            //A
-            //movement.x = -1f;
-        }
-        else if (vectorAction[1] == 2f)
-        {
-            //D
-            //movement.x = 1f;
-        }
-        else
-        {
-            //movement.x = 0;
-        }
+        //if (vectorAction[0] == 1f)
+        //{
+        //    //W
+        //    movement.y = 1f;
+        //}
+        //else if (vectorAction[0] == 2f)
+        //{
+        //    //S
+        //    movement.y = -1f;
+        //}
+        //else
+        //{
+        //    movement.y = 0f;
+        //}
+        //if (vectorAction[1] == 1f)
+        //{
+        //    //A
+        //    movement.x = -1f;
+        //}
+        //else if (vectorAction[1] == 2f)
+        //{
+        //    //D
+        //    movement.x = 1f;
+        //}
+        //else
+        //{
+        //    movement.x = 0;
+        //}
         if (vectorAction[2] == 1f)
         {
             //Rotate CCW
@@ -66,11 +66,11 @@ public class Game3Agent : Agent
             rb.rotation += -1 * turnSpeed;
         }
         Mathf.Clamp(rb.rotation, 0, 360);
-        rb.AddForce(movement * speed / 30 + -(rb.velocity * Time.deltaTime / 50));
-        Vector3 pos = cam.WorldToViewportPoint(transform.position);
-        pos.x = Mathf.Clamp01(pos.x);
-        pos.y = Mathf.Clamp01(pos.y);
-        transform.position = cam.ViewportToWorldPoint(pos);
+        //rb.AddForce(movement * speed + - new Vector2(Mathf.Log(rb.velocity.x),Mathf.Log(rb.velocity.y)));
+        //Vector3 pos = cam.WorldToViewportPoint(transform.position);
+        //pos.x = Mathf.Clamp01(pos.x);
+        //pos.y = Mathf.Clamp01(pos.y);
+        //transform.position = cam.ViewportToWorldPoint(pos);
         AddReward(-1f / agentParameters.maxStep);
     }
     public override void InitializeAgent()
@@ -94,44 +94,33 @@ public class Game3Agent : Agent
         //(transform.pos.y - gameArea.pos.y) / sizeOfGameAreaY;
         //(transform.eulerAngles.z / 360f);
         //(rb.velocity) / maxVelocity;
-        AddVectorObs((transform.position.x - gameArea.position.x)/ 8.55f);
-        AddVectorObs((transform.position.y - gameArea.position.y)/ 4.81f);
+        //AddVectorObs((transform.position.x - gameArea.position.x)/ 8.55f);
+        //AddVectorObs((transform.position.y - gameArea.position.y)/ 4.81f);
         AddVectorObs(transform.eulerAngles.z / 360f);
 
         //powerupsCount / maxPowerUps;
         //targetCount / maxTargets;
         //ammoLeft / maxAmmo;
         AddVectorObs(targetController.activeTargets / targetController.maxNumOfTargetsToSpawn);
-        AddVectorObs((shooting.ammoCount) / (shooting.ammoCount + (powerUpController.numOfPowerUpsToSpawn * 3)));
-
-        //foreach targetsInFOV[i]
-        //{
-        //    (targetsInFOV[i].pos.x - gameArea.pos.x) / sizeOfGameAreaX;
-        //    (targetsInFOV[i].pos.y - gameArea.pos.y) / sizeOfGameAreaY;
-        //    maybe also x & y velocity of targets if we can moving target training
-        //}
-
-        foreach (Transform target in agentFOV.visibleTargets)
+        //AddVectorObs((shooting.ammoCount) / (shooting.ammoCount + (powerUpController.numOfPowerUpsToSpawn * 3)));
+        foreach (Vector3 target in agentFOV.targetTransforms)
         {
-            AddVectorObs((target.position.x - gameArea.position.x) / 8.55f);
-            AddVectorObs((target.position.y - gameArea.position.y) / 4.81f);
+            AddVectorObs((target.x - gameArea.position.x) / 8.55f);
+            AddVectorObs((target.y - gameArea.position.y) / 4.81f);
 
         }
-        //foreach powerupsInFOV[i]
+ 
+        
+        //foreach (Transform powerup in agentFOV.visiblePowerups)
         //{
-        //    (powerupsInFOV[i].pos.x - gameArea.pos.x) / sizeOfGameAreaX;
-        //    (powerupsInFOV[i].pos.y - gameArea.pos.y) / sizeOfGameAreaY;
+        //    AddVectorObs((powerup.position.x - gameArea.position.x) / 8.55f);
+        //    AddVectorObs((powerup.position.y - gameArea.position.y) / 4.81f);
         //}
-        foreach (Transform powerup in agentFOV.visiblePowerups)
-        {
-            AddVectorObs((powerup.position.x - gameArea.position.x) / 8.55f);
-            AddVectorObs((powerup.position.y - gameArea.position.y) / 4.81f);
-        }
-
+        
         //rayCasts at -45, 0, and 45 degree positions, relative to front of player, for wall detection
-        float distance = 20f;
-        float[] angles = { 0, 45, 315 };
-        string[] detectableObjects = {"wall"};
-        AddVectorObs(rayPerception.Perceive(distance, angles, detectableObjects));
+        //float distance = 20f;
+        //float[] angles = { 0, 45, 315 };
+        //string[] detectableObjects = {"wall"};
+        //AddVectorObs(rayPerception.Perceive(distance, angles, detectableObjects));
     }
 }

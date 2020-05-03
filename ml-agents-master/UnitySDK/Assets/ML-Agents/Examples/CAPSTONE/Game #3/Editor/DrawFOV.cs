@@ -19,13 +19,15 @@ public class FieldOfViewEditor : Editor
         Handles.DrawLine(fov.transform.position, fov.transform.position + viewAngleB * fov.viewRadius);
 
         Handles.color = Color.red;
-        foreach (Transform visibleTarget in fov.visibleTargets)
+        foreach (Vector3 visibleTarget in fov.targetTransforms)
         {
-            Handles.DrawLine(fov.transform.position, visibleTarget.position);
+            if(visibleTarget != Vector3.zero)
+                Handles.DrawLine(fov.transform.position, visibleTarget);
         }
-        foreach (Transform visiblePowerup in fov.visiblePowerups)
+        foreach (Vector3 visiblePowerup in fov.powerupTransforms)
         {
-            Handles.DrawLine(fov.transform.position, visiblePowerup.position);
+            if (visiblePowerup != Vector3.zero)
+                Handles.DrawLine(fov.transform.position, visiblePowerup);
         }
     }
 
