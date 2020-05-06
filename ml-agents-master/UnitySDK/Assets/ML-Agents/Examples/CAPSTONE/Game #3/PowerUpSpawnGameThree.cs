@@ -34,7 +34,8 @@ public class PowerUpSpawnGameThree : MonoBehaviour
                 tempPU.Add(randomIndex);
                 GameObject temp = Instantiate(powerUpPrefab, powerUpSpawnPoints[randomIndex].transform.position, Quaternion.identity);
                 temp.transform.parent = this.transform.parent;
-                temp.layer = 15;
+                //Hardcoded value needs to be updated if layers change.
+                temp.layer = 16;
                 ActivePowerGameObjects.Add(temp);
             }
             else

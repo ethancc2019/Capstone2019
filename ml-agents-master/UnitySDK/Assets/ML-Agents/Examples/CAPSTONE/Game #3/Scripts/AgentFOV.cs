@@ -42,43 +42,11 @@ public class AgentFOV : MonoBehaviour
         //finds targets AND powerups
         Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y), viewRadius, targetMask);
         Collider2D[] powerupsInViewRadius = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y), viewRadius, powerupMask);
-        bool[] targetIndicesFound = new bool[10];
-        bool[] powerupIndicesFound = new bool[10];
-        for (int i = 0; i < targetsInViewRadius.Length; i++)
-        {
-            Transform target = targetsInViewRadius[i].transform;
-            if(target.gameObject != null)
-            {
-                bool targetFound = false;
-                Vector2 dirToTarget = (target.position - transform.position).normalized;
-                if (Vector2.Angle(transform.up, dirToTarget) < viewAngle / 2)
-                {
-                    for (int j = 0; j < visibleTargets.Length && targetFound == false; j++)
-                    {
-                        if (target.gameObject == visibleTargets[j])
-                        {
-                            targetFound = true;
-                            targetIndicesFound[j] = true;
-                        }
-                    }
-                    if (!targetFound)
-                    {
-                        float dstToTarget = Vector2.Distance(transform.position, target.position);
-
-                        if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
-                        {
-                            while (visibleTargets[targetCounter % 10] != null)
-                            {
-                                targetCounter++;
-                            }
-                            visibleTargets[targetCounter % 10] = target.gameObject;
-                            targetIndicesFound[targetCounter%10] = true;
-                            targetCounter++;
-                        }
-                    }
-                }
-            }
-        }
+        bool[] targetIndicesFound;
+        bool[] powerupIndicesFound;
+        targetIndicesFound = AddNewTargets(targetsInViewRadius, visibleTargets);
+        powerupIndicesFound = AddNewPowerups(powerupsInViewRadius, visiblePowerups);
+        //Sets any old targets null
         for (int i = 0; i < targetIndicesFound.Length; i++)
         {
             if (!targetIndicesFound[i])
@@ -86,47 +54,7 @@ public class AgentFOV : MonoBehaviour
                 visibleTargets[i] = null;
             }
         }
-
-        for (int i = 0; i < powerupsInViewRadius.Length; i++)
-        {
-            Transform powerup = powerupsInViewRadius[i].transform;
-            bool powerupFound = false;
-            if (powerup.gameObject != null)
-            {
-                
-
-            
-                Vector2 dirToPowerup = (powerup.position - transform.position).normalized;
-                if (Vector2.Angle(transform.up, dirToPowerup) < viewAngle / 2)
-                {
-                    //search for pre-existing element in array, want no duplicates.
-                    for (int j = 0; j < visiblePowerups.Length && powerupFound == false; j++)
-                    {
-                        if (powerup.gameObject == visibleTargets[j])
-                        {
-                            powerupFound = true;
-                            powerupIndicesFound[j] = true;
-                        }
-                    }
-                    if (!powerupFound)
-                    {
-                        float dstToPowerup = Vector2.Distance(transform.position, powerup.position);
-
-                        if (!Physics2D.Raycast(transform.position, dirToPowerup, dstToPowerup, obstacleMask))
-                        {
-                            //add to array
-                            while (visiblePowerups[powerupCounter % 10] != null)
-                            {
-                                powerupCounter++;
-                            }
-                            visiblePowerups[powerupCounter % 10] = powerup.gameObject;
-                            powerupIndicesFound[powerupCounter % 10] = true;
-                            powerupCounter++;
-                        }
-                    }
-                }
-            }
-        }
+        //sets any old powerups null
         for (int i = 0; i < powerupIndicesFound.Length; i++)
         {
             if (!powerupIndicesFound[i])
@@ -134,6 +62,7 @@ public class AgentFOV : MonoBehaviour
                 visiblePowerups[i] = null;
             }
         }
+        //sets the transform arrays' elements
         for (int i = 0; i < visiblePowerups.Length; i++)
         {
             if(visiblePowerups[i] != null && visiblePowerups[i].transform.position  != Vector3.zero)
@@ -155,7 +84,89 @@ public class AgentFOV : MonoBehaviour
         }
     }
 
+    bool[] AddNewTargets(Collider2D[] from, GameObject[] to)
+    {
+        //Returns a bool array of which transforms to return from the gameObj array.
+        bool[] targetIndicesFound = new bool[10];
+        for (int i = 0; i < from.Length; i++)
+        {
+            Transform target = from[i].transform;
+            if (target.gameObject != null)
+            {
+                bool targetFound = false;
+                Vector2 dirToTarget = (target.position - transform.position).normalized;
+                if (Vector2.Angle(transform.up, dirToTarget) < viewAngle / 2)
+                {
+                    for (int j = 0; j < to.Length && targetFound == false; j++)
+                    {
+                        if (target.gameObject == to[j])
+                        {
+                            targetFound = true;
+                            targetIndicesFound[j] = true;
+                        }
+                    }
+                    if (!targetFound)
+                    {
+                        float dstToTarget = Vector2.Distance(transform.position, target.position);
 
+                        if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
+                        {
+                            while (to[targetCounter % 10] != null)
+                            {
+                                targetCounter++;
+                            }
+                            to[targetCounter % 10] = target.gameObject;
+                            targetIndicesFound[targetCounter % 10] = true;
+                            targetCounter++;
+                        }
+                    }
+                }
+            }
+        }
+        return targetIndicesFound;
+    }
+    bool [] AddNewPowerups(Collider2D[] from, GameObject[] to)
+    {
+        //Returns a bool array of which transforms to return from the gameObj array.
+        bool[] powerupIndicesFound = new bool[10];
+        for (int i = 0; i < from.Length; i++)
+        {
+            Transform powerup = from[i].transform;     
+            if (powerup.gameObject != null)
+            {
+                bool powerupFound = false;
+                Vector2 dirToPowerup = (powerup.position - transform.position).normalized;
+                if (Vector2.Angle(transform.up, dirToPowerup) < viewAngle / 2)
+                {
+                    //search for pre-existing element in array, want no duplicates.
+                    for (int j = 0; j < to.Length && powerupFound == false; j++)
+                    {
+                        if (powerup.gameObject == to[j])
+                        {
+                            powerupFound = true;
+                            powerupIndicesFound[j] = true;
+                        }
+                    }
+                    if (!powerupFound)
+                    {
+                        float dstToPowerup = Vector2.Distance(transform.position, powerup.position);
+                        if (!Physics2D.Raycast(transform.position, dirToPowerup, dstToPowerup, obstacleMask))
+                        {
+                            //add to array
+                            while (to[powerupCounter % 10] != null)
+                            {
+                                powerupCounter++;
+                            }
+                            to[powerupCounter % 10] = powerup.gameObject;
+                            powerupIndicesFound[powerupCounter % 10] = true;
+                            powerupCounter++;
+                        }
+                    }
+                }
+            }
+        }
+        return powerupIndicesFound;
+    }
     public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
     {
         if (!angleIsGlobal)

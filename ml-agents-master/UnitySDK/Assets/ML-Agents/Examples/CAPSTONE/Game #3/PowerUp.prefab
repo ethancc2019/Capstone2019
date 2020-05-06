@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3067649569256391539}
   - component: {fileID: 3067649569256391549}
   - component: {fileID: 2666720291853795727}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: PowerUp
   m_TagString: goal
   m_Icon: {fileID: 0}
@@ -64,6 +64,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

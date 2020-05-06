@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5267417907368055589}
   - component: {fileID: 5267417907368055590}
   - component: {fileID: 5267417907368055591}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Target
   m_TagString: target
   m_Icon: {fileID: 0}
@@ -59,6 +59,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -110,6 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cbcbaf5a70e6644799067a51aa3b95d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDestroyed: 0
 --- !u!1 &5267417908091224718
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,7 +121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5267417908091224717}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

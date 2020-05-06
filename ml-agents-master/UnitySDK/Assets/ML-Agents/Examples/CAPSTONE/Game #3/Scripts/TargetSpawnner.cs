@@ -35,7 +35,8 @@ public class TargetSpawnner : MonoBehaviour
                 tempPoint.Add(randomIndex);
                 GameObject temp = Instantiate(TargetPrefabGameObject, targetSpawnPoints[randomIndex].transform.position, Quaternion.identity);
                 temp.transform.parent = this.transform.parent;
-                temp.layer = 16; 
+                //hardcoded value, needs to be updated according to layer value in unity editor!
+                temp.layer = 15; 
                 ActiveTargetsGameObjects.Add(temp);
             }
             else
