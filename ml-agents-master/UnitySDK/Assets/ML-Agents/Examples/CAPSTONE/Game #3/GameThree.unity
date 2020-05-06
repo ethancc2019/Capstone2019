@@ -281,6 +281,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game Area
       objectReference: {fileID: 0}
+    - target: {fileID: 6630229557296286500, guid: 58036fc131119c24f9698f1b1500a0b0,
+        type: 3}
+      propertyPath: orthographic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5614839887688507253, guid: 58036fc131119c24f9698f1b1500a0b0,
         type: 3}
       propertyPath: m_Icon
@@ -476,11 +481,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6630229557296286500, guid: 58036fc131119c24f9698f1b1500a0b0,
-        type: 3}
-      propertyPath: orthographic
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1212599908521093291, guid: 58036fc131119c24f9698f1b1500a0b0,
         type: 3}

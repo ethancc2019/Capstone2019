@@ -103,11 +103,11 @@ public class Game3Agent : Agent
         //ammoLeft / maxAmmo;
         AddVectorObs(targetController.activeTargets / targetController.maxNumOfTargetsToSpawn);
         //AddVectorObs((shooting.ammoCount) / (shooting.ammoCount + (powerUpController.numOfPowerUpsToSpawn * 3)));
-        foreach (Vector3 target in agentFOV.targetTransforms)
+        for(int i = 0; i < agentFOV.targetTransforms.Length; i++)
         {
+            Vector3 target = agentFOV.targetTransforms[i];
             AddVectorObs((target.x - gameArea.position.x) / 8.55f);
             AddVectorObs((target.y - gameArea.position.y) / 4.81f);
-
         }
  
         
