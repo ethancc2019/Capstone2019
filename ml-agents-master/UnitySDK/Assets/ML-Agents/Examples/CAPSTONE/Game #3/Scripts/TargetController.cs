@@ -16,13 +16,15 @@ public class TargetController : MonoBehaviour
         if (col.collider.CompareTag("bullet") && isDestroyed == false)
         {
             isDestroyed = true;
-            Debug.Log("Target Hit!");
             //numOfActiveTargets--;
             //Add reward here
             GetComponent<SpriteRenderer>().color = Color.red;
             Destroy(gameObject, 1f);
             GameObject temp = this.transform.parent.Find("Target Container").gameObject;
             temp.GetComponent<TargetSpawnner>().activeTargets--;
+
+            GameObject playerGameObject = this.transform.parent.Find("Player_1").gameObject;
+            playerGameObject.GetComponent<Game3Agent>().Reward(1f);
             //GameObject.Find(this.transform.parent.ToString() + "/target_container").GetComponent<TargetSpawnner>().activeTargets--;
         }
         

@@ -59,9 +59,9 @@ public class GameControllerGameThree : MonoBehaviour
             
             ResetGameArea();
         }
-        Debug.Log("Ammo: " + ammoDetails.ammoCount);
-        Debug.Log("Targets: " + targetScript.activeTargets);
-        Debug.Log("Powerups: " + powerUpScript.activePowerUps);
+        //Debug.Log("Ammo: " + ammoDetails.ammoCount);
+        //Debug.Log("Targets: " + targetScript.activeTargets);
+        //Debug.Log("Powerups: " + powerUpScript.activePowerUps);
 
 
 

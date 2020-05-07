@@ -15,14 +15,22 @@ public class Game3Agent : Agent
     public GameObject gameAreaObject;
     private PowerUpSpawnGameThree powerUpController;
     private TargetSpawnner targetController;
+    public GameControllerGameThree gameController;
 
     public Shooting shooting;
     public AgentFOV agentFOV;
 
+    private float shootTime;
+
     public override void AgentAction(float[] vectorAction, string textAction)
     {
-        if (vectorAction[3] == 1f)
+        if (shooting.ammoCount == 0)
         {
+            AgentReset();
+        }
+        if (vectorAction[1] == 1f && shootTime <= 0)
+        {
+            shootTime = 0.5f;
             GetComponent<Shooting>().Shoot();
         }
         float angle = transform.rotation.z;
@@ -55,12 +63,12 @@ public class Game3Agent : Agent
         //{
         //    movement.x = 0;
         //}
-        if (vectorAction[2] == 1f)
+        if (vectorAction[0] == 1f)
         {
             //Rotate CCW
             rb.rotation += 1 * turnSpeed;
         }
-        else if (vectorAction[2] == 2f)
+        else if (vectorAction[0] == 2f)
         {
             //Rotate CW
             rb.rotation += -1 * turnSpeed;
@@ -71,7 +79,6 @@ public class Game3Agent : Agent
         //pos.x = Mathf.Clamp01(pos.x);
         //pos.y = Mathf.Clamp01(pos.y);
         //transform.position = cam.ViewportToWorldPoint(pos);
-        AddReward(-1f / agentParameters.maxStep);
     }
     public override void InitializeAgent()
     {
@@ -86,6 +93,10 @@ public class Game3Agent : Agent
 
         shooting = GetComponent<Shooting>();
         agentFOV = GetComponent<AgentFOV>();
+        gameController = this.transform.parent.gameObject.GetComponent<GameControllerGameThree>();
+
+
+        shootTime = 0f;
     }
 
     public override void CollectObservations()
@@ -122,5 +133,22 @@ public class Game3Agent : Agent
         //float[] angles = { 0, 45, 315 };
         //string[] detectableObjects = {"wall"};
         //AddVectorObs(rayPerception.Perceive(distance, angles, detectableObjects));
+    }
+
+    public void FixedUpdate()
+    {
+        shootTime -= Time.fixedDeltaTime;
+        Mathf.Clamp(shootTime, 0, 0.5f);
+    }
+
+    public void Reward(float reward)
+    {
+        Debug.Log("Adding reward " + reward);
+        AddReward(1f);
+    }
+    public override void AgentReset()
+    {
+        base.AgentReset();
+        gameController.ResetGameArea();
     }
 }

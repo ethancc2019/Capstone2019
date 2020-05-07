@@ -22,9 +22,8 @@ public class PowerUpController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Player"))
+        if (collider.CompareTag("bullet"))
         {
-            Debug.Log("+5 Ammo Added!");
             playerGameObject = this.transform.parent.Find("Player_1").gameObject;
             playerGameObject.GetComponent<Shooting>().ammoCount += 5;
             //GameObject.FindGameObjectWithTag("power_container").GetComponent<PowerUpSpawnGameThree>().activePowerUps--;

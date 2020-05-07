@@ -27,9 +27,12 @@ public class Shooting:MonoBehaviour
 
     public void Shoot()
     {
-        GameObject bulletTemp = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation) as GameObject;
-        bulletTemp.transform.parent = this.transform.parent;
-        Rigidbody2D rb = bulletTemp.GetComponent<Rigidbody2D>();
-        rb.AddForce(firePoint.up * bulletSpeed, ForceMode2D.Impulse);
+        if (ammoCount > 0)
+        {
+            GameObject bulletTemp = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation) as GameObject;
+            bulletTemp.transform.parent = this.transform.parent;
+            Rigidbody2D rb = bulletTemp.GetComponent<Rigidbody2D>();
+            rb.AddForce(firePoint.up * bulletSpeed, ForceMode2D.Impulse);
+        }
     }
 }
