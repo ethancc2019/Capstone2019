@@ -1,68 +1,68 @@
 {
   "name": "root",
-  "total": 247.61406350000001,
+  "total": 507.2914404,
   "count": 1,
-  "self": 14.036072699997504,
+  "self": 15.452207100000408,
   "children": [
     {
       "name": "TrainerController.advance",
-      "total": 233.5779908000025,
-      "count": 50001,
-      "self": 26.09665660000212,
+      "total": 491.8392332999996,
+      "count": 108992,
+      "self": 55.89807499998568,
       "children": [
         {
           "name": "env_step",
-          "total": 193.92117740000043,
-          "count": 50001,
-          "self": 167.77408,
+          "total": 414.5586594000139,
+          "count": 108992,
+          "self": 357.72259310001084,
           "children": [
             {
               "name": "SubprocessEnvManager._take_step",
-              "total": 25.73475729999953,
-              "count": 50001,
-              "self": 0.6228903000012735,
+              "total": 55.917697200002955,
+              "count": 108992,
+              "self": 1.324240200006372,
               "children": [
                 {
                   "name": "PPOPolicy.evaluate",
-                  "total": 25.111866999998256,
-                  "count": 50001,
-                  "self": 25.111866999998256
+                  "total": 54.59345699999658,
+                  "count": 108992,
+                  "self": 54.59345699999658
                 }
               ]
             },
             {
               "name": "workers",
-              "total": 0.4123401000009057,
-              "count": 50001,
+              "total": 0.9183691000001097,
+              "count": 108991,
               "self": 0.0,
               "children": [
                 {
                   "name": "worker_root",
-                  "total": 241.0280345999991,
-                  "count": 50001,
+                  "total": 501.3002303000137,
+                  "count": 108991,
                   "is_parallel": true,
-                  "self": 97.58427479999943,
+                  "self": 196.56809290001064,
                   "children": [
                     {
                       "name": "UnityEnvironment.step",
-                      "total": 143.44375979999967,
-                      "count": 50001,
+                      "total": 304.73213740000307,
+                      "count": 108991,
                       "is_parallel": true,
-                      "self": 13.361984800002404,
+                      "self": 29.43857430000503,
                       "children": [
                         {
                           "name": "UnityEnvironment._generate_step_input",
-                          "total": 3.1200707999994792,
-                          "count": 50001,
+                          "total": 6.648345799991608,
+                          "count": 108991,
                           "is_parallel": true,
-                          "self": 3.1200707999994792
+                          "self": 6.648345799991608
                         },
                         {
                           "name": "communicator.exchange",
-                          "total": 126.96170419999778,
-                          "count": 50001,
+                          "total": 268.64521730000644,
+                          "count": 108991,
                           "is_parallel": true,
-                          "self": 126.96170419999778
+                          "self": 268.64521730000644
                         }
                       ]
                     }
@@ -74,15 +74,15 @@
         },
         {
           "name": "update_policy",
-          "total": 13.560156799999945,
-          "count": 19,
-          "self": 8.506743499999882,
+          "total": 21.382498900000055,
+          "count": 211,
+          "self": 12.609770400001691,
           "children": [
             {
               "name": "PPOPolicy.update",
-              "total": 5.053413300000063,
-              "count": 570,
-              "self": 5.053413300000063
+              "total": 8.772728499998363,
+              "count": 3376,
+              "self": 8.772728499998363
             }
           ]
         }
